@@ -1,0 +1,208 @@
+---
+import Layout from '../../layouts/ConverterLayout.astro';
+const pageTitle = 'Pounds to Cups Converter';
+const pageDesc = 'Convert pounds to cups and vice versa. Quick kitchen converter for cooking and baking.';
+const path = '/tools/pounds-to-cups';
+---
+
+<Layout title={pageTitle} description={pageDesc} path={path}>
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6 rounded-t-xl shadow">
+    <h1 class="text-3xl font-bold">⚖️ Pounds ↔ Cups</h1>
+    <p class="text-base mt-2">Quickly convert between pounds and cups for cooking, baking, or grocery prep.</p>
+  </header>
+
+  <!-- Seasonal Tip -->
+  <div class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-100 text-sm p-4 text-center">
+    <p><strong>💡 Seasonal Tip:</strong> Holiday baking often calls for bulk ingredients — use this converter to scale recipes by weight or volume with ease!</p>
+  </div>
+
+  <!-- Tool -->
+  <div class="max-w-3xl mx-auto bg-white dark:bg-gray-900 shadow-md p-6 border-b border-gray-200 dark:border-gray-700">
+    <div class="flex items-center justify-between mb-4">
+      <p id="modeLabel" class="text-lg font-medium text-gray-800 dark:text-gray-200">Convert Pounds to Cups</p>
+      <button id="switchBtn" class="bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded text-sm">🔁 Switch</button>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
+      <div>
+        <label id="inputLabel" for="inputValue" class="block text-base font-semibold">Pounds</label>
+        <input id="inputValue" type="number" step="any" class="mt-2 w-full rounded-lg border p-3 text-lg dark:bg-gray-800 dark:border-gray-700" />
+      </div>
+      <div>
+        <label id="outputLabel" for="outputValue" class="block text-base font-semibold">Cups</label>
+        <input id="outputValue" type="number" step="any" disabled class="mt-2 w-full rounded-lg border p-3 text-lg bg-gray-100 dark:bg-gray-800 dark:border-gray-700 text-gray-500 dark:text-gray-300" />
+      </div>
+    </div>
+
+    <p id="helperText" class="text-sm text-gray-600 dark:text-gray-400">1 pound ≈ 2 cups (general estimate)</p>
+    <p id="resultDisplay" class="text-3xl mt-6 font-bold text-center text-purple-700 dark:text-purple-300">—</p>
+  </div>
+
+  <!-- Conversion Info -->
+  <section class="max-w-3xl mx-auto p-6 text-base space-y-6">
+    <div>
+      <h2 class="text-xl font-semibold">How to Convert Pounds and Cups</h2>
+      <ul class="list-disc list-inside text-gray-800 dark:text-gray-200">
+        <li>To convert pounds to cups, multiply the pounds by 2.</li>
+        <li>To convert cups to pounds, divide the cups by 2.</li>
+      </ul>
+
+      <h2 class="text-xl font-semibold mt-4">Common Conversions</h2>
+      <ul id="examplesList" class="list-disc list-inside text-gray-800 dark:text-gray-200">
+        <li>1 lb = 2 cups</li>
+        <li>2 lb = 4 cups</li>
+        <li>3 lb = 6 cups</li>
+        <li>4 lb = 8 cups</li>
+        <li>5 lb = 10 cups</li>
+        <li>6 lb = 12 cups</li>
+        <li>7 lb = 14 cups</li>
+        <li>8 lb = 16 cups</li>
+        <li>9 lb = 18 cups</li>
+        <li>10 lb = 20 cups</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="max-w-3xl mx-auto p-6 mt-8 text-base">
+    <h2 class="text-2xl font-bold mb-4 text-purple-700">Frequently Asked Questions</h2>
+    <div class="space-y-4">
+      <div><strong>How many cups in a pound?</strong><br />About 2 cups, but it depends on the ingredient.</div>
+      <div><strong>Is this accurate for flour or sugar?</strong><br />Not exactly. This is a general estimate. We’ll be adding ingredient-specific dropdowns soon.</div>
+      <div><strong>How do I measure weight if I don’t have a scale?</strong><br />You can use this converter as an approximation, but a kitchen scale is more accurate.</div>
+      <div><strong>Why does cup-to-pound vary by ingredient?</strong><br />Different ingredients have different densities. For example, 1 cup of sugar weighs more than 1 cup of flour.</div>
+    </div>
+  </section>
+
+  <!-- Learn More -->
+  <section class="max-w-3xl mx-auto p-6 mt-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-base leading-relaxed text-gray-800 dark:text-gray-200">
+    <h2 class="text-2xl font-bold mb-4 text-purple-600">Learn More About Pounds and Cups</h2>
+
+    <p><strong>Pound (lb)</strong> — A pound is a unit of mass commonly used in the U.S. customary and British imperial systems. One pound is equal to 16 ounces.</p>
+    <p><strong>Cup</strong> — A U.S. cup is a unit of volume equal to 8 fluid ounces or approximately 237 milliliters. Cup measurements are often used for cooking and baking.</p>
+    <p><strong>Important:</strong> Pounds are a unit of weight, while cups are a unit of volume. The conversion between the two depends on the density of the substance being measured.</p>
+    <p><strong>Approximate Conversion:</strong> 1 pound ≈ 2 cups (based on general-purpose estimates).</p>
+  </section>
+
+  <!-- Script -->
+  <script is:inline>
+    const input = document.getElementById('inputValue');
+    const output = document.getElementById('outputValue');
+    const result = document.getElementById('resultDisplay');
+    const switchBtn = document.getElementById('switchBtn');
+
+    const inputLabel = document.getElementById('inputLabel');
+    const outputLabel = document.getElementById('outputLabel');
+    const modeLabel = document.getElementById('modeLabel');
+    const helperText = document.getElementById('helperText');
+    const examplesList = document.getElementById('examplesList');
+
+    let mode = 'lbToCup';
+
+    const updateConversion = () => {
+      const val = parseFloat(input.value);
+      if (isNaN(val)) {
+        output.value = '';
+        result.textContent = '—';
+        return;
+      }
+      let converted;
+      if (mode === 'lbToCup') {
+        converted = (val * 2).toFixed(4);
+        result.textContent = `${val} lb = ${converted} cups`;
+      } else {
+        converted = (val / 2).toFixed(4);
+        result.textContent = `${val} cups = ${converted} lb`;
+      }
+      output.value = converted;
+    };
+
+    input.addEventListener('input', updateConversion);
+
+    switchBtn.addEventListener('click', () => {
+      mode = mode === 'lbToCup' ? 'cupToLb' : 'lbToCup';
+
+      if (mode === 'lbToCup') {
+        inputLabel.textContent = 'Pounds';
+        outputLabel.textContent = 'Cups';
+        modeLabel.textContent = 'Convert Pounds to Cups';
+        helperText.textContent = '1 pound ≈ 2 cups (general estimate)';
+        examplesList.innerHTML = `
+          <li>1 lb = 2 cups</li>
+          <li>2 lb = 4 cups</li>
+          <li>3 lb = 6 cups</li>
+          <li>4 lb = 8 cups</li>
+          <li>5 lb = 10 cups</li>
+          <li>6 lb = 12 cups</li>
+          <li>7 lb = 14 cups</li>
+          <li>8 lb = 16 cups</li>
+          <li>9 lb = 18 cups</li>
+          <li>10 lb = 20 cups</li>`;
+      } else {
+        inputLabel.textContent = 'Cups';
+        outputLabel.textContent = 'Pounds';
+        modeLabel.textContent = 'Convert Cups to Pounds';
+        helperText.textContent = '1 pound ≈ 2 cups (general estimate)';
+        examplesList.innerHTML = `
+          <li>2 cups = 1 lb</li>
+          <li>4 cups = 2 lb</li>
+          <li>6 cups = 3 lb</li>
+          <li>8 cups = 4 lb</li>
+          <li>10 cups = 5 lb</li>
+          <li>12 cups = 6 lb</li>
+          <li>14 cups = 7 lb</li>
+          <li>16 cups = 8 lb</li>
+          <li>18 cups = 9 lb</li>
+          <li>20 cups = 10 lb</li>`;
+      }
+
+      input.value = '';
+      output.value = '';
+      result.textContent = '—';
+    });
+  </script>
+
+  <!-- JSON-LD FAQ Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many cups in a pound?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "About 2 cups, but it depends on the ingredient."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this accurate for flour or sugar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This is a general estimate. We'll add ingredient-specific dropdowns soon."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I measure weight if I don’t have a scale?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can use this converter as an approximation, but a kitchen scale is more accurate."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does cup-to-pound vary by ingredient?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because different ingredients have different densities."
+          }
+        }
+      ]
+    }
+  </script>
+</Layout>
+

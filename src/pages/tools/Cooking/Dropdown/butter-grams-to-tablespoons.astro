@@ -1,0 +1,177 @@
+---
+const pageTitle = 'Butter Grams to Tablespoons Converter';
+const pageDesc = 'Convert butter from grams to tablespoons and back with our accurate dropdown-based calculator.';
+const path = '/tools/cooking/dropdown/butter-grams-to-tablespoons';
+
+const ingredientOptions = [
+  { name: 'Butter', ratio: 0.071 }, // 1 gram of butter ≈ 0.071 tablespoons
+];
+
+let mode = 'gramsToTablespoons';
+---
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{pageTitle} | Smart Converter</title>
+    <meta name="description" content={pageDesc} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100">
+    <main class="max-w-3xl mx-auto px-4 py-8 space-y-8">
+      <!-- Header -->
+      <header class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6 rounded-t-xl shadow">
+        <h1 class="text-3xl font-bold">Butter Grams ↔ Tablespoons Converter</h1>
+        <p class="text-base mt-2">Easily convert grams of butter to tablespoons using this simple tool.</p>
+      </header>
+
+      <!-- Seasonal Tip -->
+      <div class="mt-6 mb-4 bg-purple-100 dark:bg-purple-800 text-purple-900 dark:text-purple-100 p-4 text-sm rounded text-center">
+        💡 <strong>Seasonal Tip:</strong> Planning holiday baking? This tool makes measuring butter a breeze!
+      </div>
+
+      <!-- Converter -->
+      <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow p-6 space-y-4">
+        <div>
+          <label for="ingredient" class="block font-semibold mb-1">Ingredient Type</label>
+          <select id="ingredient" class="w-full p-2 rounded border dark:bg-gray-900 dark:border-gray-600">
+            {ingredientOptions.map((item, i) => (
+              <option value={i}>{item.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <p id="modeLabel" class="text-lg font-medium">Convert Grams to Tablespoons</p>
+          <button id="switchBtn" class="bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded text-sm">🔁 Switch</button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label id="inputLabel" for="inputValue" class="block mb-1 font-medium">Grams</label>
+            <input id="inputValue" type="number" step="any" class="w-full p-3 rounded border text-lg dark:bg-gray-900 dark:border-gray-700" />
+          </div>
+          <div>
+            <label id="outputLabel" for="outputValue" class="block mb-1 font-medium">Tablespoons</label>
+            <input id="outputValue" type="text" disabled class="w-full p-3 rounded border bg-gray-100 text-gray-500 text-lg dark:bg-gray-800 dark:border-gray-700" />
+          </div>
+        </div>
+
+        <p id="resultDisplay" class="text-2xl font-bold text-purple-700 text-center mt-4">—</p>
+      </div>
+
+      <!-- Conversion Table -->
+      <section class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4">Common Conversions for Butter</h2>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+          <li>5g Butter ≈ 0.355 tbsp</li>
+          <li>10g Butter ≈ 0.71 tbsp</li>
+          <li>20g Butter ≈ 1.42 tbsp</li>
+          <li>50g Butter ≈ 3.55 tbsp</li>
+          <li>100g Butter ≈ 7.1 tbsp</li>
+        </ul>
+      </section>
+
+      <!-- Learn More -->
+      <section class="prose dark:prose-invert">
+        <h2>Why Convert Butter by Weight and Volume?</h2>
+        <p>Different countries and recipes may use weight (grams) or volume (tablespoons) when measuring butter. This tool helps you convert accurately between the two.</p>
+
+        <h2>Measurement Tips</h2>
+        <ul>
+          <li>Use a kitchen scale for the most accurate results.</li>
+          <li>Softened butter can be easier to measure in tablespoons than cold butter.</li>
+          <li>Always select the correct ingredient type — this tool is calibrated for butter only.</li>
+        </ul>
+      </section>
+
+      <!-- FAQs -->
+      <section class="prose dark:prose-invert">
+        <h2>FAQs</h2>
+
+        <h3>How many tablespoons are in 100g of butter?</h3>
+        <p>Approximately 7.1 tablespoons of butter.</p>
+
+        <h3>Is this based on US tablespoons?</h3>
+        <p>Yes, 1 US tablespoon = 14.79 mL.</p>
+
+        <h3>Can I use this for margarine?</h3>
+        <p>Margarine has a similar density, but results may vary slightly. Use butter-specific conversions for accuracy.</p>
+      </section>
+
+      <!-- Structured Data -->
+      <script type="application/ld+json" is:inline>
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Butter Grams to Tablespoons Converter",
+          "description": "Convert butter from grams to tablespoons or vice versa with a quick, easy calculator.",
+          "url": "https://yourdomain.com/tools/cooking/dropdown/butter-grams-to-tablespoons"
+        }
+      </script>
+    </main>
+
+    <script is:inline>
+      const input = document.getElementById('inputValue');
+      const output = document.getElementById('outputValue');
+      const resultDisplay = document.getElementById('resultDisplay');
+      const switchBtn = document.getElementById('switchBtn');
+      const ingredientSelect = document.getElementById('ingredient');
+
+      const inputLabel = document.getElementById('inputLabel');
+      const outputLabel = document.getElementById('outputLabel');
+      const modeLabel = document.getElementById('modeLabel');
+
+      const ingredientRatios = [
+        { name: 'Butter', ratio: 0.071 },
+      ];
+
+      let currentRatio = ingredientRatios[0].ratio;
+      let mode = 'gramsToTablespoons';
+
+      const convert = () => {
+        const val = parseFloat(input.value);
+        if (isNaN(val)) {
+          output.value = '';
+          resultDisplay.textContent = '—';
+          return;
+        }
+
+        let result = mode === 'gramsToTablespoons'
+          ? val * currentRatio
+          : val / currentRatio;
+
+        const fromUnit = mode === 'gramsToTablespoons' ? 'g' : 'tbsp';
+        const toUnit = mode === 'gramsToTablespoons' ? 'tbsp' : 'g';
+
+        output.value = result.toFixed(4);
+        resultDisplay.textContent = `${val} ${fromUnit} = ${result.toFixed(4)} ${toUnit}`;
+      };
+
+      input.addEventListener('input', convert);
+
+      switchBtn.addEventListener('click', () => {
+        mode = mode === 'gramsToTablespoons' ? 'tablespoonsToGrams' : 'gramsToTablespoons';
+
+        if (mode === 'gramsToTablespoons') {
+          inputLabel.textContent = 'Grams';
+          outputLabel.textContent = 'Tablespoons';
+          modeLabel.textContent = 'Convert Grams to Tablespoons';
+        } else {
+          inputLabel.textContent = 'Tablespoons';
+          outputLabel.textContent = 'Grams';
+          modeLabel.textContent = 'Convert Tablespoons to Grams';
+        }
+
+        input.value = '';
+        output.value = '';
+        resultDisplay.textContent = '—';
+      });
+
+      ingredientSelect.addEventListener('change', (e) => {
+        const idx = parseInt(e.target.value);
+        currentRatio = ingredientRatios[idx].ratio;
+        convert();
+      });
+    </script>
+  </body>
+</html>

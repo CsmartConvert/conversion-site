@@ -1,0 +1,94 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const title = "Watts to Amps Converter";
+
+// Default values
+let watts = "";
+let voltage = "120"; // Default to common household voltage
+let amps = null;
+
+if (
+  Astro.request?.method === 'POST' &&
+  Astro.request.headers.get('content-type')?.includes('application/x-www-form-urlencoded')
+) {
+  const form = await Astro.request.formData();
+
+  watts = form.get('watts') || "";
+  voltage = form.get('voltage') || "120";
+
+  const wattsNum = parseFloat(watts);
+  const voltageNum = parseFloat(voltage);
+
+  if (!isNaN(wattsNum) && !isNaN(voltageNum) && voltageNum !== 0) {
+    amps = wattsNum / voltageNum;
+  }
+}
+---
+
+<Layout>
+  <!-- ⚡️ Header -->
+  <section class="max-w-3xl mx-auto bg-gradient-to-r from-blue-600 to-blue-800 text-white py-6 px-4 md:py-8 mb-8 shadow text-center rounded-md">
+    <h1 class="text-3xl font-bold mb-2">⚡️ {title}</h1>
+    <p class="text-base">Convert electric power in watts to current in amps using standard voltages.</p>
+  </section>
+
+  <!-- 💡 Tip Box -->
+  <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 max-w-3xl mx-auto">
+    <p class="text-blue-700"><strong>💡 Tip:</strong> This tool assumes a single-phase AC circuit. For three-phase calculations, use a different formula.</p>
+  </div>
+
+  <!-- 🔢 Form -->
+  <section class="bg-white border border-gray-200 p-6 rounded-lg shadow max-w-2xl mx-auto mb-10">
+    <form method="POST" enctype="application/x-www-form-urlencoded" class="space-y-6">
+      <div>
+        <label for="watts" class="block font-medium text-gray-800">Power (Watts):</label>
+        <input
+          type="number"
+          step="any"
+          name="watts"
+          id="watts"
+          class="w-full p-2 border rounded"
+          value={watts}
+          required
+        />
+      </div>
+
+      <div>
+        <label for="voltage" class="block font-medium text-gray-800">Voltage (Volts):</label>
+        <select name="voltage" id="voltage" class="w-full p-2 border rounded">
+          <option value="120" selected={voltage === '120'}>120V (North America Standard)</option>
+          <option value="240" selected={voltage === '240'}>240V (Large Appliances)</option>
+          <option value="12" selected={voltage === '12'}>12V (DC / Automotive)</option>
+          <option value="48" selected={voltage === '48'}>48V (Solar Systems)</option>
+        </select>
+      </div>
+
+      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded font-semibold w-full">
+        Convert to Amps
+      </button>
+    </form>
+
+    {amps !== null && (
+      <div class="mt-6 bg-green-50 border border-green-300 text-green-800 font-semibold p-4 rounded text-center">
+        Current: {amps.toFixed(2)} Amps
+      </div>
+    )}
+  </section>
+
+  <!-- 📘 Why This Matters + Pro Tips -->
+  <section class="max-w-3xl mx-auto px-6 mt-6 mb-8">
+    <h2 class="text-xl font-semibold mb-4 text-gray-800">Why This Matters</h2>
+    <p class="text-gray-700 mb-4">
+      Electrical circuits rely on current (amps) ratings to ensure safety. Overloading a circuit by misjudging amp draw can lead to overheating or fire hazards.
+    </p>
+
+    <h3 class="text-lg font-semibold mb-2 text-gray-800">Pro Tips</h3>
+    <ul class="list-disc list-inside text-gray-700 space-y-1">
+      <li>Use 120V for most household devices in the US.</li>
+      <li>Large appliances like dryers or ovens usually run on 240V.</li>
+      <li>Double-check device labels — most list voltage and wattage.</li>
+      <li>If you know amps and voltage, you can reverse this with an Amps to Watts calculator.</li>
+    </ul>
+  </section>
+</Layout>

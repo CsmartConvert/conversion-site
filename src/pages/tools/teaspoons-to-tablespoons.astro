@@ -1,0 +1,236 @@
+---
+import Layout from '../../layouts/ConverterLayout.astro';
+const pageTitle = 'Teaspoons to Tablespoons Converter';
+const pageDesc = 'Convert teaspoons to tablespoons and back. Smart two-way converter for recipes and cooking.';
+const path = '/tools/teaspoons-to-tablespoons';
+---
+
+<Layout title={pageTitle} description={pageDesc} path={path}>
+  <!-- Header Section -->
+  <header class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6 rounded-t-xl shadow">
+    <h1 class="text-3xl font-bold">🥄 Teaspoons ↔ Tablespoons</h1>
+    <p class="text-base mt-2">Swap directions and get instant results while cooking or scaling recipes.</p>
+  </header>
+
+  <!-- Seasonal Tip -->
+  <div class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-100 text-sm p-4 text-center">
+    <p><strong>💡 Seasonal Tip:</strong> Summer recipes often double or triple ingredients—use this converter to avoid guesswork when scaling for BBQs, picnics, and meal prep.</p>
+  </div>
+
+  <!-- Tool Container -->
+  <div class="max-w-3xl mx-auto bg-white dark:bg-gray-900 shadow-md p-6 border-b border-gray-200 dark:border-gray-700">
+    <!-- Conversion Mode Switcher -->
+    <div class="flex items-center justify-between mb-4">
+      <p id="modeLabel" class="text-lg font-medium text-gray-800 dark:text-gray-200">Convert Teaspoons to Tablespoons</p>
+      <button id="switchBtn" class="bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded text-sm">🔁 Switch</button>
+    </div>
+
+    <!-- Input Fields -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
+      <div>
+        <label id="inputLabel" for="inputValue" class="block text-base font-semibold">Teaspoons</label>
+        <input id="inputValue" type="number" step="any" class="mt-2 w-full rounded-lg border p-3 text-lg dark:bg-gray-800 dark:border-gray-700" />
+      </div>
+      <div>
+        <label id="outputLabel" for="outputValue" class="block text-base font-semibold">Tablespoons</label>
+        <input id="outputValue" type="number" step="any" disabled class="mt-2 w-full rounded-lg border p-3 text-lg bg-gray-100 dark:bg-gray-800 dark:border-gray-700 text-gray-500 dark:text-gray-300" />
+      </div>
+    </div>
+
+    <!-- Conversion Explanation -->
+    <p id="helperText" class="text-sm text-gray-600 dark:text-gray-400">1 tablespoon = 3 teaspoons</p>
+    <p id="resultDisplay" class="text-3xl mt-6 font-bold text-center text-purple-700 dark:text-purple-300">—</p>
+  </div>
+
+  <!-- Instructions + Examples -->
+  <section class="max-w-3xl mx-auto p-6 space-y-6 text-base">
+    <div>
+      <h2 class="text-xl font-semibold">How to Convert</h2>
+      <ul class="list-disc list-inside text-gray-800 dark:text-gray-200">
+        <li>To convert teaspoons to tablespoons, divide the number of teaspoons by 3.</li>
+        <li>To convert tablespoons to teaspoons, multiply the number of tablespoons by 3.</li>
+      </ul>
+
+      <h2 class="text-xl font-semibold mt-4">Common Conversions</h2>
+      <ul id="examplesList" class="list-disc list-inside text-gray-800 dark:text-gray-200">
+        <li>1 tsp = 0.333 tbsp</li>
+        <li>2 tsp = 0.667 tbsp</li>
+        <li>3 tsp = 1 tbsp</li>
+        <li>4 tsp = 1.333 tbsp</li>
+        <li>5 tsp = 1.667 tbsp</li>
+        <li>6 tsp = 2 tbsp</li>
+        <li>7 tsp = 2.333 tbsp</li>
+        <li>8 tsp = 2.667 tbsp</li>
+        <li>9 tsp = 3 tbsp</li>
+        <li>10 tsp = 3.333 tbsp</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="max-w-3xl mx-auto p-6 mt-8 text-base">
+    <h2 class="text-2xl font-bold mb-4 text-purple-700">Frequently Asked Questions</h2>
+    <div class="space-y-4">
+      <div><strong>How many teaspoons in a tablespoon?</strong><br />There are 3 teaspoons in 1 U.S. tablespoon.</div>
+      <div><strong>Is a tablespoon 15 mL?</strong><br />Yes, a metric tablespoon is 15 milliliters, but a U.S. tablespoon is approximately 14.79 mL.</div>
+      <div><strong>What’s the difference between U.S. and U.K. tablespoons?</strong><br />U.S. tablespoons are 14.79 mL, while U.K. tablespoons are 15 mL. Always check your recipe’s origin.</div>
+      <div><strong>How do I accurately measure teaspoons and tablespoons?</strong><br />Use a proper measuring spoon set. Level dry ingredients and pour liquids carefully.</div>
+      <div><strong>Why does my recipe use both teaspoons and tablespoons?</strong><br />Some ingredients need precise measurements in smaller units. It’s common to use both for accuracy.</div>
+    </div>
+  </section>
+
+  <!-- Learn More (Expanded) -->
+  <section class="max-w-3xl mx-auto p-6 mt-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-base leading-relaxed text-gray-800 dark:text-gray-200">
+    <h2 class="text-2xl font-bold mb-4 text-purple-600">Learn More About Teaspoons & Tablespoons</h2>
+
+    <p><strong>Teaspoon (tsp)</strong> — A teaspoon is a small unit of volume often used in cooking and baking. In U.S. customary measurements, 1 teaspoon equals approximately <strong>4.92892 milliliters</strong>.</p>
+
+    <p><strong>Tablespoon (tbsp)</strong> — One tablespoon equals <strong>3 teaspoons</strong> or about <strong>14.7868 milliliters</strong> in U.S. measurement. Tablespoons are commonly used for slightly larger ingredient amounts.</p>
+
+    <p><strong>Metric vs. U.S. vs. U.K.:</strong> While the U.S. and metric tablespoons are about the same, a U.K. tablespoon is typically 15 mL and can vary in older recipes. Always check the region when following a recipe!</p>
+
+    <p><strong>Origin & History:</strong> Both units originated from household spoons. In the 18th and 19th centuries, actual silverware varied in size — but modern standardized measuring spoons make it consistent.</p>
+
+    <p><strong>Usage Tips:</strong> Use a leveled measuring spoon for dry ingredients. For liquids, fill and pour carefully to avoid spills. Know your ratios: <code>1 tbsp = 3 tsp</code>.</p>
+
+    <p><strong>Fun Fact:</strong> In recipe shorthand, you’ll often see “tsp” or “t” for teaspoon, and “tbsp” or “T” for tablespoon. Never mix them up — the difference is 3x!</p>
+  </section>
+
+
+
+  <script is:inline>
+    const input = document.getElementById('inputValue');
+    const output = document.getElementById('outputValue');
+    const result = document.getElementById('resultDisplay');
+    const switchBtn = document.getElementById('switchBtn');
+
+    const inputLabel = document.getElementById('inputLabel');
+    const outputLabel = document.getElementById('outputLabel');
+    const modeLabel = document.getElementById('modeLabel');
+    const helperText = document.getElementById('helperText');
+    const examplesList = document.getElementById('examplesList');
+
+    let mode = 'tspToTbsp';
+
+    const updateConversion = () => {
+      const val = parseFloat(input.value);
+      if (isNaN(val)) {
+        output.value = '';
+        result.textContent = '—';
+        return;
+      }
+      let converted;
+      if (mode === 'tspToTbsp') {
+        converted = (val / 3).toFixed(4);
+        result.textContent = `${val} tsp = ${converted} tbsp`;
+      } else {
+        converted = (val * 3).toFixed(4);
+        result.textContent = `${val} tbsp = ${converted} tsp`;
+      }
+      output.value = converted;
+    };
+
+    input.addEventListener('input', updateConversion);
+
+    switchBtn.addEventListener('click', () => {
+      mode = mode === 'tspToTbsp' ? 'tbspToTsp' : 'tspToTbsp';
+
+      if (mode === 'tspToTbsp') {
+        inputLabel.textContent = 'Teaspoons';
+        outputLabel.textContent = 'Tablespoons';
+        modeLabel.textContent = 'Convert Teaspoons to Tablespoons';
+        helperText.textContent = '1 tablespoon = 3 teaspoons';
+        examplesList.innerHTML = `
+          <li>1 tsp = 0.333 tbsp</li>
+          <li>2 tsp = 0.667 tbsp</li>
+          <li>3 tsp = 1 tbsp</li>
+          <li>4 tsp = 1.333 tbsp</li>
+          <li>5 tsp = 1.667 tbsp</li>
+          <li>6 tsp = 2 tbsp</li>
+          <li>7 tsp = 2.333 tbsp</li>
+          <li>8 tsp = 2.667 tbsp</li>
+          <li>9 tsp = 3 tbsp</li>
+          <li>10 tsp = 3.333 tbsp</li>`;
+      } else {
+        inputLabel.textContent = 'Tablespoons';
+        outputLabel.textContent = 'Teaspoons';
+        modeLabel.textContent = 'Convert Tablespoons to Teaspoons';
+        helperText.textContent = '1 tablespoon = 3 teaspoons';
+        examplesList.innerHTML = `
+          <li>1 tbsp = 3 tsp</li>
+          <li>2 tbsp = 6 tsp</li>
+          <li>3 tbsp = 9 tsp</li>
+          <li>4 tbsp = 12 tsp</li>
+          <li>5 tbsp = 15 tsp</li>
+          <li>6 tbsp = 18 tsp</li>
+          <li>7 tbsp = 21 tsp</li>
+          <li>8 tbsp = 24 tsp</li>
+          <li>9 tbsp = 27 tsp</li>
+          <li>10 tbsp = 30 tsp</li>`;
+      }
+
+      input.value = '';
+      output.value = '';
+      result.textContent = '—';
+    });
+  </script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many teaspoons in a tablespoon?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "There are 3 teaspoons in 1 U.S. tablespoon."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a tablespoon 15 mL?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, a metric tablespoon is 15 milliliters, but a U.S. tablespoon is approximately 14.79 mL."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What’s the difference between U.S. and U.K. tablespoons?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "U.S. tablespoons are 14.79 mL, while U.K. tablespoons are 15 mL. Always check your recipe’s origin."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I accurately measure teaspoons and tablespoons?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use a proper measuring spoon set. Level dry ingredients and pour liquids carefully."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does my recipe use both teaspoons and tablespoons?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Some ingredients need precise measurements in smaller units. It’s common to use both for accuracy."
+          }
+        }
+      ]
+    }
+  </script>
+</Layout>
+
+
+
+
+
+
+
+
+

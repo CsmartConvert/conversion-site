@@ -1,0 +1,209 @@
+---
+import Layout from '../../layouts/ConverterLayout.astro';
+const pageTitle = 'Milliliters to Ounces Converter';
+const pageDesc = 'Convert milliliters to U.S. fluid ounces and back. Ideal for cooking, nutrition, and liquid measurements.';
+const path = '/tools/milliliters-to-ounces';
+---
+
+<Layout title={pageTitle} description={pageDesc} path={path}>
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6 rounded-t-xl shadow">
+    <h1 class="text-3xl font-bold">💧 Milliliters ↔ Fluid Ounces</h1>
+    <p class="text-base mt-2">Convert between milliliters (mL) and U.S. fluid ounces (fl oz) for recipes, hydration, and portioning.</p>
+  </header>
+
+  <!-- Seasonal Tip -->
+  <div class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-100 text-sm p-4 text-center">
+    <p><strong>💡 Seasonal Tip:</strong> Staying hydrated in summer? Use this converter to track water intake in milliliters and ounces.</p>
+  </div>
+
+  <!-- Tool -->
+  <div class="max-w-3xl mx-auto bg-white dark:bg-gray-900 shadow-md p-6 border-b border-gray-200 dark:border-gray-700">
+    <div class="flex items-center justify-between mb-4">
+      <p id="modeLabel" class="text-lg font-medium text-gray-800 dark:text-gray-200">Convert Milliliters to Fluid Ounces</p>
+      <button id="switchBtn" class="bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded text-sm">🔁 Switch</button>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
+      <div>
+        <label id="inputLabel" for="inputValue" class="block text-base font-semibold">Milliliters</label>
+        <input id="inputValue" type="number" step="any" class="mt-2 w-full rounded-lg border p-3 text-lg dark:bg-gray-800 dark:border-gray-700" />
+      </div>
+      <div>
+        <label id="outputLabel" for="outputValue" class="block text-base font-semibold">Fluid Ounces</label>
+        <input id="outputValue" type="number" disabled class="mt-2 w-full rounded-lg border p-3 text-lg bg-gray-100 dark:bg-gray-800 dark:border-gray-700 text-gray-500 dark:text-gray-300" />
+      </div>
+    </div>
+
+    <p id="helperText" class="text-sm text-gray-600 dark:text-gray-400">1 mL = 0.033814 U.S. fluid ounces</p>
+    <p id="resultDisplay" class="text-3xl mt-6 font-bold text-center text-purple-700 dark:text-purple-300">—</p>
+  </div>
+
+  <!-- Explanation -->
+  <section class="max-w-3xl mx-auto p-6 text-base space-y-6">
+    <h2 class="text-xl font-semibold">How to Convert Milliliters and Ounces</h2>
+    <ul class="list-disc list-inside text-gray-800 dark:text-gray-200">
+      <li>To convert milliliters to ounces, multiply the mL by <code>0.033814</code>.</li>
+      <li>To convert ounces to milliliters, multiply the fl oz by <code>29.5735</code>.</li>
+    </ul>
+
+    <h2 class="text-xl font-semibold">Common Conversions</h2>
+    <ul id="examplesList" class="list-disc list-inside text-gray-800 dark:text-gray-200">
+      <li>50 mL = 1.69 fl oz</li>
+      <li>100 mL = 3.38 fl oz</li>
+      <li>150 mL = 5.07 fl oz</li>
+      <li>200 mL = 6.76 fl oz</li>
+      <li>250 mL = 8.45 fl oz</li>
+      <li>1 fl oz = 29.57 mL</li>
+      <li>2 fl oz = 59.15 mL</li>
+      <li>3 fl oz = 88.72 mL</li>
+      <li>4 fl oz = 118.29 mL</li>
+      <li>5 fl oz = 147.87 mL</li>
+    </ul>
+  </section>
+
+  <!-- FAQ -->
+  <section class="max-w-3xl mx-auto p-6 mt-8 text-base">
+    <h2 class="text-2xl font-bold mb-4 text-purple-700">Frequently Asked Questions</h2>
+    <div class="space-y-4">
+      <div><strong>How many mL in a U.S. fluid ounce?</strong><br />About 29.5735 milliliters per fluid ounce.</div>
+      <div><strong>Is the UK fluid ounce different?</strong><br />Yes, the UK fluid ounce is 28.41 mL. This converter uses U.S. measurements.</div>
+      <div><strong>Why do recipes list both mL and fl oz?</strong><br />To accommodate different regional standards — mL is common internationally, fl oz is U.S. customary.</div>
+      <div><strong>Can I use this for water and other liquids?</strong><br />Yes. Milliliters and ounces measure volume regardless of the liquid.</div>
+    </div>
+  </section>
+
+  <!-- Learn More -->
+  <section class="max-w-3xl mx-auto p-6 mt-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-base leading-relaxed text-gray-800 dark:text-gray-200">
+    <h2 class="text-2xl font-bold mb-4 text-purple-600">Learn More About Milliliters & Fluid Ounces</h2>
+    <p><strong>Milliliter (mL)</strong> — A metric unit of volume commonly used for beverages, liquid medicine, and nutrition labels. 1 mL = 1/1000 of a liter.</p>
+    <p><strong>Fluid Ounce (fl oz)</strong> — A U.S. customary volume unit used for liquids. 1 fl oz = approx. 29.5735 mL.</p>
+    <p><strong>Use in Recipes:</strong> Many U.S. cookbooks and bottles use fl oz. International sources use mL — this tool helps bridge both.</p>
+    <p><strong>Metric vs U.S.:</strong> Always verify the measurement system (U.K. vs U.S.) — this converter is for U.S. fluid ounces only.</p>
+  </section>
+
+  <!-- Script -->
+  <script is:inline>
+    const input = document.getElementById('inputValue');
+    const output = document.getElementById('outputValue');
+    const result = document.getElementById('resultDisplay');
+    const switchBtn = document.getElementById('switchBtn');
+
+    const inputLabel = document.getElementById('inputLabel');
+    const outputLabel = document.getElementById('outputLabel');
+    const modeLabel = document.getElementById('modeLabel');
+    const helperText = document.getElementById('helperText');
+    const examplesList = document.getElementById('examplesList');
+
+    let mode = 'mlToOz';
+
+    const updateConversion = () => {
+      const val = parseFloat(input.value);
+      if (isNaN(val)) {
+        output.value = '';
+        result.textContent = '—';
+        return;
+      }
+
+      let converted;
+      if (mode === 'mlToOz') {
+        converted = (val * 0.033814).toFixed(4);
+        result.textContent = `${val} mL = ${converted} fl oz`;
+      } else {
+        converted = (val * 29.5735).toFixed(4);
+        result.textContent = `${val} fl oz = ${converted} mL`;
+      }
+      output.value = converted;
+    };
+
+    input.addEventListener('input', updateConversion);
+
+    switchBtn.addEventListener('click', () => {
+      mode = mode === 'mlToOz' ? 'ozToMl' : 'mlToOz';
+
+      if (mode === 'mlToOz') {
+        inputLabel.textContent = 'Milliliters';
+        outputLabel.textContent = 'Fluid Ounces';
+        modeLabel.textContent = 'Convert Milliliters to Fluid Ounces';
+        helperText.textContent = '1 mL = 0.033814 U.S. fluid ounces';
+        examplesList.innerHTML = `
+          <li>50 mL = 1.69 fl oz</li>
+          <li>100 mL = 3.38 fl oz</li>
+          <li>150 mL = 5.07 fl oz</li>
+          <li>200 mL = 6.76 fl oz</li>
+          <li>250 mL = 8.45 fl oz</li>
+          <li>1 fl oz = 29.57 mL</li>
+          <li>2 fl oz = 59.15 mL</li>
+          <li>3 fl oz = 88.72 mL</li>
+          <li>4 fl oz = 118.29 mL</li>
+          <li>5 fl oz = 147.87 mL</li>`;
+      } else {
+        inputLabel.textContent = 'Fluid Ounces';
+        outputLabel.textContent = 'Milliliters';
+        modeLabel.textContent = 'Convert Fluid Ounces to Milliliters';
+        helperText.textContent = '1 fl oz = 29.5735 milliliters';
+        examplesList.innerHTML = `
+          <li>1 fl oz = 29.57 mL</li>
+          <li>2 fl oz = 59.15 mL</li>
+          <li>3 fl oz = 88.72 mL</li>
+          <li>4 fl oz = 118.29 mL</li>
+          <li>5 fl oz = 147.87 mL</li>
+          <li>50 mL = 1.69 fl oz</li>
+          <li>100 mL = 3.38 fl oz</li>
+          <li>150 mL = 5.07 fl oz</li>
+          <li>200 mL = 6.76 fl oz</li>
+          <li>250 mL = 8.45 fl oz</li>`;
+      }
+
+      input.value = '';
+      output.value = '';
+      result.textContent = '—';
+    });
+  </script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many mL in a fluid ounce?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "There are approximately 29.5735 milliliters in one U.S. fluid ounce."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a UK fluid ounce different?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, a UK fluid ounce equals 28.41 mL. This tool converts using U.S. fluid ounces."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use this for beverages?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely. You can use this tool to convert water, milk, juice, or any liquid between ounces and mL."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do some recipes use both units?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Different countries use different units — U.S. uses fl oz while most others use mL. This converter helps with both."
+          }
+        }
+      ]
+    }
+  </script>
+</Layout>
+
+
+
+

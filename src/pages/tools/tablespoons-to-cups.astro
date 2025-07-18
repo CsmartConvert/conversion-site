@@ -1,0 +1,118 @@
+---
+export const prerender = false;
+import Layout from '../../layouts/Layout.astro';
+
+
+let result = null;
+let direction = 'tbsp-to-cups';
+
+if (Astro.request.method === 'POST') {
+  const contentType = Astro.request.headers.get('content-type') || '';
+  if (
+    contentType.includes('application/x-www-form-urlencoded') ||
+    contentType.includes('multipart/form-data')
+  ) {
+    const data = await Astro.request.formData();
+    direction = data.get('direction') || 'tbsp-to-cups';
+    const input = parseFloat(data.get('inputValue')) || 0;
+
+    result =
+      direction === 'tbsp-to-cups'
+        ? input / 16
+        : input * 16;
+  }
+}
+---
+
+<Layout>
+  <!-- 🌟 Header -->
+  <section class="w-full bg-gradient-to-r from-purple-600 to-purple-800 text-white py-6 px-4 md:py-8 mb-8 shadow text-center rounded-md max-w-3xl mx-auto">
+    <h1 class="text-3xl font-bold mb-2">🥄 Tablespoons to Cups Converter</h1>
+    <p class="text-base">Quickly convert between tablespoons and cups for any recipe or measurement need.</p>
+  </section>
+
+  <!-- 💡 Seasonal Tip -->
+  <div class="bg-purple-50 border-l-4 border-purple-400 p-4 mb-6 max-w-3xl mx-auto">
+    <p class="text-purple-700">
+      <strong>💡 Tip:</strong> 16 tablespoons = 1 cup. Great for scaling recipes up or down!
+    </p>
+  </div>
+
+  <!-- 🔢 Converter Form -->
+  <section class="bg-white border border-gray-200 p-6 rounded-lg shadow max-w-2xl mx-auto mb-10">
+    <form method="POST" enctype="application/x-www-form-urlencoded" class="space-y-6">
+      <div>
+        <label for="inputValue" class="block font-medium text-gray-800">
+          {direction === 'tbsp-to-cups' ? 'Tablespoons:' : 'Cups:'}
+        </label>
+        <input
+          type="number"
+          step="any"
+          name="inputValue"
+          id="inputValue"
+          class="w-full p-2 border rounded"
+          required
+        />
+      </div>
+
+      <input type="hidden" name="direction" value={direction} />
+
+      <div class="flex justify-between items-center">
+        <button type="submit" class="bg-purple-700 hover:bg-purple-800 text-white py-2 px-4 rounded font-semibold w-full">
+          Convert
+        </button>
+        <button
+          type="submit"
+          name="direction"
+          value={direction === 'tbsp-to-cups' ? 'cups-to-tbsp' : 'tbsp-to-cups'}
+          class="ml-4 text-sm text-purple-700 underline"
+        >
+          🔁 Switch to {direction === 'tbsp-to-cups' ? 'Cups ➜ Tablespoons' : 'Tablespoons ➜ Cups'}
+        </button>
+      </div>
+    </form>
+
+    {result !== null && (
+      <div class="mt-6 bg-green-50 border border-green-300 text-green-800 font-semibold p-4 rounded text-center">
+        {direction === 'tbsp-to-cups'
+          ? `${(result).toFixed(4)} cups`
+          : `${(result).toFixed(2)} tablespoons`}
+      </div>
+    )}
+  </section>
+
+  <!-- 📘 Why This Matters + Pro Tips -->
+  <section class="max-w-3xl mx-auto px-6 mt-6 mb-8">
+    <h2 class="text-xl font-semibold mb-4 text-gray-800">Why This Matters</h2>
+    <p class="text-gray-700 mb-4">
+      Cooking often requires flexible measurements, especially when scaling recipes. Knowing how many tablespoons are in a cup ensures accuracy without hunting for another measuring tool.
+    </p>
+
+    <h3 class="text-lg font-semibold mb-2 text-gray-800">Pro Tips</h3>
+    <ul class="list-disc list-inside text-gray-700 space-y-1">
+      <li>Use level tablespoons for the most accurate results.</li>
+      <li>When halving a recipe, remember 8 tablespoons = 0.5 cup.</li>
+      <li>Keep a tablespoon-to-cup chart near your baking station for quick reference.</li>
+    </ul>
+  </section>
+</Layout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

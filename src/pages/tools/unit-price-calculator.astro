@@ -1,0 +1,98 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const title = "Unit Price Calculator";
+
+let totalCost = "";
+let quantity = "";
+let unitPrice = null;
+
+// ✅ Server-side POST guard for SSR
+if (
+  Astro.request?.method === 'POST' &&
+  Astro.request.headers.get('content-type')?.includes('application/x-www-form-urlencoded')
+) {
+  const form = await Astro.request.formData();
+
+  totalCost = form.get('totalCost') || "";
+  quantity = form.get('quantity') || "";
+
+  const cost = parseFloat(totalCost);
+  const qty = parseFloat(quantity);
+
+  if (!isNaN(cost) && !isNaN(qty) && qty > 0) {
+    unitPrice = cost / qty;
+  }
+}
+---
+
+<Layout>
+  <!-- 📦 Header -->
+  <section class="max-w-3xl mx-auto bg-gradient-to-r from-blue-600 to-blue-800 text-white py-6 px-4 md:py-8 mb-8 shadow text-center rounded-md">
+    <h1 class="text-3xl font-bold mb-2">📦 {title}</h1>
+    <p class="text-base">Find the cost per unit of any item to compare prices and get the best deal.</p>
+  </section>
+
+  <!-- 💡 Tip -->
+  <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 max-w-3xl mx-auto">
+    <p class="text-blue-700"><strong>💡 Tip:</strong> Unit price helps you compare similar products in different sizes — essential for budget shopping.</p>
+  </div>
+
+  <!-- 🔢 Form -->
+  <section class="bg-white border border-gray-200 p-6 rounded-lg shadow max-w-2xl mx-auto mb-10">
+    <form method="POST" enctype="application/x-www-form-urlencoded" class="space-y-6">
+      <div>
+        <label for="totalCost" class="block font-medium text-gray-800">Total Cost ($):</label>
+        <input
+          type="number"
+          step="any"
+          name="totalCost"
+          id="totalCost"
+          class="w-full p-2 border rounded"
+          value={totalCost}
+          required
+        />
+      </div>
+
+      <div>
+        <label for="quantity" class="block font-medium text-gray-800">Quantity or Size (e.g. oz, kg, items):</label>
+        <input
+          type="number"
+          step="any"
+          name="quantity"
+          id="quantity"
+          class="w-full p-2 border rounded"
+          value={quantity}
+          required
+        />
+      </div>
+
+      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded font-semibold w-full">
+        Calculate Unit Price
+      </button>
+    </form>
+
+    {unitPrice !== null && (
+      <div class="mt-6 bg-green-50 border border-green-300 text-green-800 font-semibold p-4 rounded text-center">
+        Unit Price: ${unitPrice.toFixed(4)} per unit
+      </div>
+    )}
+  </section>
+
+  <!-- 📘 Why This Matters + Pro Tips -->
+  <section class="max-w-3xl mx-auto px-6 mt-6 mb-8">
+    <h2 class="text-xl font-semibold mb-4 text-gray-800">Why This Matters</h2>
+    <p class="text-gray-700 mb-4">
+      Unit pricing is one of the best tools for saving money at the store. It removes the confusion of differently sized packages so you can easily compare true value.
+    </p>
+
+    <h3 class="text-lg font-semibold mb-2 text-gray-800">Pro Tips</h3>
+    <ul class="list-disc list-inside text-gray-700 space-y-1">
+      <li>Look for unit price labels on shelves, especially in grocery stores.</li>
+      <li>Use this calculator for both weight-based items (like produce) and count-based items (like packs of batteries).</li>
+      <li>Don’t assume bigger is always better — unit pricing tells the real story.</li>
+    </ul>
+  </section>
+</Layout>
+
+

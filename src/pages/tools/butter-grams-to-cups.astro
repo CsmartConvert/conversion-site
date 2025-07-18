@@ -1,0 +1,79 @@
+---
+import Layout from '../../layouts/ConverterLayout.astro';
+const pageTitle = 'Butter Grams to Cups Converter';
+const pageDesc = 'Convert grams of butter to cups easily with this smart cooking calculator.';
+const path = '/tools/butter-grams-to-cups';
+---
+
+<Layout title={pageTitle} description={pageDesc} path={path}>
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-blue-500 to-indigo-700 text-white p-6 rounded-t-xl shadow">
+    <h1 class="text-3xl font-bold">🧈 Butter Grams to Cups</h1>
+    <p class="text-base mt-2">Select butter type and convert grams to cups quickly for accurate baking results.</p>
+  </header>
+
+  <!-- Seasonal Tip -->
+  <div class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 text-sm p-4 text-center">
+    <p><strong>💡 Baking Tip:</strong> Butter density varies—choose the right type (salted, unsalted, whipped) for consistent flavor and texture.</p>
+  </div>
+
+  <!-- Converter Tool -->
+  <div class="max-w-3xl mx-auto bg-white dark:bg-gray-900 shadow-md p-6 border-b border-gray-200 dark:border-gray-700">
+    <div class="mb-4">
+      <label for="butterType" class="block text-base font-semibold mb-1">Butter Type</label>
+      <select id="butterType" class="w-full rounded border p-2 dark:bg-gray-800 dark:text-white">
+        <option value="227">Unsalted Butter</option>
+        <option value="227">Salted Butter</option>
+        <option value="210">Whipped Butter</option>
+      </select>
+    </div>
+
+    <div class="mb-4">
+      <label for="gramsInput" class="block text-base font-semibold">Grams</label>
+      <input id="gramsInput" type="number" step="any" class="mt-1 w-full rounded-lg border p-3 text-lg dark:bg-gray-800 dark:border-gray-700" />
+    </div>
+
+    <div class="mb-4">
+      <label for="cupsOutput" class="block text-base font-semibold">Cups</label>
+      <input id="cupsOutput" type="text" disabled class="mt-1 w-full rounded-lg border p-3 text-lg bg-gray-100 dark:bg-gray-800 dark:text-gray-300" />
+    </div>
+
+    <p id="resultDisplay" class="text-2xl mt-6 font-bold text-center text-blue-700 dark:text-blue-300">—</p>
+  </div>
+
+  <!-- Learn More Section -->
+  <section class="max-w-3xl mx-auto p-6 text-base space-y-4">
+    <h2 class="text-xl font-bold text-blue-600">Learn More About Butter Measurement</h2>
+    <p><strong>Butter</strong> is a common ingredient in both cooking and baking. It’s important to measure it by weight for precision, especially when baking.</p>
+    <p>Different types of butter have slightly different densities. For example, whipped butter contains more air, so it weighs less per cup than regular butter.</p>
+    <p><strong>General rule:</strong> 1 cup of regular butter (salted or unsalted) = 227 grams. Whipped butter is lighter at about 210 grams per cup.</p>
+    <p>Use this converter to ensure your recipe turns out just right—no matter what kind of butter you have!</p>
+  </section>
+
+  <footer class="text-center text-sm text-gray-500 py-6">
+    &copy; 2025 Smart Converter. All rights reserved.
+  </footer>
+
+  <script is:inline>
+    const gramsInput = document.getElementById('gramsInput');
+    const cupsOutput = document.getElementById('cupsOutput');
+    const resultDisplay = document.getElementById('resultDisplay');
+    const butterType = document.getElementById('butterType');
+
+    function convertButter() {
+      const grams = parseFloat(gramsInput.value);
+      const gramsPerCup = parseFloat(butterType.value);
+      if (isNaN(grams)) {
+        cupsOutput.value = '';
+        resultDisplay.textContent = '—';
+        return;
+      }
+      const cups = grams / gramsPerCup;
+      cupsOutput.value = cups.toFixed(4);
+      resultDisplay.textContent = `${grams} grams = ${cups.toFixed(4)} cups`;
+    }
+
+    gramsInput.addEventListener('input', convertButter);
+    butterType.addEventListener('change', convertButter);
+  </script>
+</Layout>

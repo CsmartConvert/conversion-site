@@ -1,0 +1,215 @@
+---
+import Layout from '../../layouts/ConverterLayout.astro';
+const pageTitle = 'Ounces to Cups Converter';
+const pageDesc = 'Easily convert ounces to cups and vice versa for accurate cooking and baking. Includes switch mode, examples, tips, and FAQs.';
+const path = '/tools/ounces-to-cups';
+---
+
+<Layout title={pageTitle} description={pageDesc} path={path}>
+  <!-- Header Section -->
+  <header class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6 rounded-t-xl shadow">
+    <h1 class="text-3xl font-bold">🧪 Ounces ↔ Cups</h1>
+    <p class="text-base mt-2">Convert ounces to cups instantly with our flexible cooking and baking tool.</p>
+  </header>
+
+  <!-- Seasonal Tip -->
+  <div class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-100 text-sm p-4 text-center">
+    <p><strong>💡 Seasonal Tip:</strong> Summer smoothies and cold drinks often use ounces—convert quickly for accurate hydration!</p>
+  </div>
+
+  <!-- Tool Container -->
+  <div class="max-w-3xl mx-auto bg-white dark:bg-gray-900 shadow-md p-6 border-b border-gray-200 dark:border-gray-700">
+    <!-- Conversion Mode Switcher -->
+    <div class="flex items-center justify-between mb-4">
+      <p id="modeLabel" class="text-lg font-medium text-gray-800 dark:text-gray-200">Convert Ounces to Cups</p>
+      <button id="switchBtn" class="bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded text-sm">🔁 Switch</button>
+    </div>
+
+    <!-- Input Fields -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
+      <div>
+        <label id="inputLabel" for="inputValue" class="block text-base font-semibold">Ounces</label>
+        <input id="inputValue" type="number" step="any" class="mt-2 w-full rounded-lg border p-3 text-lg dark:bg-gray-800 dark:border-gray-700" />
+      </div>
+      <div>
+        <label id="outputLabel" for="outputValue" class="block text-base font-semibold">Cups</label>
+        <input id="outputValue" type="number" step="any" disabled class="mt-2 w-full rounded-lg border p-3 text-lg bg-gray-100 dark:bg-gray-800 dark:border-gray-700 text-gray-500 dark:text-gray-300" />
+      </div>
+    </div>
+
+    <!-- Conversion Explanation -->
+    <p id="helperText" class="text-sm text-gray-600 dark:text-gray-400">1 cup = 8 fluid ounces</p>
+    <p id="resultDisplay" class="text-3xl mt-6 font-bold text-center text-purple-700 dark:text-purple-300">—</p>
+  </div>
+
+  <!-- Instructions + Examples -->
+  <section class="max-w-3xl mx-auto p-6 space-y-6 text-base">
+    <h2 class="text-xl font-semibold">How to Convert Ounces and Cups</h2>
+    <ul class="list-disc list-inside text-gray-800 dark:text-gray-200">
+      <li>To convert ounces to cups, divide the number of ounces by 8.</li>
+      <li>To convert cups to ounces, multiply the number of cups by 8.</li>
+    </ul>
+
+    <h2 class="text-xl font-semibold mt-4">Common Conversions</h2>
+    <ul id="examplesList" class="list-disc list-inside text-gray-800 dark:text-gray-200">
+      <li>1 oz = 0.125 cups</li>
+      <li>2 oz = 0.25 cups</li>
+      <li>4 oz = 0.5 cups</li>
+      <li>6 oz = 0.75 cups</li>
+      <li>8 oz = 1 cup</li>
+      <li>12 oz = 1.5 cups</li>
+      <li>16 oz = 2 cups</li>
+      <li>24 oz = 3 cups</li>
+      <li>32 oz = 4 cups</li>
+      <li>40 oz = 5 cups</li>
+    </ul>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="max-w-3xl mx-auto p-6 mt-8 text-base">
+    <h2 class="text-2xl font-bold mb-4 text-purple-700">Frequently Asked Questions</h2>
+    <div class="space-y-4">
+      <div><strong>How many ounces in a cup?</strong><br />There are 8 fluid ounces in 1 U.S. cup.</div>
+      <div><strong>Is 1 cup the same for dry and liquid?</strong><br />Not always. Fluid ounces measure volume. Dry ounces measure weight. Use volume for liquids and weight for solids.</div>
+      <div><strong>Can I use a regular drinking cup to measure?</strong><br />No. Use a standardized measuring cup for accurate results in recipes.</div>
+      <div><strong>Is 1 oz always 1/8 cup?</strong><br />Yes, for fluid ounces. But for dry ounces, the conversion depends on the ingredient's density.</div>
+      <div><strong>What tools are best for converting ounces to cups?</strong><br />Use our calculator or measuring tools designed for wet or dry ingredients.</div>
+    </div>
+  </section>
+
+  <!-- Learn More -->
+  <section class="max-w-3xl mx-auto p-6 mt-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-base leading-relaxed text-gray-800 dark:text-gray-200">
+    <h2 class="text-2xl font-bold mb-4 text-purple-600">Learn More About Ounces & Cups</h2>
+
+    <p><strong>Fluid Ounce (fl oz)</strong> — A unit of liquid volume in the U.S. customary system. 1 fluid ounce = ~29.5735 mL.</p>
+
+    <p><strong>U.S. Cup</strong> — Common kitchen measure. 1 U.S. cup = 8 fluid ounces = ~236.588 mL.</p>
+
+    <p><strong>Dry vs Liquid:</strong> Don’t confuse dry and liquid measurements. Always use proper tools for the ingredient type.</p>
+
+    <p><strong>Fun Fact:</strong> The term “cup” comes from ancient measuring vessels used for grain and wine!</p>
+  </section>
+
+  <!-- Script -->
+  <script is:inline>
+    const input = document.getElementById('inputValue');
+    const output = document.getElementById('outputValue');
+    const result = document.getElementById('resultDisplay');
+    const switchBtn = document.getElementById('switchBtn');
+
+    const inputLabel = document.getElementById('inputLabel');
+    const outputLabel = document.getElementById('outputLabel');
+    const modeLabel = document.getElementById('modeLabel');
+    const helperText = document.getElementById('helperText');
+    const examplesList = document.getElementById('examplesList');
+
+    let mode = 'ozToCups';
+
+    const updateConversion = () => {
+      const val = parseFloat(input.value);
+      if (isNaN(val)) {
+        output.value = '';
+        result.textContent = '—';
+        return;
+      }
+      let converted;
+      if (mode === 'ozToCups') {
+        converted = (val / 8).toFixed(4);
+        result.textContent = `${val} oz = ${converted} cups`;
+      } else {
+        converted = (val * 8).toFixed(4);
+        result.textContent = `${val} cups = ${converted} oz`;
+      }
+      output.value = converted;
+    };
+
+    input.addEventListener('input', updateConversion);
+
+    switchBtn.addEventListener('click', () => {
+      mode = mode === 'ozToCups' ? 'cupsToOz' : 'ozToCups';
+
+      if (mode === 'ozToCups') {
+        inputLabel.textContent = 'Ounces';
+        outputLabel.textContent = 'Cups';
+        modeLabel.textContent = 'Convert Ounces to Cups';
+        helperText.textContent = '1 cup = 8 fluid ounces';
+        examplesList.innerHTML = `
+          <li>1 oz = 0.125 cups</li>
+          <li>2 oz = 0.25 cups</li>
+          <li>4 oz = 0.5 cups</li>
+          <li>6 oz = 0.75 cups</li>
+          <li>8 oz = 1 cup</li>
+          <li>12 oz = 1.5 cups</li>
+          <li>16 oz = 2 cups</li>
+          <li>24 oz = 3 cups</li>
+          <li>32 oz = 4 cups</li>
+          <li>40 oz = 5 cups</li>`;
+      } else {
+        inputLabel.textContent = 'Cups';
+        outputLabel.textContent = 'Ounces';
+        modeLabel.textContent = 'Convert Cups to Ounces';
+        helperText.textContent = '1 cup = 8 fluid ounces';
+        examplesList.innerHTML = `
+          <li>0.25 cups = 2 oz</li>
+          <li>0.5 cups = 4 oz</li>
+          <li>0.75 cups = 6 oz</li>
+          <li>1 cup = 8 oz</li>
+          <li>1.5 cups = 12 oz</li>
+          <li>2 cups = 16 oz</li>
+          <li>3 cups = 24 oz</li>
+          <li>4 cups = 32 oz</li>
+          <li>5 cups = 40 oz</li>
+          <li>6 cups = 48 oz</li>`;
+      }
+
+      input.value = '';
+      output.value = '';
+      result.textContent = '—';
+    });
+  </script>
+
+  <!-- FAQ Structured Data -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many ounces in a cup?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "There are 8 fluid ounces in 1 U.S. cup."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is 1 cup the same for dry and liquid?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Fluid ounces measure volume, dry ounces measure weight. Use the correct measurement tool."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use a regular cup to measure ingredients?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. A standard drinking cup is not a reliable measuring tool for recipes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What's the best tool to convert ounces to cups?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our calculator and standard kitchen measuring cups are both reliable for conversions."
+          }
+        }
+      ]
+    }
+  </script>
+</Layout>
+
+
+

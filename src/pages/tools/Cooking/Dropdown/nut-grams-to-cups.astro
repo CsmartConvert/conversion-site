@@ -1,0 +1,181 @@
+---
+const pageTitle = 'Nut Grams to Cups Converter';
+const pageDesc = 'Convert nut weights from grams to cups with options for almonds, walnuts, peanuts, and cashews.';
+const path = '/tools/cooking/dropdown/nut-grams-to-cups';
+
+const ingredientOptions = [
+  { name: 'Almonds (whole)', ratio: 0.0067 },
+  { name: 'Walnuts (chopped)', ratio: 0.0075 },
+  { name: 'Peanuts (dry roasted)', ratio: 0.0069 },
+  { name: 'Cashews (whole)', ratio: 0.0068 },
+];
+
+let mode = 'gramsToCups';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{pageTitle} | Smart Converter</title>
+    <meta name="description" content={pageDesc} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100">
+    <main class="max-w-3xl mx-auto px-4 py-8 space-y-8">
+
+      <!-- Header -->
+      <header class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6 rounded-t-xl shadow">
+        <h1 class="text-3xl font-bold">Nut Grams ↔ Cups Converter</h1>
+        <p class="text-base mt-2">Convert nut weights from grams to cups with ingredient selection.</p>
+      </header>
+
+      <!-- Seasonal Tip -->
+      <div class="mt-6 mb-4 bg-purple-100 dark:bg-purple-800 text-purple-900 dark:text-purple-100 p-4 text-sm rounded text-center">
+        🥜 <strong>Seasonal Tip:</strong> Use this for trail mixes, baking, or snack prep!
+      </div>
+
+      <!-- Converter -->
+      <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow p-6 space-y-4">
+        <div>
+          <label for="ingredient" class="block font-semibold mb-1">Nut Type</label>
+          <select id="ingredient" class="w-full p-2 rounded border dark:bg-gray-900 dark:border-gray-600">
+            {ingredientOptions.map((item, i) => (
+              <option value={i}>{item.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <p id="modeLabel" class="text-lg font-medium">Convert Grams to Cups</p>
+          <button id="switchBtn" class="bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded text-sm">🔁 Switch</button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label id="inputLabel" for="inputValue" class="block mb-1 font-medium">Grams</label>
+            <input id="inputValue" type="number" step="any" class="w-full p-3 rounded border text-lg dark:bg-gray-900 dark:border-gray-700" />
+          </div>
+          <div>
+            <label id="outputLabel" for="outputValue" class="block mb-1 font-medium">Cups</label>
+            <input id="outputValue" type="text" disabled class="w-full p-3 rounded border bg-gray-100 text-gray-500 text-lg dark:bg-gray-800 dark:border-gray-700" />
+          </div>
+        </div>
+
+        <p id="resultDisplay" class="text-2xl font-bold text-purple-700 text-center mt-4">—</p>
+      </div>
+
+      <!-- Conversion Table -->
+      <section class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4">Common Conversions</h2>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+          <li>50g Almonds ≈ 0.335 cups</li>
+          <li>60g Walnuts ≈ 0.45 cups</li>
+          <li>40g Peanuts ≈ 0.276 cups</li>
+          <li>70g Cashews ≈ 0.476 cups</li>
+        </ul>
+      </section>
+
+      <!-- Learn More -->
+      <section class="prose dark:prose-invert">
+        <h2>Nut Densities Vary</h2>
+        <p>Different nuts have different sizes, shapes, and oil contents — all of which affect their density in cups. Whole nuts are less dense per cup than chopped or crushed ones.</p>
+
+        <h2>Tips for Best Accuracy</h2>
+        <ul>
+          <li>Use whole, dry nuts unless otherwise stated.</li>
+          <li>Chopped nuts settle more densely in measuring cups.</li>
+          <li>For recipes, weigh if possible for better results.</li>
+        </ul>
+      </section>
+
+      <!-- FAQs -->
+      <section class="prose dark:prose-invert">
+        <h2>FAQs</h2>
+
+        <h3>Can I use this for nut butter?</h3>
+        <p>No, nut butters are much denser and require separate volume measurements.</p>
+
+        <h3>Are the values the same for salted or roasted nuts?</h3>
+        <p>Slightly. Roasted nuts can be lighter due to moisture loss, but these values are close estimates.</p>
+      </section>
+
+      <!-- Structured Data -->
+      <script type="application/ld+json" is:inline>
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Nut Grams to Cups Converter",
+          "description": "Convert nut weights from grams to cups with options for almonds, walnuts, peanuts, and cashews.",
+          "url": "https://yourdomain.com/tools/cooking/dropdown/nut-grams-to-cups"
+        }
+      </script>
+    </main>
+
+    <script is:inline>
+      const input = document.getElementById('inputValue');
+      const output = document.getElementById('outputValue');
+      const resultDisplay = document.getElementById('resultDisplay');
+      const switchBtn = document.getElementById('switchBtn');
+      const ingredientSelect = document.getElementById('ingredient');
+
+      const inputLabel = document.getElementById('inputLabel');
+      const outputLabel = document.getElementById('outputLabel');
+      const modeLabel = document.getElementById('modeLabel');
+
+      const ingredientRatios = [
+        { name: 'Almonds (whole)', ratio: 0.0067 },
+        { name: 'Walnuts (chopped)', ratio: 0.0075 },
+        { name: 'Peanuts (dry roasted)', ratio: 0.0069 },
+        { name: 'Cashews (whole)', ratio: 0.0068 },
+      ];
+
+      let currentRatio = ingredientRatios[0].ratio;
+      let mode = 'gramsToCups';
+
+      const convert = () => {
+        const val = parseFloat(input.value);
+        if (isNaN(val)) {
+          output.value = '';
+          resultDisplay.textContent = '—';
+          return;
+        }
+
+        let result = mode === 'gramsToCups'
+          ? val * currentRatio
+          : val / currentRatio;
+
+        const fromUnit = mode === 'gramsToCups' ? 'g' : 'cups';
+        const toUnit = mode === 'gramsToCups' ? 'cups' : 'g';
+
+        output.value = result.toFixed(4);
+        resultDisplay.textContent = `${val} ${fromUnit} = ${result.toFixed(4)} ${toUnit}`;
+      };
+
+      input.addEventListener('input', convert);
+
+      switchBtn.addEventListener('click', () => {
+        mode = mode === 'gramsToCups' ? 'cupsToGrams' : 'gramsToCups';
+
+        if (mode === 'gramsToCups') {
+          inputLabel.textContent = 'Grams';
+          outputLabel.textContent = 'Cups';
+          modeLabel.textContent = 'Convert Grams to Cups';
+        } else {
+          inputLabel.textContent = 'Cups';
+          outputLabel.textContent = 'Grams';
+          modeLabel.textContent = 'Convert Cups to Grams';
+        }
+
+        input.value = '';
+        output.value = '';
+        resultDisplay.textContent = '—';
+      });
+
+      ingredientSelect.addEventListener('change', (e) => {
+        const idx = parseInt(e.target.value);
+        currentRatio = ingredientRatios[idx].ratio;
+        convert();
+      });
+    </script>
+  </body>
+</html>

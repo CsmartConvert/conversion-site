@@ -1,0 +1,74 @@
+---
+export const prerender = false;
+import Layout from '../../layouts/Layout.astro';
+
+let result = null;
+
+if (Astro.request.method === 'POST') {
+  const contentType = Astro.request.headers.get('content-type') || '';
+  if (
+    contentType.includes('application/x-www-form-urlencoded') ||
+    contentType.includes('multipart/form-data')
+  ) {
+    const data = await Astro.request.formData();
+    const price = parseFloat(data.get('price')) || 0;
+    const sheets = parseFloat(data.get('sheets')) || 1;
+    result = price / sheets;
+  }
+}
+---
+
+<Layout>
+  <!-- 🧻 Header -->
+  <section class="bg-gradient-to-r from-purple-600 to-purple-800 text-white py-6 px-4 md:py-8 mb-8 shadow text-center rounded-md max-w-3xl mx-auto">
+    <h1 class="text-3xl font-bold mb-2">🧻 Price Per Sheet Calculator</h1>
+    <p class="text-base">Figure out how much you’re really paying per sheet of toilet paper and compare brands easily.</p>
+  </section>
+
+  <!-- 💡 Tip Section -->
+  <div class="bg-purple-50 border-l-4 border-purple-400 p-4 mb-6 max-w-3xl mx-auto">
+    <p class="text-purple-700">
+      <strong>💡 Tip:</strong> Use this to compare pack sizes and make sure you're not overpaying for fancy packaging.
+    </p>
+  </div>
+
+  <!-- 🧮 Calculator Form -->
+  <section class="bg-white border border-gray-200 p-6 rounded-lg shadow max-w-2xl mx-auto mb-10">
+    <form method="POST" enctype="application/x-www-form-urlencoded" class="space-y-6">
+      <div>
+        <label for="price" class="block font-medium text-gray-800">Total Price ($):</label>
+        <input type="number" step="any" name="price" id="price" class="w-full p-2 border rounded" required />
+      </div>
+
+      <div>
+        <label for="sheets" class="block font-medium text-gray-800">Total Sheets:</label>
+        <input type="number" step="any" name="sheets" id="sheets" class="w-full p-2 border rounded" required />
+      </div>
+
+      <button type="submit" class="bg-purple-700 hover:bg-purple-800 text-white py-2 px-4 rounded font-semibold w-full">
+        Calculate
+      </button>
+    </form>
+
+    {result !== null && (
+      <div class="mt-6 bg-green-50 border border-green-300 text-green-800 font-semibold p-4 rounded text-center">
+        📄 Cost Per Sheet: ${result.toFixed(4)}
+      </div>
+    )}
+  </section>
+
+  <!-- 📘 Why This Matters + Pro Tips -->
+  <section class="max-w-3xl mx-auto px-6 mt-6 mb-8">
+    <h2 class="text-xl font-semibold mb-4 text-gray-800">Why This Matters</h2>
+    <p class="text-gray-700 mb-4">
+      Toilet paper is one of those household essentials where costs can add up without notice. Calculating cost per sheet lets you make smarter bulk-buying decisions and avoid being fooled by marketing.
+    </p>
+
+    <h3 class="text-lg font-semibold mb-2 text-gray-800">Pro Tips</h3>
+    <ul class="list-disc list-inside text-gray-700 space-y-1">
+      <li>Always check the number of sheets per roll—some brands use fewer sheets and thicker plies.</li>
+      <li>Compare per-sheet prices across sizes (12-pack vs 24-pack) to find the best deal.</li>
+      <li>This tool works great with coupons and warehouse deals too!</li>
+    </ul>
+  </section>
+</Layout>

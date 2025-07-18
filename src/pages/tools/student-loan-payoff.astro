@@ -1,0 +1,152 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import StudentLoanCharts from '../../components/StudentLoanCharts.jsx';
+
+const title = "Student Loan Payoff Calculator";
+
+let loanAmount = "";
+let monthlyPayment = "";
+let interestRate = "";
+
+let monthsToPayoff = null;
+let totalInterest = 0;
+let totalPayments = 0;
+let amortizationTable = [];
+
+let chartLabels = [];
+let chartBalances = [];
+let chartInterests = [];
+let chartPrincipals = [];
+
+if (
+  Astro.request?.method === 'POST' &&
+  Astro.request.headers.get('content-type')?.includes('application/x-www-form-urlencoded')
+) {
+  const form = await Astro.request.formData();
+  loanAmount = form.get('loanAmount') || "";
+  monthlyPayment = form.get('monthlyPayment') || "";
+  interestRate = form.get('interestRate') || "";
+
+  const principal = parseFloat(loanAmount);
+  const monthly = parseFloat(monthlyPayment);
+  const rate = parseFloat(interestRate) / 100 / 12;
+
+  if (!isNaN(principal) && !isNaN(monthly) && !isNaN(rate) && monthly > 0 && rate >= 0) {
+    let balance = principal;
+    let month = 0;
+
+    while (balance > 0 && month < 1000) {
+      const interest = balance * rate;
+      const principalPaid = Math.min(monthly - interest, balance);
+      balance -= principalPaid;
+
+      totalInterest += interest;
+      totalPayments += principalPaid + interest;
+
+      amortizationTable.push({
+        month: month + 1,
+        interest: interest.toFixed(2),
+        principal: principalPaid.toFixed(2),
+        remaining: balance > 0 ? balance.toFixed(2) : "0.00"
+      });
+
+      chartLabels.push(`Month ${month + 1}`);
+      chartBalances.push(balance.toFixed(2));
+      chartInterests.push(interest.toFixed(2));
+      chartPrincipals.push(principalPaid.toFixed(2));
+
+      month++;
+    }
+
+    monthsToPayoff = amortizationTable.length;
+  }
+}
+---
+
+<Layout>
+  <section class="max-w-3xl mx-auto bg-gradient-to-r from-blue-600 to-blue-800 text-white py-6 px-4 md:py-8 mb-8 shadow text-center rounded-md">
+    <h1 class="text-3xl font-bold mb-2">🎓 {title}</h1>
+    <p class="text-base">Calculate how long it will take to pay off your student loan and visualize your monthly progress.</p>
+  </section>
+
+  <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 max-w-3xl mx-auto">
+    <p class="text-blue-700"><strong>💡 Tip:</strong> Making extra payments reduces interest and shortens your loan term.</p>
+  </div>
+
+  <section class="bg-white border border-gray-200 p-6 rounded-lg shadow max-w-2xl mx-auto mb-10">
+    <form method="POST" enctype="application/x-www-form-urlencoded" class="space-y-6">
+      <div>
+        <label for="loanAmount" class="block font-medium text-gray-800">Total Loan Amount ($):</label>
+        <input type="number" step="any" name="loanAmount" id="loanAmount" class="w-full p-2 border rounded" value={loanAmount} required />
+      </div>
+
+      <div>
+        <label for="monthlyPayment" class="block font-medium text-gray-800">Monthly Payment ($):</label>
+        <input type="number" step="any" name="monthlyPayment" id="monthlyPayment" class="w-full p-2 border rounded" value={monthlyPayment} required />
+      </div>
+
+      <div>
+        <label for="interestRate" class="block font-medium text-gray-800">Annual Interest Rate (%):</label>
+        <input type="number" step="any" name="interestRate" id="interestRate" class="w-full p-2 border rounded" value={interestRate} required />
+      </div>
+
+      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded font-semibold w-full">
+        Calculate Payoff Time
+      </button>
+    </form>
+
+    {monthsToPayoff && (
+      <div class="mt-6 bg-green-50 border border-green-300 text-green-800 font-semibold p-4 rounded text-center">
+        Payoff Time: {Math.floor(monthsToPayoff / 12)} years and {monthsToPayoff % 12} months <br />
+        Total Payments: ${totalPayments.toFixed(2)} <br />
+        Total Interest Paid: ${totalInterest.toFixed(2)}
+      </div>
+    )}
+  </section>
+
+  {amortizationTable.length > 0 && (
+    <>
+      <section class="max-w-4xl mx-auto px-4 mb-12">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">📊 Visual Payoff Tracker</h2>
+        <StudentLoanCharts
+          client:load
+          labels={chartLabels}
+          balances={chartBalances}
+          interests={chartInterests}
+          principals={chartPrincipals}
+          principalTotal={(totalPayments - totalInterest).toFixed(2)}
+          interestTotal={totalInterest.toFixed(2)}
+        />
+
+        <h2 class="text-xl font-semibold mt-12 mb-4 text-gray-800">🗓️ Amortization Table</h2>
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm text-left border border-gray-300 rounded">
+            <thead class="bg-blue-100 text-blue-800 font-semibold">
+              <tr>
+                <th class="py-2 px-3 border-b">Month</th>
+                <th class="py-2 px-3 border-b">Interest Paid</th>
+                <th class="py-2 px-3 border-b">Principal Paid</th>
+                <th class="py-2 px-3 border-b">Remaining Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+              {amortizationTable.map(row => (
+                <tr>
+                  <td class="py-1 px-3 border-b">{row.month}</td>
+                  <td class="py-1 px-3 border-b">${row.interest}</td>
+                  <td class="py-1 px-3 border-b">${row.principal}</td>
+                  <td class="py-1 px-3 border-b">${row.remaining}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </>
+  )}
+</Layout>
+
+
+
+
+

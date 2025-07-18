@@ -1,0 +1,178 @@
+---
+const pageTitle = 'Butter Cups to Tablespoons Converter';
+const pageDesc = 'Convert butter from cups to tablespoons and vice versa with options for salted or unsalted.';
+const path = '/tools/cooking/dropdown/butter-cups-to-tablespoons';
+
+const ingredientOptions = [
+  { name: 'Salted Butter', ratio: 16 }, // 1 cup = 16 tbsp
+  { name: 'Unsalted Butter', ratio: 16 },
+];
+
+let mode = 'cupsToTablespoons';
+---
+<html lang="en">
+  <head>
+    <title>{pageTitle} | Smart Converter</title>
+    <meta charset="UTF-8" />
+    <meta name="description" content={pageDesc} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100">
+    <main class="max-w-3xl mx-auto px-4 py-8 space-y-8">
+      <!-- Header -->
+      <header class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6 rounded-t-xl shadow">
+        <h1 class="text-3xl font-bold">Butter ↔ Cups to Tablespoons Converter</h1>
+        <p class="text-base mt-2">Easily switch between cups and tablespoons for different butter types.</p>
+      </header>
+
+      <!-- Seasonal Tip -->
+      <div class="mt-6 mb-4 bg-purple-100 dark:bg-purple-800 text-purple-900 dark:text-purple-100 p-4 text-sm rounded text-center">
+        💡 <strong>Seasonal Tip:</strong> Perfect for adjusting butter measurements in baking recipes!
+      </div>
+
+      <!-- Converter -->
+      <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow p-6 space-y-4">
+        <div>
+          <label for="ingredient" class="block font-semibold mb-1">Butter Type</label>
+          <select id="ingredient" class="w-full p-2 rounded border dark:bg-gray-900 dark:border-gray-600">
+            {ingredientOptions.map((item, i) => (
+              <option value={i}>{item.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <p id="modeLabel" class="text-lg font-medium">Convert Cups to Tablespoons</p>
+          <button id="switchBtn" class="bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded text-sm">🔁 Switch</button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label id="inputLabel" for="inputValue" class="block mb-1 font-medium">Cups</label>
+            <input id="inputValue" type="number" step="any" class="w-full p-3 rounded border text-lg dark:bg-gray-900 dark:border-gray-700" />
+          </div>
+          <div>
+            <label id="outputLabel" for="outputValue" class="block mb-1 font-medium">Tablespoons</label>
+            <input id="outputValue" type="text" disabled class="w-full p-3 rounded border bg-gray-100 text-gray-500 text-lg dark:bg-gray-800 dark:border-gray-700" />
+          </div>
+        </div>
+
+        <p id="resultDisplay" class="text-2xl font-bold text-purple-700 text-center mt-4">—</p>
+      </div>
+
+      <!-- Conversion Table -->
+      <section class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4">Quick Reference</h2>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+          <li>1 cup Salted Butter ≈ 16 tbsp</li>
+          <li>½ cup Unsalted Butter ≈ 8 tbsp</li>
+          <li>¼ cup Butter ≈ 4 tbsp</li>
+          <li>2 tbsp Butter ≈ 0.125 cups</li>
+        </ul>
+      </section>
+
+      <!-- Learn More -->
+      <section class="prose dark:prose-invert">
+        <h2>Why Converting Butter Matters</h2>
+        <p>Many recipes use cups while others prefer tablespoons. This converter helps ensure precise butter measurements when scaling recipes or adapting to different formats.</p>
+
+        <h2>Tips for Accurate Butter Conversion</h2>
+        <ul>
+          <li>Use standard US cups and tablespoons for reliable results.</li>
+          <li>Stick to the same butter type—salted or unsalted—as flavor and density can slightly differ.</li>
+          <li>Pack butter tightly into measuring cups to avoid air pockets.</li>
+        </ul>
+      </section>
+
+      <!-- FAQs -->
+      <section class="prose dark:prose-invert">
+        <h2>FAQs</h2>
+
+        <h3>Does salted and unsalted butter convert the same?</h3>
+        <p>Yes, both types typically convert 1 cup = 16 tablespoons. Flavor is the key difference, not volume.</p>
+
+        <h3>What is 1 tablespoon of butter in cups?</h3>
+        <p>1 tbsp of butter is approximately 0.0625 cups.</p>
+
+        <h3>What’s the best way to measure butter?</h3>
+        <p>Use sticks or a scale for precision, but this converter helps when only volume measurements are available.</p>
+      </section>
+
+      <!-- Structured Data -->
+      <script type="application/ld+json" is:inline>
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Butter Cups to Tablespoons Converter",
+          "description": "Convert butter from cups to tablespoons and vice versa. Includes salted and unsalted butter options.",
+          "url": "https://yourdomain.com/tools/cooking/dropdown/butter-cups-to-tablespoons"
+        }
+      </script>
+    </main>
+
+    <script is:inline>
+      const input = document.getElementById('inputValue');
+      const output = document.getElementById('outputValue');
+      const resultDisplay = document.getElementById('resultDisplay');
+      const switchBtn = document.getElementById('switchBtn');
+      const ingredientSelect = document.getElementById('ingredient');
+
+      const inputLabel = document.getElementById('inputLabel');
+      const outputLabel = document.getElementById('outputLabel');
+      const modeLabel = document.getElementById('modeLabel');
+
+      const ingredientRatios = [
+        { name: 'Salted Butter', ratio: 16 },
+        { name: 'Unsalted Butter', ratio: 16 },
+      ];
+
+      let currentRatio = ingredientRatios[0].ratio;
+      let mode = 'cupsToTablespoons';
+
+      const convert = () => {
+        const val = parseFloat(input.value);
+        if (isNaN(val)) {
+          output.value = '';
+          resultDisplay.textContent = '—';
+          return;
+        }
+
+        let result = mode === 'cupsToTablespoons'
+          ? val * currentRatio
+          : val / currentRatio;
+
+        const fromUnit = mode === 'cupsToTablespoons' ? 'cups' : 'tbsp';
+        const toUnit = mode === 'cupsToTablespoons' ? 'tbsp' : 'cups';
+
+        output.value = result.toFixed(4);
+        resultDisplay.textContent = `${val} ${fromUnit} = ${result.toFixed(4)} ${toUnit}`;
+      };
+
+      input.addEventListener('input', convert);
+
+      switchBtn.addEventListener('click', () => {
+        mode = mode === 'cupsToTablespoons' ? 'tablespoonsToCups' : 'cupsToTablespoons';
+
+        if (mode === 'cupsToTablespoons') {
+          inputLabel.textContent = 'Cups';
+          outputLabel.textContent = 'Tablespoons';
+          modeLabel.textContent = 'Convert Cups to Tablespoons';
+        } else {
+          inputLabel.textContent = 'Tablespoons';
+          outputLabel.textContent = 'Cups';
+          modeLabel.textContent = 'Convert Tablespoons to Cups';
+        }
+
+        input.value = '';
+        output.value = '';
+        resultDisplay.textContent = '—';
+      });
+
+      ingredientSelect.addEventListener('change', (e) => {
+        const idx = parseInt(e.target.value);
+        currentRatio = ingredientRatios[idx].ratio;
+        convert();
+      });
+    </script>
+  </body>
+</html>

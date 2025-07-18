@@ -1,0 +1,95 @@
+---
+export const prerender = false;
+import Layout from '../../layouts/Layout.astro';
+
+let result = null;
+
+if (Astro.request.method === 'POST') {
+  const contentType = Astro.request.headers.get('content-type') || '';
+  if (
+    contentType.includes('application/x-www-form-urlencoded') ||
+    contentType.includes('multipart/form-data')
+  ) {
+    const data = await Astro.request.formData();
+    const cost = parseFloat(data.get('cost')) || 0;
+    const frequency = data.get('frequency');
+
+    if (frequency === 'monthly') {
+      result = cost * 12;
+    } else if (frequency === 'weekly') {
+      result = cost * 52;
+    } else if (frequency === 'daily') {
+      result = cost * 365;
+    } else {
+      result = cost; // yearly or one-time
+    }
+  }
+}
+---
+
+<Layout>
+  <main class="max-w-4xl mx-auto px-4 py-10">
+    <!-- 💳 Header -->
+    <section class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6 rounded-t-lg shadow-md">
+      <h1 class="text-3xl font-bold">Subscription Cost Per Year Calculator</h1>
+      <p class="text-sm mt-1">Estimate how much a subscription really costs you annually based on your payment frequency.</p>
+    </section>
+
+    <!-- 💡 Tip -->
+    <div class="bg-purple-50 border-l-4 border-purple-400 p-4 mb-6">
+      <p class="text-purple-700">
+        <strong>💡 Tip:</strong> Great for identifying hidden annual spending across streaming, apps, memberships, and more.
+      </p>
+    </div>
+
+    <!-- 🧮 Calculator -->
+    <section class="bg-white border border-gray-200 p-6 rounded-b-lg shadow space-y-6">
+      <form method="POST" enctype="application/x-www-form-urlencoded" class="grid gap-6">
+        <div>
+          <label for="cost" class="block font-semibold mb-1">Subscription Cost ($):</label>
+          <input type="number" step="any" name="cost" id="cost" class="w-full p-2 border rounded" required />
+        </div>
+
+        <div>
+          <label for="frequency" class="block font-semibold mb-1">Billing Frequency:</label>
+          <select name="frequency" id="frequency" class="w-full p-2 border rounded" required>
+            <option value="monthly">Monthly</option>
+            <option value="weekly">Weekly</option>
+            <option value="daily">Daily</option>
+            <option value="yearly">Yearly</option>
+            <option value="one-time">One-Time</option>
+          </select>
+        </div>
+
+        <button type="submit" class="bg-purple-700 hover:bg-purple-800 text-white py-2 px-4 rounded font-semibold">
+          Calculate
+        </button>
+      </form>
+
+      {result !== null && (
+        <div class="mt-6 bg-green-50 border border-green-300 text-green-800 font-semibold p-4 rounded">
+          📅 Estimated Annual Cost: ${result.toFixed(2)}
+        </div>
+      )}
+    </section>
+
+    <!-- 📘 Why This Matters + Pro Tips -->
+    <section class="mt-10 px-6">
+      <h2 class="text-xl font-semibold mb-4 text-gray-800">Why This Matters</h2>
+      <p class="text-gray-700 mb-4">
+        Many subscriptions seem cheap monthly, but add up quickly over time. Knowing your annual cost helps you decide what’s worth keeping or cutting.
+      </p>
+
+      <h3 class="text-lg font-semibold mb-2 text-gray-800">Pro Tips</h3>
+      <ul class="list-disc list-inside text-gray-700 space-y-1">
+        <li>Review all your active subscriptions and total them using this tool.</li>
+        <li>Use yearly totals to trim unused services and save money long-term.</li>
+        <li>Compare monthly vs yearly plans to see which saves more annually.</li>
+      </ul>
+    </section>
+  </main>
+</Layout>
+
+
+
+

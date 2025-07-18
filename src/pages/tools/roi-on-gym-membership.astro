@@ -1,0 +1,91 @@
+---
+export const prerender = false;
+import Layout from '../../layouts/Layout.astro';
+
+let result = null;
+
+if (Astro.request.method === 'POST') {
+  const contentType = Astro.request.headers.get('content-type') || '';
+  if (
+    contentType.includes('application/x-www-form-urlencoded') ||
+    contentType.includes('multipart/form-data')
+  ) {
+    const data = await Astro.request.formData();
+    const monthlyCost = parseFloat(data.get('monthlyCost')) || 0;
+    const valuePerVisit = parseFloat(data.get('valuePerVisit')) || 0;
+    const visitsPerMonth = parseFloat(data.get('visitsPerMonth')) || 0;
+
+    const totalCost = monthlyCost;
+    const totalValue = valuePerVisit * visitsPerMonth;
+    result = ((totalValue - totalCost) / totalCost) * 100;
+  }
+}
+---
+
+<Layout>
+  <main class="max-w-4xl mx-auto px-4 py-10">
+    <!-- 🟣 Header -->
+    <section class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6 rounded-t-lg shadow-md">
+      <h1 class="text-3xl font-bold">Gym Membership ROI Calculator</h1>
+      <p class="text-sm mt-1">Calculate whether your monthly gym membership is worth the cost based on how often you go.</p>
+    </section>
+
+    <!-- 💡 Tip -->
+    <div class="bg-purple-50 border-l-4 border-purple-400 p-4 mb-6">
+      <p class="text-purple-700">
+        <strong>💡 Tip:</strong> Helps you decide if you're getting value out of your gym membership based on usage.
+      </p>
+    </div>
+
+    <!-- 🧮 Form + Result -->
+    <section class="bg-white border border-gray-200 p-6 rounded-b-lg shadow space-y-6 mb-8">
+      <form method="POST" enctype="application/x-www-form-urlencoded" class="grid gap-6">
+        <div>
+          <label for="monthlyCost" class="block font-semibold mb-1">Monthly Gym Cost ($):</label>
+          <input type="number" step="any" name="monthlyCost" id="monthlyCost" class="w-full p-2 border rounded" required />
+        </div>
+
+        <div>
+          <label for="valuePerVisit" class="block font-semibold mb-1">Estimated Value Per Visit ($):</label>
+          <input type="number" step="any" name="valuePerVisit" id="valuePerVisit" class="w-full p-2 border rounded" required />
+        </div>
+
+        <div>
+          <label for="visitsPerMonth" class="block font-semibold mb-1">Visits Per Month:</label>
+          <input type="number" step="any" name="visitsPerMonth" id="visitsPerMonth" class="w-full p-2 border rounded" required />
+        </div>
+
+        <button type="submit" class="bg-purple-700 hover:bg-purple-800 text-white py-2 px-4 rounded font-semibold">
+          Calculate
+        </button>
+      </form>
+
+      {result !== null && (
+        <div class="mt-6 bg-green-50 border border-green-300 text-green-800 font-semibold p-4 rounded">
+          {result >= 0 
+            ? `✅ Positive ROI: ${result.toFixed(1)}% — you're getting your money's worth!` 
+            : `⚠️ Negative ROI: ${result.toFixed(1)}% — consider visiting more or reevaluating your membership.`}
+        </div>
+      )}
+    </section>
+
+    <!-- ✅ Why This Matters + Pro Tips -->
+    <section class="max-w-3xl mx-auto px-6 mt-6 mb-8">
+      <h2 class="text-xl font-semibold mb-4 text-gray-800">Why This Matters</h2>
+      <p class="text-gray-700 mb-4">
+        Many people pay for a gym membership without knowing if they’re actually getting value from it. This tool helps you decide if your membership cost is worth it based on how often you go and what you get out of it.
+      </p>
+
+      <h3 class="text-lg font-semibold mb-2 text-gray-800">Pro Tips</h3>
+      <ul class="list-disc list-inside text-gray-700 space-y-1">
+        <li>Use this calculator monthly to track changes in usage habits.</li>
+        <li>If your ROI is below 1.0, you're paying more than you're getting in value — time to reevaluate.</li>
+        <li>Consider alternatives like class packs, outdoor workouts, or other fitness memberships.</li>
+      </ul>
+    </section>
+  </main>
+</Layout>
+
+
+
+

@@ -1,0 +1,28 @@
+---
+const { title = "Unit Converter" } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{title} | Smart Converter</title>
+    <meta name="description" content={`Use this simple tool to convert or calculate ${title.toLowerCase()}.`} />
+  </head>
+  <body class="bg-gray-50 text-gray-900 font-sans">
+    <main class="max-w-2xl mx-auto px-4 py-10 space-y-8">
+      <header class="text-center">
+        <h1 class="text-3xl font-bold">{title}</h1>
+        <p class="text-gray-600">Fast, accurate, and user-friendly converter tool.</p>
+      </header>
+
+      <slot /> <!-- Content of the tool goes here -->
+
+      <footer class="text-sm text-center text-gray-400 mt-12">
+        &copy; {new Date().getFullYear()} Smart Converter
+      </footer>
+    </main>
+  </body>
+</html>
+
+
+

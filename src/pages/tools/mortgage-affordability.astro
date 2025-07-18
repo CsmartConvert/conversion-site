@@ -1,0 +1,137 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const title = "Mortgage Affordability Calculator";
+
+let income = "";
+let monthlyDebt = "";
+let downPayment = "";
+let interestRate = "";
+let affordability = null;
+
+if (
+  Astro.request?.method === 'POST' &&
+  Astro.request.headers.get('content-type')?.includes('application/x-www-form-urlencoded')
+) {
+  const form = await Astro.request.formData();
+
+  income = form.get('income') || "";
+  monthlyDebt = form.get('monthlyDebt') || "";
+  downPayment = form.get('downPayment') || "";
+  interestRate = form.get('interestRate') || "";
+
+  const annualIncome = parseFloat(income);
+  const debt = parseFloat(monthlyDebt);
+  const down = parseFloat(downPayment);
+  const rate = parseFloat(interestRate) / 100 / 12;
+  const loanTermMonths = 30 * 12;
+
+  if (!isNaN(annualIncome) && !isNaN(debt) && !isNaN(down) && !isNaN(rate) && rate > 0) {
+    const maxMonthlyPayment = (annualIncome / 12) * 0.28 - debt;
+
+    if (maxMonthlyPayment > 0) {
+      const numerator = maxMonthlyPayment * (Math.pow(1 + rate, loanTermMonths) - 1);
+      const denominator = rate * Math.pow(1 + rate, loanTermMonths);
+      const loanAmount = numerator / denominator;
+      affordability = loanAmount + down;
+    }
+  }
+}
+---
+
+<Layout>
+  <!-- 🏡 Header -->
+  <section class="max-w-3xl mx-auto bg-gradient-to-r from-blue-600 to-blue-800 text-white py-6 px-4 md:py-8 mb-8 shadow text-center rounded-md">
+    <h1 class="text-3xl font-bold mb-2">🏡 {title}</h1>
+    <p class="text-base">Estimate how much house you can afford based on your income and expenses.</p>
+  </section>
+
+  <!-- 💡 Tip -->
+  <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 max-w-3xl mx-auto">
+    <p class="text-blue-700"><strong>💡 Tip:</strong> Lenders often use the 28/36 rule: your housing costs shouldn't exceed 28% of your income, and total debt shouldn't exceed 36%.</p>
+  </div>
+
+  <!-- 🔢 Form -->
+  <section class="bg-white border border-gray-200 p-6 rounded-lg shadow max-w-2xl mx-auto mb-10">
+    <form method="POST" enctype="application/x-www-form-urlencoded" class="space-y-6">
+      <div>
+        <label for="income" class="block font-medium text-gray-800">Annual Income ($):</label>
+        <input
+          type="number"
+          step="any"
+          name="income"
+          id="income"
+          class="w-full p-2 border rounded"
+          value={income}
+          required
+        />
+      </div>
+
+      <div>
+        <label for="monthlyDebt" class="block font-medium text-gray-800">Monthly Debt Payments ($):</label>
+        <input
+          type="number"
+          step="any"
+          name="monthlyDebt"
+          id="monthlyDebt"
+          class="w-full p-2 border rounded"
+          value={monthlyDebt}
+          required
+        />
+      </div>
+
+      <div>
+        <label for="downPayment" class="block font-medium text-gray-800">Down Payment ($):</label>
+        <input
+          type="number"
+          step="any"
+          name="downPayment"
+          id="downPayment"
+          class="w-full p-2 border rounded"
+          value={downPayment}
+          required
+        />
+      </div>
+
+      <div>
+        <label for="interestRate" class="block font-medium text-gray-800">Interest Rate (%):</label>
+        <input
+          type="number"
+          step="any"
+          name="interestRate"
+          id="interestRate"
+          class="w-full p-2 border rounded"
+          value={interestRate}
+          required
+        />
+      </div>
+
+      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded font-semibold w-full">
+        Calculate Affordability
+      </button>
+    </form>
+
+    {affordability !== null && (
+      <div class="mt-6 bg-green-50 border border-green-300 text-green-800 font-semibold p-4 rounded text-center">
+        Estimated Affordable Home Price: ${affordability.toFixed(2)}
+      </div>
+    )}
+  </section>
+
+  <!-- 📘 Why This Matters + Pro Tips -->
+  <section class="max-w-3xl mx-auto px-6 mt-6 mb-8">
+    <h2 class="text-xl font-semibold mb-4 text-gray-800">Why This Matters</h2>
+    <p class="text-gray-700 mb-4">
+      This estimate helps you set realistic expectations before shopping for homes, avoiding the risk of overextending yourself financially.
+    </p>
+
+    <h3 class="text-lg font-semibold mb-2 text-gray-800">Pro Tips</h3>
+    <ul class="list-disc list-inside text-gray-700 space-y-1">
+      <li>Aim for a mortgage that fits comfortably within your budget — not just what you're approved for.</li>
+      <li>Factor in taxes, insurance, and HOA fees for a full picture.</li>
+      <li>If affordability is tight, increase your down payment or reduce debt before applying.</li>
+    </ul>
+  </section>
+</Layout>
+
+

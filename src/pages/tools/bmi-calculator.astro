@@ -1,0 +1,59 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout>
+  <section class="max-w-xl mx-auto mt-10 p-6 bg-white shadow rounded-lg">
+    <h1 class="text-2xl font-bold mb-4">BMI Calculator</h1>
+    <p class="text-gray-600 mb-6">
+      Enter your height and weight to calculate your Body Mass Index and health category.
+    </p>
+
+    <form class="space-y-4">
+      <div>
+        <label class="block text-gray-700">Height:</label>
+        <div class="flex space-x-2">
+          <input id="feet" type="number" placeholder="Feet" class="w-1/2 border p-2 rounded" required />
+          <input id="inches" type="number" placeholder="Inches" class="w-1/2 border p-2 rounded" required />
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-gray-700">Weight (lbs):</label>
+        <input id="weight" type="number" placeholder="Pounds" class="w-full border p-2 rounded" required />
+      </div>
+
+      <button type="button" onclick="calculateBMI()" class="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700">
+        Calculate
+      </button>
+    </form>
+
+    <div id="bmiResult" class="mt-6 text-lg font-semibold text-purple-700 hidden"></div>
+  </section>
+
+  <script is:inline>
+    function calculateBMI() {
+      const feet = parseFloat(document.getElementById("feet").value);
+      const inches = parseFloat(document.getElementById("inches").value);
+      const weight = parseFloat(document.getElementById("weight").value);
+      const resultDiv = document.getElementById("bmiResult");
+
+      if (feet > 0 && weight > 0) {
+        const heightInInches = feet * 12 + inches;
+        const bmi = (weight / (heightInInches * heightInInches)) * 703;
+        const rounded = bmi.toFixed(1);
+
+        let category = "Normal";
+        if (bmi < 18.5) category = "Underweight";
+        else if (bmi >= 25 && bmi < 30) category = "Overweight";
+        else if (bmi >= 30) category = "Obese";
+
+        resultDiv.innerText = `🧠 BMI = ${rounded} (${category})`;
+        resultDiv.classList.remove("hidden");
+      } else {
+        resultDiv.innerText = "Please enter valid values.";
+        resultDiv.classList.remove("hidden");
+      }
+    }
+  </script>
+</Layout>

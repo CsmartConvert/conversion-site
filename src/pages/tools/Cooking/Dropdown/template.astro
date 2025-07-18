@@ -1,0 +1,38 @@
+---
+const pageTitle = 'Grams to Cups Converter';
+const pageDesc = 'Convert grams to cups based on ingredient type like butter, sugar, flour, and more.';
+const path = '/tools/cooking/dropdown/template';
+
+const ingredientOptions = [
+  { name: 'Butter', ratio: 0.0044 },
+  { name: 'Sugar (granulated)', ratio: 0.005 },
+  { name: 'Flour (all-purpose)', ratio: 0.0067 },
+  { name: 'Honey', ratio: 0.0042 },
+];
+
+let mode = 'gramsToCups';
+---
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{pageTitle} | Smart Converter</title>
+    <meta name="description" content={pageDesc} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100">
+    <main class="max-w-3xl mx-auto px-4 py-8 space-y-8">
+
+      <!-- Header -->
+      <header class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6 rounded-t-xl shadow">
+        <h1 class="text-3xl font-bold">Grams ↔ Cups Converter</h1>
+        <p class="text-base mt-2">Convert grams to cups by ingredient with a quick switch option.</p>
+      </header>
+
+      <!-- Seasonal Tip -->
+      <div class="mt-6 mb-4 bg-purple-100 dark:bg-purple-800 text-purple-900 dark:text-purple-100 p-4 text-sm rounded text-center">
+        💡 <strong>Seasonal Tip:</strong> Ideal for converting baking ingredients during holiday cooking or meal prep!
+      </div>
+
+      <!-- Converter -->
+      <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded
+

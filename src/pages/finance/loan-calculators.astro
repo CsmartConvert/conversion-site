@@ -1,0 +1,39 @@
+---
+import { useState } from 'react';
+import LoanChart from '../../../components/LoanChart.jsx'; // Shared pie chart component
+import LoanTable from '../../../components/LoanTable.jsx'; // Shared amortization table
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Loan Calculators - Compare Loan Types</title>
+  </head>
+  <body class="bg-gray-50 text-gray-900 px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6 text-center">📊 Compare Loan Types</h1>
+
+    <!-- MODULE 1: Amortized Loan -->
+    <section class="bg-white p-6 rounded-lg shadow mb-10">
+      <h2 class="text-xl font-semibold mb-4">Amortized Loan: Fixed Monthly Payment</h2>
+      <LoanModule type="amortized" />
+    </section>
+
+    <!-- MODULE 2: Interest-Only Loan -->
+    <section class="bg-white p-6 rounded-lg shadow mb-10">
+      <h2 class="text-xl font-semibold mb-4">Interest-Only Loan</h2>
+      <LoanModule type="interestOnly" />
+    </section>
+
+    <!-- MODULE 3: Deferred Payment Loan -->
+    <section class="bg-white p-6 rounded-lg shadow mb-10">
+      <h2 class="text-xl font-semibold mb-4">Deferred Payment (Lump Sum Due at Maturity)</h2>
+      <LoanModule type="deferred" />
+    </section>
+
+    <!-- MODULE 4: Balloon Loan -->
+    <section class="bg-white p-6 rounded-lg shadow mb-10">
+      <h2 class="text-xl font-semibold mb-4">Balloon Loan</h2>
+      <LoanModule type="balloon" />
+    </section>
+  </body>
+</html>

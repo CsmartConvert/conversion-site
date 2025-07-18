@@ -1,0 +1,181 @@
+---
+const pageTitle = 'Oats Grams to Cups Converter';
+const pageDesc = 'Convert oats grams to cups with options for rolled oats, quick oats, steel-cut oats, and oat flour.';
+const path = '/tools/cooking/dropdown/oats-grams-to-cups';
+
+const ingredientOptions = [
+  { name: 'Rolled Oats', ratio: 0.0111 },
+  { name: 'Quick Oats', ratio: 0.0113 },
+  { name: 'Steel-Cut Oats', ratio: 0.0106 },
+  { name: 'Oat Flour', ratio: 0.0102 },
+];
+
+let mode = 'gramsToCups';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{pageTitle} | Smart Converter</title>
+    <meta name="description" content={pageDesc} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100">
+    <main class="max-w-3xl mx-auto px-4 py-8 space-y-8">
+
+      <!-- Header -->
+      <header class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6 rounded-t-xl shadow">
+        <h1 class="text-3xl font-bold">Oats Grams ↔ Cups Converter</h1>
+        <p class="text-base mt-2">Convert oats by grams to cups with a dropdown for common oat types.</p>
+      </header>
+
+      <!-- Seasonal Tip -->
+      <div class="mt-6 mb-4 bg-purple-100 dark:bg-purple-800 text-purple-900 dark:text-purple-100 p-4 text-sm rounded text-center">
+        🌾 <strong>Seasonal Tip:</strong> Ideal for homemade granola, energy bites, or overnight oats!
+      </div>
+
+      <!-- Converter -->
+      <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow p-6 space-y-4">
+        <div>
+          <label for="ingredient" class="block font-semibold mb-1">Oat Type</label>
+          <select id="ingredient" class="w-full p-2 rounded border dark:bg-gray-900 dark:border-gray-600">
+            {ingredientOptions.map((item, i) => (
+              <option value={i}>{item.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <p id="modeLabel" class="text-lg font-medium">Convert Grams to Cups</p>
+          <button id="switchBtn" class="bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded text-sm">🔁 Switch</button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label id="inputLabel" for="inputValue" class="block mb-1 font-medium">Grams</label>
+            <input id="inputValue" type="number" step="any" class="w-full p-3 rounded border text-lg dark:bg-gray-900 dark:border-gray-700" />
+          </div>
+          <div>
+            <label id="outputLabel" for="outputValue" class="block mb-1 font-medium">Cups</label>
+            <input id="outputValue" type="text" disabled class="w-full p-3 rounded border bg-gray-100 text-gray-500 text-lg dark:bg-gray-800 dark:border-gray-700" />
+          </div>
+        </div>
+
+        <p id="resultDisplay" class="text-2xl font-bold text-purple-700 text-center mt-4">—</p>
+      </div>
+
+      <!-- Conversion Table -->
+      <section class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4">Common Conversions</h2>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+          <li>40g Rolled Oats ≈ 0.444 cups</li>
+          <li>60g Quick Oats ≈ 0.678 cups</li>
+          <li>30g Steel-Cut Oats ≈ 0.318 cups</li>
+          <li>50g Oat Flour ≈ 0.51 cups</li>
+        </ul>
+      </section>
+
+      <!-- Learn More -->
+      <section class="prose dark:prose-invert">
+        <h2>Why Oat Type Matters</h2>
+        <p>Oat varieties absorb liquid differently and have different densities. Quick oats are finer and more compact than steel-cut oats. This tool helps you match measurements more precisely to your oat type.</p>
+
+        <h2>Tips for Best Results</h2>
+        <ul>
+          <li>Use a kitchen scale for accurate baking or smoothie prep.</li>
+          <li>Conversions assume dry, uncooked oats.</li>
+          <li>Choose the oat variety to match your recipe’s intent.</li>
+        </ul>
+      </section>
+
+      <!-- FAQs -->
+      <section class="prose dark:prose-invert">
+        <h2>FAQs</h2>
+
+        <h3>Can I convert cooked oats with this tool?</h3>
+        <p>No. Cooked oats expand with water and vary by prep. This tool is for dry oats only.</p>
+
+        <h3>Is there a big difference between oat types?</h3>
+        <p>Yes. Steel-cut oats are denser and heavier per volume than quick oats or oat flour.</p>
+      </section>
+
+      <!-- Structured Data -->
+      <script type="application/ld+json" is:inline>
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Oats Grams to Cups Converter",
+          "description": "Convert oats from grams to cups using this converter for rolled, quick, steel-cut oats, and oat flour.",
+          "url": "https://yourdomain.com/tools/cooking/dropdown/oats-grams-to-cups"
+        }
+      </script>
+    </main>
+
+    <script is:inline>
+      const input = document.getElementById('inputValue');
+      const output = document.getElementById('outputValue');
+      const resultDisplay = document.getElementById('resultDisplay');
+      const switchBtn = document.getElementById('switchBtn');
+      const ingredientSelect = document.getElementById('ingredient');
+
+      const inputLabel = document.getElementById('inputLabel');
+      const outputLabel = document.getElementById('outputLabel');
+      const modeLabel = document.getElementById('modeLabel');
+
+      const ingredientRatios = [
+        { name: 'Rolled Oats', ratio: 0.0111 },
+        { name: 'Quick Oats', ratio: 0.0113 },
+        { name: 'Steel-Cut Oats', ratio: 0.0106 },
+        { name: 'Oat Flour', ratio: 0.0102 },
+      ];
+
+      let currentRatio = ingredientRatios[0].ratio;
+      let mode = 'gramsToCups';
+
+      const convert = () => {
+        const val = parseFloat(input.value);
+        if (isNaN(val)) {
+          output.value = '';
+          resultDisplay.textContent = '—';
+          return;
+        }
+
+        let result = mode === 'gramsToCups'
+          ? val * currentRatio
+          : val / currentRatio;
+
+        const fromUnit = mode === 'gramsToCups' ? 'g' : 'cups';
+        const toUnit = mode === 'gramsToCups' ? 'cups' : 'g';
+
+        output.value = result.toFixed(4);
+        resultDisplay.textContent = `${val} ${fromUnit} = ${result.toFixed(4)} ${toUnit}`;
+      };
+
+      input.addEventListener('input', convert);
+
+      switchBtn.addEventListener('click', () => {
+        mode = mode === 'gramsToCups' ? 'cupsToGrams' : 'gramsToCups';
+
+        if (mode === 'gramsToCups') {
+          inputLabel.textContent = 'Grams';
+          outputLabel.textContent = 'Cups';
+          modeLabel.textContent = 'Convert Grams to Cups';
+        } else {
+          inputLabel.textContent = 'Cups';
+          outputLabel.textContent = 'Grams';
+          modeLabel.textContent = 'Convert Cups to Grams';
+        }
+
+        input.value = '';
+        output.value = '';
+        resultDisplay.textContent = '—';
+      });
+
+      ingredientSelect.addEventListener('change', (e) => {
+        const idx = parseInt(e.target.value);
+        currentRatio = ingredientRatios[idx].ratio;
+        convert();
+      });
+    </script>
+  </body>
+</html>

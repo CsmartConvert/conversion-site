@@ -1,0 +1,117 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const title = "Retirement Savings Goal Calculator";
+
+let currentAge = "";
+let retirementAge = "";
+let currentSavings = "";
+let goalAmount = "";
+let annualReturn = "";
+let monthlyContribution = null;
+
+const contentType = Astro.request.headers.get("content-type") || "";
+
+if (Astro.request.method === 'POST' && contentType.includes("application/x-www-form-urlencoded")) {
+  const form = await Astro.request.formData();
+
+  // Get raw values
+  currentAge = form.get('currentAge') || "";
+  retirementAge = form.get('retirementAge') || "";
+  currentSavings = form.get('currentSavings') || "";
+  goalAmount = form.get('goalAmount') || "";
+  annualReturn = form.get('annualReturn') || "";
+
+  // Parse numbers for calculation
+  const ageNow = parseInt(currentAge);
+  const ageRetire = parseInt(retirementAge);
+  const savingsNow = parseFloat(currentSavings);
+  const targetGoal = parseFloat(goalAmount);
+  const returnRate = parseFloat(annualReturn);
+
+  const months = (ageRetire - ageNow) * 12;
+  const monthlyRate = (returnRate / 100) / 12;
+
+  if (months > 0 && monthlyRate >= 0) {
+    const futureValue = targetGoal - savingsNow * Math.pow(1 + monthlyRate, months);
+    const contribution = (monthlyRate > 0)
+      ? futureValue * monthlyRate / (Math.pow(1 + monthlyRate, months) - 1)
+      : futureValue / months;
+
+    monthlyContribution = contribution > 0 ? contribution : 0;
+  } else {
+    monthlyContribution = 0;
+  }
+}
+---
+
+
+<Layout>
+  <!-- 💸 Header -->
+  <section class="max-w-3xl mx-auto bg-gradient-to-r from-blue-600 to-blue-800 text-white py-6 px-4 md:py-8 mb-8 shadow text-center rounded-md">
+    <h1 class="text-3xl font-bold mb-2">📈 {title}</h1>
+    <p class="text-base">Estimate how much you need to save monthly to reach your retirement goal.</p>
+  </section>
+
+  <!-- 💡 Tip -->
+  <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 max-w-3xl mx-auto">
+    <p class="text-blue-700"><strong>💡 Tip:</strong> The earlier you start saving, the more compound interest can grow your money!</p>
+  </div>
+
+  <!-- 🔢 Form -->
+  <section class="bg-white border border-gray-200 p-6 rounded-lg shadow max-w-2xl mx-auto mb-10">
+    <form method="POST" enctype="application/x-www-form-urlencoded" class="space-y-6">
+      <div>
+        <label for="currentAge" class="block font-medium">Your Current Age:</label>
+        <input type="number" name="currentAge" id="currentAge" class="w-full p-2 border rounded" value={currentAge} required />
+      </div>
+
+      <div>
+        <label for="retirementAge" class="block font-medium">Desired Retirement Age:</label>
+        <input type="number" name="retirementAge" id="retirementAge" class="w-full p-2 border rounded" value={retirementAge} required />
+      </div>
+
+      <div>
+        <label for="currentSavings" class="block font-medium">Current Savings ($):</label>
+        <input type="number" name="currentSavings" id="currentSavings" class="w-full p-2 border rounded" value={currentSavings} required />
+      </div>
+
+      <div>
+        <label for="goalAmount" class="block font-medium">Retirement Goal Amount ($):</label>
+        <input type="number" name="goalAmount" id="goalAmount" class="w-full p-2 border rounded" value={goalAmount} required />
+      </div>
+
+      <div>
+        <label for="annualReturn" class="block font-medium">Expected Annual Return (%):</label>
+        <input type="number" step="any" name="annualReturn" id="annualReturn" class="w-full p-2 border rounded" value={annualReturn} required />
+      </div>
+
+      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded font-semibold w-full">
+        Calculate Monthly Contribution
+      </button>
+    </form>
+
+    {monthlyContribution !== null && (
+      <div class="mt-6 bg-green-50 border border-green-300 text-green-800 font-semibold p-4 rounded text-center">
+        You need to save approximately <strong>${monthlyContribution.toFixed(2)}</strong> per month to reach your goal by age {retirementAge}.
+      </div>
+    )}
+  </section>
+
+  <!-- 📘 Why This Matters + Pro Tips -->
+  <section class="max-w-3xl mx-auto px-6 mt-6 mb-8">
+    <h2 class="text-xl font-semibold mb-4 text-gray-800">Why This Matters</h2>
+    <p class="text-gray-700 mb-4">
+      Retirement planning ensures financial independence and stability later in life. Small contributions over time can lead to a large nest egg with compound growth.
+    </p>
+
+    <h3 class="text-lg font-semibold mb-2 text-gray-800">Pro Tips</h3>
+    <ul class="list-disc list-inside text-gray-700 space-y-1">
+      <li>Maximize contributions to tax-advantaged retirement accounts.</li>
+      <li>Review your savings progress annually.</li>
+      <li>Use catch-up contributions if you’re 50 or older.</li>
+    </ul>
+  </section>
+</Layout>
+
+

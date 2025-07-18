@@ -1,0 +1,205 @@
+---
+import Layout from '../../layouts/ConverterLayout.astro';
+const pageTitle = 'Cups to Tablespoons Converter';
+const pageDesc = 'Convert cups to tablespoons and back. Smart two-way converter for recipes and cooking.';
+const path = '/tools/cups-to-tablespoons';
+---
+
+<Layout title={pageTitle} description={pageDesc} path={path}>
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6 rounded-t-xl shadow">
+    <h1 class="text-3xl font-bold">🥄 Cups ↔ Tablespoons</h1>
+    <p class="text-base mt-2">Swap directions and get instant results while cooking or scaling recipes.</p>
+  </header>
+
+  <!-- Seasonal Tip -->
+  <div class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-100 text-sm p-4 text-center">
+    <p><strong>💡 Seasonal Tip:</strong> Baking season? Use this converter to quickly adjust batter, frosting, or syrup quantities in your holiday recipes.</p>
+  </div>
+
+  <!-- Tool Container -->
+  <div class="max-w-3xl mx-auto bg-white dark:bg-gray-900 shadow-md p-6 border-b border-gray-200 dark:border-gray-700">
+    <div class="flex items-center justify-between mb-4">
+      <p id="modeLabel" class="text-lg font-medium text-gray-800 dark:text-gray-200">Convert Cups to Tablespoons</p>
+      <button id="switchBtn" class="bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded text-sm">🔁 Switch</button>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
+      <div>
+        <label id="inputLabel" for="inputValue" class="block text-base font-semibold">Cups</label>
+        <input id="inputValue" type="number" step="any" class="mt-2 w-full rounded-lg border p-3 text-lg dark:bg-gray-800 dark:border-gray-700" />
+      </div>
+      <div>
+        <label id="outputLabel" for="outputValue" class="block text-base font-semibold">Tablespoons</label>
+        <input id="outputValue" type="number" step="any" disabled class="mt-2 w-full rounded-lg border p-3 text-lg bg-gray-100 dark:bg-gray-800 dark:border-gray-700 text-gray-500 dark:text-gray-300" />
+      </div>
+    </div>
+
+    <p id="helperText" class="text-sm text-gray-600 dark:text-gray-400">1 cup = 16 tablespoons</p>
+    <p id="resultDisplay" class="text-3xl mt-6 font-bold text-center text-purple-700 dark:text-purple-300">—</p>
+  </div>
+
+  <!-- How-To + Examples -->
+  <section class="max-w-3xl mx-auto p-6 space-y-6 text-base">
+    <h2 class="text-xl font-semibold mt-6">How to Convert Cups and Tablespoons</h2>
+    <ul class="list-disc list-inside text-gray-800 dark:text-gray-200">
+      <li>To convert cups to tablespoons, multiply the number of cups by 16.</li>
+      <li>To convert tablespoons to cups, divide the number of tablespoons by 16.</li>
+    </ul>
+
+    <h2 class="text-xl font-semibold mt-6">Common Conversions</h2>
+    <ul id="examplesList" class="list-disc list-inside text-gray-800 dark:text-gray-200">
+      <li>0.25 cup = 4 tbsp</li>
+      <li>0.5 cup = 8 tbsp</li>
+      <li>0.75 cup = 12 tbsp</li>
+      <li>1 cup = 16 tbsp</li>
+      <li>1.5 cups = 24 tbsp</li>
+      <li>2 cups = 32 tbsp</li>
+      <li>2.5 cups = 40 tbsp</li>
+      <li>3 cups = 48 tbsp</li>
+      <li>3.5 cups = 56 tbsp</li>
+      <li>4 cups = 64 tbsp</li>
+    </ul>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="max-w-3xl mx-auto p-6 mt-8 text-base">
+    <h2 class="text-2xl font-bold mb-4 text-purple-700">Frequently Asked Questions</h2>
+    <div class="space-y-4">
+      <div><strong>How many tablespoons are in one cup?</strong><br />There are 16 tablespoons in 1 U.S. cup.</div>
+      <div><strong>Is this the same for liquid and dry ingredients?</strong><br />Yes, both dry and liquid U.S. measuring cups use the same conversion: 1 cup = 16 tbsp.</div>
+      <div><strong>Can I use a tablespoon for accurate measuring?</strong><br />Yes, but for precise recipes, especially in baking, use a proper measuring cup.</div>
+      <div><strong>Are UK and US cup sizes the same?</strong><br />No. U.S. cups are ~237 mL, while UK/metric cups are typically 250 mL. This can affect conversions.</div>
+    </div>
+  </section>
+
+  <!-- Learn More Section -->
+  <section class="max-w-3xl mx-auto p-6 mt-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-base leading-relaxed text-gray-800 dark:text-gray-200">
+    <h2 class="text-2xl font-bold mb-4 text-purple-600">Learn More About Cups & Tablespoons</h2>
+    <p><strong>Cup (US)</strong> — A standard cup used in U.S. recipes equals <strong>16 tablespoons</strong> or about <strong>237 mL</strong>.</p>
+    <p><strong>Tablespoon (tbsp)</strong> — A U.S. tablespoon is approximately <strong>14.79 mL</strong>. It’s commonly used for both liquid and dry ingredients.</p>
+    <p><strong>Conversion Tips:</strong> For quick math, remember that each quarter cup is 4 tbsp (e.g., ½ cup = 8 tbsp).</p>
+    <p><strong>Accuracy Tip:</strong> Use level tablespoons for dry ingredients and fill to the top edge for liquids.</p>
+  </section>
+
+  <!-- JSON-LD Structured FAQ -->
+  <script type="application/ld+json" is:inline>
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How many tablespoons are in one cup?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "There are 16 tablespoons in 1 U.S. cup."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this the same for liquid and dry ingredients?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, both dry and liquid U.S. measuring cups use the same conversion: 1 cup = 16 tbsp."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use a tablespoon for accurate measuring?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, but for precise recipes, especially in baking, use a proper measuring cup."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are UK and US cup sizes the same?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. U.S. cups are ~237 mL, while UK/metric cups are typically 250 mL. This can affect conversions."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Calculator Logic -->
+  <script is:inline>
+    const input = document.getElementById('inputValue');
+    const output = document.getElementById('outputValue');
+    const result = document.getElementById('resultDisplay');
+    const switchBtn = document.getElementById('switchBtn');
+
+    const inputLabel = document.getElementById('inputLabel');
+    const outputLabel = document.getElementById('outputLabel');
+    const modeLabel = document.getElementById('modeLabel');
+    const helperText = document.getElementById('helperText');
+    const examplesList = document.getElementById('examplesList');
+
+    let mode = 'cupsToTbsp';
+
+    const updateConversion = () => {
+      const val = parseFloat(input.value);
+      if (isNaN(val)) {
+        output.value = '';
+        result.textContent = '—';
+        return;
+      }
+      let converted;
+      if (mode === 'cupsToTbsp') {
+        converted = (val * 16).toFixed(4);
+        result.textContent = `${val} cup(s) = ${converted} tbsp`;
+      } else {
+        converted = (val / 16).toFixed(4);
+        result.textContent = `${val} tbsp = ${converted} cup(s)`;
+      }
+      output.value = converted;
+    };
+
+    input.addEventListener('input', updateConversion);
+
+    switchBtn.addEventListener('click', () => {
+      mode = mode === 'cupsToTbsp' ? 'tbspToCups' : 'cupsToTbsp';
+
+      if (mode === 'cupsToTbsp') {
+        inputLabel.textContent = 'Cups';
+        outputLabel.textContent = 'Tablespoons';
+        modeLabel.textContent = 'Convert Cups to Tablespoons';
+        helperText.textContent = '1 cup = 16 tablespoons';
+        examplesList.innerHTML = `
+          <li>0.25 cup = 4 tbsp</li>
+          <li>0.5 cup = 8 tbsp</li>
+          <li>0.75 cup = 12 tbsp</li>
+          <li>1 cup = 16 tbsp</li>
+          <li>1.5 cups = 24 tbsp</li>
+          <li>2 cups = 32 tbsp</li>
+          <li>2.5 cups = 40 tbsp</li>
+          <li>3 cups = 48 tbsp</li>
+          <li>3.5 cups = 56 tbsp</li>
+          <li>4 cups = 64 tbsp</li>`;
+      } else {
+        inputLabel.textContent = 'Tablespoons';
+        outputLabel.textContent = 'Cups';
+        modeLabel.textContent = 'Convert Tablespoons to Cups';
+        helperText.textContent = '1 cup = 16 tablespoons';
+        examplesList.innerHTML = `
+          <li>4 tbsp = 0.25 cup</li>
+          <li>8 tbsp = 0.5 cup</li>
+          <li>12 tbsp = 0.75 cup</li>
+          <li>16 tbsp = 1 cup</li>
+          <li>24 tbsp = 1.5 cups</li>
+          <li>32 tbsp = 2 cups</li>
+          <li>40 tbsp = 2.5 cups</li>
+          <li>48 tbsp = 3 cups</li>
+          <li>56 tbsp = 3.5 cups</li>
+          <li>64 tbsp = 4 cups</li>`;
+      }
+
+      input.value = '';
+      output.value = '';
+      result.textContent = '—';
+    });
+  </script>
+</Layout>
+

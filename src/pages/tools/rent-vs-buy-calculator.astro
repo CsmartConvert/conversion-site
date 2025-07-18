@@ -1,0 +1,146 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const title = "Rent vs Buy Calculator";
+
+let monthlyRent = "";
+let homePrice = "";
+let mortgageRate = "";
+let years = "";
+let rentTotal = null;
+let buyTotal = null;
+
+// ✅ Proper server-side form handling
+if (
+  Astro.request?.method === 'POST' &&
+  Astro.request.headers.get('content-type')?.includes('application/x-www-form-urlencoded')
+) {
+  const form = await Astro.request.formData();
+
+  monthlyRent = form.get('monthlyRent') || "";
+  homePrice = form.get('homePrice') || "";
+  mortgageRate = form.get('mortgageRate') || "";
+  years = form.get('years') || "";
+
+  const rent = parseFloat(monthlyRent);
+  const price = parseFloat(homePrice);
+  const rate = parseFloat(mortgageRate) / 100 / 12;
+  const termMonths = parseFloat(years) * 12;
+
+  if (!isNaN(rent) && !isNaN(price) && !isNaN(rate) && !isNaN(termMonths)) {
+    rentTotal = rent * termMonths;
+
+    // Basic mortgage cost estimate (ignoring taxes/insurance)
+    const numerator = rate * Math.pow(1 + rate, termMonths);
+    const denominator = Math.pow(1 + rate, termMonths) - 1;
+
+    const monthlyMortgage =
+      denominator > 0 ? price * (numerator / denominator) : 0;
+
+    buyTotal = monthlyMortgage * termMonths;
+  }
+}
+---
+
+<Layout>
+  <!-- 🏘️ Header -->
+  <section class="max-w-3xl mx-auto bg-gradient-to-r from-blue-600 to-blue-800 text-white py-6 px-4 md:py-8 mb-8 shadow text-center rounded-md">
+    <h1 class="text-3xl font-bold mb-2">🏘️ {title}</h1>
+    <p class="text-base">Compare the long-term cost of renting vs. buying a home over a number of years.</p>
+  </section>
+
+  <!-- 💡 Tip Box -->
+  <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 max-w-3xl mx-auto">
+    <p class="text-blue-700"><strong>💡 Tip:</strong> Renting may be cheaper short term, but buying could build equity over time. Use this tool to compare total costs.</p>
+  </div>
+
+  <!-- 🔢 Form -->
+  <section class="bg-white border border-gray-200 p-6 rounded-lg shadow max-w-2xl mx-auto mb-10">
+    <form method="POST" enctype="application/x-www-form-urlencoded" class="space-y-6">
+      <div>
+        <label for="monthlyRent" class="block font-medium text-gray-800">Monthly Rent ($):</label>
+        <input
+          type="number"
+          step="any"
+          name="monthlyRent"
+          id="monthlyRent"
+          class="w-full p-2 border rounded"
+          value={monthlyRent}
+          required
+        />
+      </div>
+
+      <div>
+        <label for="homePrice" class="block font-medium text-gray-800">Home Purchase Price ($):</label>
+        <input
+          type="number"
+          step="any"
+          name="homePrice"
+          id="homePrice"
+          class="w-full p-2 border rounded"
+          value={homePrice}
+          required
+        />
+      </div>
+
+      <div>
+        <label for="mortgageRate" class="block font-medium text-gray-800">Mortgage Rate (%):</label>
+        <input
+          type="number"
+          step="any"
+          name="mortgageRate"
+          id="mortgageRate"
+          class="w-full p-2 border rounded"
+          value={mortgageRate}
+          required
+        />
+      </div>
+
+      <div>
+        <label for="years" class="block font-medium text-gray-800">Time Horizon (Years):</label>
+        <input
+          type="number"
+          step="1"
+          name="years"
+          id="years"
+          class="w-full p-2 border rounded"
+          value={years}
+          required
+        />
+      </div>
+
+      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded font-semibold w-full">
+        Compare Costs
+      </button>
+    </form>
+
+    {rentTotal !== null && buyTotal !== null && (
+      <div class="mt-6 bg-green-50 border border-green-300 text-green-800 font-semibold p-4 rounded text-center space-y-2">
+        <p>Total Rent Paid: ${rentTotal.toFixed(2)}</p>
+        <p>Total Home Ownership Cost: ${buyTotal.toFixed(2)}</p>
+        <p class="mt-2 font-bold">
+          {rentTotal < buyTotal
+            ? "🏠 Buying costs more over this time horizon."
+            : "💸 Renting costs more over this time horizon."}
+        </p>
+      </div>
+    )}
+  </section>
+
+  <!-- 📘 Why This Matters + Pro Tips -->
+  <section class="max-w-3xl mx-auto px-6 mt-6 mb-8">
+    <h2 class="text-xl font-semibold mb-4 text-gray-800">Why This Matters</h2>
+    <p class="text-gray-700 mb-4">
+      Housing is one of your biggest recurring expenses. This calculator helps you compare two major options and make a financially informed decision.
+    </p>
+
+    <h3 class="text-lg font-semibold mb-2 text-gray-800">Pro Tips</h3>
+    <ul class="list-disc list-inside text-gray-700 space-y-1">
+      <li>Don’t forget about closing costs, property taxes, maintenance, and insurance when buying.</li>
+      <li>Renting offers flexibility, but doesn’t build long-term equity.</li>
+      <li>Buying makes more sense the longer you plan to stay in one place.</li>
+    </ul>
+  </section>
+</Layout>
+
+

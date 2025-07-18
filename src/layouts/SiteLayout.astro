@@ -1,0 +1,28 @@
+---
+// src/layouts/SiteLayout.astro
+const { title } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title ? `${title} - Unit Converter` : 'Unit Converter'}</title>
+    <link rel="stylesheet" href="/styles/global.css" />
+  </head>
+  <body class="bg-gray-100 text-gray-800">
+    <header class="bg-blue-600 text-white py-4 shadow-md">
+      <div class="max-w-4xl mx-auto px-4">
+        <h1 class="text-xl font-bold">Smart Converter</h1>
+      </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-8">
+      <slot />
+    </main>
+
+    <footer class="bg-gray-200 text-center text-sm py-4 mt-8">
+      &copy; {new Date().getFullYear()} Smart Converter. All rights reserved.
+    </footer>
+  </body>
+</html>

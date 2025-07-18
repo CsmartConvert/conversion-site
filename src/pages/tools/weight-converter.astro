@@ -1,0 +1,61 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout>
+  <section class="max-w-xl mx-auto mt-10 p-6 bg-white shadow rounded-lg">
+    <h1 class="text-2xl font-bold mb-4">Weight Converter</h1>
+    <p class="text-gray-600 mb-6">
+      Easily convert between pounds and kilograms for any use.
+    </p>
+
+    <form class="space-y-4">
+      <div>
+        <label class="block font-medium text-gray-700">Enter Weight:</label>
+        <input id="weightInput" type="number" step="0.01" class="w-full border rounded p-2" required />
+      </div>
+
+      <div>
+        <label class="block font-medium text-gray-700">Convert From:</label>
+        <select id="weightScale" class="w-full border rounded p-2">
+          <option value="lbs">Pounds</option>
+          <option value="kg">Kilograms</option>
+        </select>
+      </div>
+
+      <button type="button" onclick="convertWeight()" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+        Convert
+      </button>
+    </form>
+
+    <div id="weightResult" class="mt-6 text-lg font-semibold text-green-700 hidden"></div>
+  </section>
+
+  <script is:inline>
+    function convertWeight() {
+      const value = parseFloat(document.getElementById("weightInput").value);
+      const scale = document.getElementById("weightScale").value;
+      const resultDiv = document.getElementById("weightResult");
+
+      if (isNaN(value)) {
+        resultDiv.innerText = "Please enter a valid number.";
+        resultDiv.classList.remove("hidden");
+        return;
+      }
+
+      let result = 0;
+      let label = "";
+
+      if (scale === "lbs") {
+        result = value * 0.453592;
+        label = `${value} lbs is ${result.toFixed(2)} kg`;
+      } else {
+        result = value / 0.453592;
+        label = `${value} kg is ${result.toFixed(2)} lbs`;
+      }
+
+      resultDiv.innerText = label;
+      resultDiv.classList.remove("hidden");
+    }
+  </script>
+</Layout>

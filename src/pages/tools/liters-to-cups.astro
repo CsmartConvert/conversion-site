@@ -1,0 +1,204 @@
+---
+import Layout from '../../layouts/ConverterLayout.astro';
+const pageTitle = 'Liters to Cups Converter';
+const pageDesc = 'Convert liters to cups and back. Simple, accurate kitchen volume conversions for recipes and cooking.';
+const path = '/tools/liters-to-cups';
+---
+
+<Layout title={pageTitle} description={pageDesc} path={path}>
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6 rounded-t-xl shadow">
+    <h1 class="text-3xl font-bold">🥛 Liters ↔ Cups</h1>
+    <p class="text-base mt-2">Easily convert liters to cups for cooking, baking, and kitchen prep.</p>
+  </header>
+
+  <!-- Seasonal Tip -->
+  <div class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-100 text-sm p-4 text-center">
+    <p><strong>💡 Seasonal Tip:</strong> Holiday baking or large family meals? Use this converter to scale recipes without hassle.</p>
+  </div>
+
+  <!-- Conversion Tool -->
+  <div class="max-w-3xl mx-auto bg-white dark:bg-gray-900 shadow-md p-6 border-b border-gray-200 dark:border-gray-700">
+    <div class="flex items-center justify-between mb-4">
+      <p id="modeLabel" class="text-lg font-medium text-gray-800 dark:text-gray-200">Convert Liters to Cups</p>
+      <button id="switchBtn" class="bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded text-sm">🔁 Switch</button>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
+      <div>
+        <label id="inputLabel" for="inputValue" class="block text-base font-semibold">Liters</label>
+        <input id="inputValue" type="number" step="any" class="mt-2 w-full rounded-lg border p-3 text-lg dark:bg-gray-800 dark:border-gray-700" />
+      </div>
+      <div>
+        <label id="outputLabel" for="outputValue" class="block text-base font-semibold">Cups</label>
+        <input id="outputValue" type="number" step="any" disabled class="mt-2 w-full rounded-lg border p-3 text-lg bg-gray-100 dark:bg-gray-800 dark:border-gray-700 text-gray-500 dark:text-gray-300" />
+      </div>
+    </div>
+
+    <p id="helperText" class="text-sm text-gray-600 dark:text-gray-400">1 liter = 4.22675 U.S. cups</p>
+    <p id="resultDisplay" class="text-3xl mt-6 font-bold text-center text-purple-700 dark:text-purple-300">—</p>
+  </div>
+
+  <!-- How to Convert -->
+  <section class="max-w-3xl mx-auto p-6 space-y-6 text-base">
+    <div>
+      <h2 class="text-xl font-semibold">How to Convert Liters and Cups</h2>
+      <ul class="list-disc list-inside text-gray-800 dark:text-gray-200">
+        <li>To convert liters to cups, multiply the number of liters by 4.22675.</li>
+        <li>To convert cups to liters, divide the number of cups by 4.22675.</li>
+      </ul>
+
+      <h2 class="text-xl font-semibold mt-4">Common Conversions</h2>
+      <ul id="examplesList" class="list-disc list-inside text-gray-800 dark:text-gray-200">
+        <li>1 liter = 4.23 cups</li>
+        <li>2 liters = 8.45 cups</li>
+        <li>0.5 liter = 2.11 cups</li>
+        <li>3 liters = 12.68 cups</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="max-w-3xl mx-auto p-6 mt-8 text-base">
+    <h2 class="text-2xl font-bold mb-4 text-purple-700">Frequently Asked Questions</h2>
+    <div class="space-y-4">
+      <div><strong>How many cups in a liter?</strong><br />There are approximately 4.22675 U.S. cups in 1 liter.</div>
+      <div><strong>Is a U.S. cup the same as a metric cup?</strong><br />No. A U.S. cup is about 236.59 mL, while a metric cup is exactly 250 mL.</div>
+      <div><strong>Are cups used worldwide?</strong><br />Cups are mostly used in the U.S. and Canada. Other countries rely on milliliters or liters.</div>
+      <div><strong>What is a liter in milliliters?</strong><br />1 liter = 1,000 milliliters.</div>
+      <div><strong>Is cup measurement the same for solids and liquids?</strong><br />Yes, the volume is the same, but the weight depends on the substance being measured.</div>
+    </div>
+  </section>
+
+  <!-- Learn More -->
+  <section class="max-w-3xl mx-auto p-6 mt-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-base leading-relaxed text-gray-800 dark:text-gray-200">
+    <h2 class="text-2xl font-bold mb-4 text-purple-600">Learn More About Liters & Cups</h2>
+
+    <p><strong>Liter (L)</strong> — A liter is a metric unit of volume equal to 1,000 milliliters or 1 cubic decimeter. It’s widely used for measuring liquids and beverages.</p>
+
+    <p><strong>U.S. Cup</strong> — A standard U.S. measuring cup equals approximately 236.59 milliliters. Often used in American cooking and nutrition labels.</p>
+
+    <p><strong>History:</strong> The liter was introduced in France in 1795 during the metric system’s development. The U.S. cup has evolved from older imperial systems.</p>
+
+    <p><strong>Usage:</strong> Liters are preferred for bottled drinks, fuel, and recipes globally. Cups are mostly used in home cooking in the U.S. and a few other countries.</p>
+  </section>
+
+  <!-- Script -->
+  <script is:inline>
+    const input = document.getElementById('inputValue');
+    const output = document.getElementById('outputValue');
+    const result = document.getElementById('resultDisplay');
+    const switchBtn = document.getElementById('switchBtn');
+
+    const inputLabel = document.getElementById('inputLabel');
+    const outputLabel = document.getElementById('outputLabel');
+    const modeLabel = document.getElementById('modeLabel');
+    const helperText = document.getElementById('helperText');
+    const examplesList = document.getElementById('examplesList');
+
+    let mode = 'literToCup';
+
+    const updateConversion = () => {
+      const val = parseFloat(input.value);
+      if (isNaN(val)) {
+        output.value = '';
+        result.textContent = '—';
+        return;
+      }
+
+      let converted;
+      if (mode === 'literToCup') {
+        converted = (val * 4.22675).toFixed(4);
+        result.textContent = `${val} L = ${converted} cups`;
+      } else {
+        converted = (val / 4.22675).toFixed(4);
+        result.textContent = `${val} cups = ${converted} L`;
+      }
+
+      output.value = converted;
+    };
+
+    input.addEventListener('input', updateConversion);
+
+    switchBtn.addEventListener('click', () => {
+      mode = mode === 'literToCup' ? 'cupToLiter' : 'literToCup';
+
+      if (mode === 'literToCup') {
+        inputLabel.textContent = 'Liters';
+        outputLabel.textContent = 'Cups';
+        modeLabel.textContent = 'Convert Liters to Cups';
+        helperText.textContent = '1 liter = 4.22675 U.S. cups';
+        examplesList.innerHTML = `
+          <li>1 liter = 4.23 cups</li>
+          <li>2 liters = 8.45 cups</li>
+          <li>0.5 liter = 2.11 cups</li>
+          <li>3 liters = 12.68 cups</li>`;
+      } else {
+        inputLabel.textContent = 'Cups';
+        outputLabel.textContent = 'Liters';
+        modeLabel.textContent = 'Convert Cups to Liters';
+        helperText.textContent = '1 cup = 0.236588 liters';
+        examplesList.innerHTML = `
+          <li>1 cup = 0.2366 L</li>
+          <li>2 cups = 0.4732 L</li>
+          <li>3 cups = 0.7098 L</li>
+          <li>4 cups = 0.9464 L</li>`;
+      }
+
+      input.value = '';
+      output.value = '';
+      result.textContent = '—';
+    });
+  </script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many cups in a liter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "There are approximately 4.22675 U.S. cups in 1 liter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a U.S. cup the same as a metric cup?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. A U.S. cup is about 236.59 mL, while a metric cup is exactly 250 mL."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are cups used worldwide?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cups are mostly used in the U.S. and Canada. Other countries rely on milliliters or liters."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a liter in milliliters?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "1 liter = 1,000 milliliters."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is cup measurement the same for solids and liquids?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, the volume is the same, but the weight depends on the substance being measured."
+          }
+        }
+      ]
+    }
+  </script>
+</Layout>
+

@@ -1,0 +1,25 @@
+---
+import HomeToolList from '../../components/HomeToolList.astro';
+import Layout from '../../layouts/Layout.astro';
+import FeaturedConverters from '../../components/FeaturedConverters.astro';
+
+---
+
+<Layout>
+  <!-- 🌟 Featured Tools -->
+  <FeaturedConverters />
+
+  <!-- 📌 Bookmark CTA -->
+  <div class="text-center mb-8">
+    <p class="text-gray-700">📌 <strong>Tip:</strong> Bookmark this site so you always have quick access to the tools that save you money and time!</p>
+  </div>
+
+  <!-- 🛠 Tool Categories (generated from JSON) -->
+  <HomeToolList />
+</Layout>
+
+
+
+
+
+

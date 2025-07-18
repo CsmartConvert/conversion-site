@@ -1,0 +1,58 @@
+---
+// src/pages/tools/milliliters-to-cups.astro
+import ToolLayout from '../../layouts/ToolLayout.astro';
+
+const title = "Milliliters to Cups";
+const description = "Convert milliliters to cups and vice versa for cooking and measuring accuracy.";
+---
+
+<ToolLayout title={title} description={description}>
+  <form class="space-y-4 max-w-md mx-auto">
+    <div>
+      <label for="milliliters" class="block font-medium">Milliliters (mL):</label>
+      <input
+        id="milliliters"
+        type="number"
+        step="any"
+        class="w-full p-2 border rounded"
+        oninput="convertFromMilliliters()"
+      />
+    </div>
+
+    <div>
+      <label for="cups" class="block font-medium">Cups:</label>
+      <input
+        id="cups"
+        type="number"
+        step="any"
+        class="w-full p-2 border rounded"
+        oninput="convertFromCups()"
+      />
+    </div>
+  </form>
+
+  <script is:inline>
+    const ML_PER_CUP = 236.588;
+
+    function convertFromMilliliters() {
+      const ml = parseFloat(document.getElementById('milliliters').value);
+      if (!isNaN(ml)) {
+        const cups = (ml / ML_PER_CUP).toFixed(4);
+        document.getElementById('cups').value = cups;
+      } else {
+        document.getElementById('cups').value = '';
+      }
+    }
+
+    function convertFromCups() {
+      const cups = parseFloat(document.getElementById('cups').value);
+      if (!isNaN(cups)) {
+        const ml = (cups * ML_PER_CUP).toFixed(2);
+        document.getElementById('milliliters').value = ml;
+      } else {
+        document.getElementById('milliliters').value = '';
+      }
+    }
+  </script>
+</ToolLayout>
+

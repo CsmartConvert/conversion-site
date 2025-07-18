@@ -1,0 +1,184 @@
+---
+const pageTitle = 'Milk Grams to Cups Converter';
+const pageDesc = 'Convert grams of milk to cups with a dropdown for whole milk, skim milk, condensed milk, and more.';
+const path = '/tools/cooking/dropdown/milk-grams-to-cups';
+
+const ingredientOptions = [
+  { name: 'Whole Milk', ratio: 0.00412 },       // 1 gram ≈ 0.00412 cups
+  { name: 'Skim Milk', ratio: 0.00413 },
+  { name: 'Condensed Milk', ratio: 0.00239 },
+  { name: 'Evaporated Milk', ratio: 0.00245 },
+];
+
+let mode = 'gramsToCups';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{pageTitle} | Smart Converter</title>
+    <meta name="description" content={pageDesc} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100">
+    <main class="max-w-3xl mx-auto px-4 py-8 space-y-8">
+
+      <!-- Header -->
+      <header class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6 rounded-t-xl shadow">
+        <h1 class="text-3xl font-bold">Milk Grams ↔ Cups Converter</h1>
+        <p class="text-base mt-2">Convert grams of milk to cups by type — whole, skim, condensed, or evaporated.</p>
+      </header>
+
+      <!-- Seasonal Tip -->
+      <div class="mt-6 mb-4 bg-purple-100 dark:bg-purple-800 text-purple-900 dark:text-purple-100 p-4 text-sm rounded text-center">
+        💡 <strong>Seasonal Tip:</strong> Great for scaling recipes and choosing the right milk type for your dish.
+      </div>
+
+      <!-- Converter -->
+      <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow p-6 space-y-4">
+        <!-- Dropdown -->
+        <div>
+          <label for="ingredient" class="block font-semibold mb-1">Milk Type</label>
+          <select id="ingredient" class="w-full p-2 rounded border dark:bg-gray-900 dark:border-gray-600">
+            {ingredientOptions.map((item, i) => (
+              <option value={i}>{item.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <!-- Switch Button -->
+        <div class="flex items-center justify-between">
+          <p id="modeLabel" class="text-lg font-medium">Convert Grams to Cups</p>
+          <button id="switchBtn" class="bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded text-sm">🔁 Switch</button>
+        </div>
+
+        <!-- Inputs -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label id="inputLabel" for="inputValue" class="block mb-1 font-medium">Grams</label>
+            <input id="inputValue" type="number" step="any" class="w-full p-3 rounded border text-lg dark:bg-gray-900 dark:border-gray-700" />
+          </div>
+          <div>
+            <label id="outputLabel" for="outputValue" class="block mb-1 font-medium">Cups</label>
+            <input id="outputValue" type="text" disabled class="w-full p-3 rounded border bg-gray-100 text-gray-500 text-lg dark:bg-gray-800 dark:border-gray-700" />
+          </div>
+        </div>
+
+        <p id="resultDisplay" class="text-2xl font-bold text-purple-700 text-center mt-4">—</p>
+      </div>
+
+      <!-- Conversion Table -->
+      <section class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4">Common Conversions</h2>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+          <li>100g Whole Milk ≈ 0.412 cups</li>
+          <li>100g Skim Milk ≈ 0.413 cups</li>
+          <li>100g Condensed Milk ≈ 0.239 cups</li>
+          <li>100g Evaporated Milk ≈ 0.245 cups</li>
+        </ul>
+      </section>
+
+      <!-- Learn More -->
+      <section class="prose dark:prose-invert">
+        <h2>Why Milk Type Matters</h2>
+        <p>Different milk types have different densities. For example, condensed milk is much thicker than skim milk, resulting in very different volume conversions. Always select the correct type from the dropdown to get accurate results.</p>
+
+        <h2>Tips for Accuracy</h2>
+        <ul>
+          <li>Use a kitchen scale to measure grams precisely.</li>
+          <li>Results are rounded to 4 decimal places.</li>
+          <li>Choose the milk type that matches your recipe (whole, skim, etc.).</li>
+        </ul>
+      </section>
+
+      <!-- FAQs -->
+      <section class="prose dark:prose-invert">
+        <h2>FAQs</h2>
+
+        <h3>Can I use this tool for plant-based milks?</h3>
+        <p>This version is designed for dairy-based milks. Almond, oat, and soy milks have different densities not included here.</p>
+
+        <h3>What is the cup size used?</h3>
+        <p>This converter uses the US standard cup: 1 cup = 240 mL.</p>
+      </section>
+
+      <!-- Structured Data -->
+      <script type="application/ld+json" is:inline>
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Milk Grams to Cups Converter",
+          "description": "Convert grams of milk to cups with a dropdown for whole, skim, condensed, and evaporated milk.",
+          "url": "https://yourdomain.com/tools/cooking/dropdown/milk-grams-to-cups"
+        }
+      </script>
+    </main>
+
+    <script is:inline>
+      const input = document.getElementById('inputValue');
+      const output = document.getElementById('outputValue');
+      const resultDisplay = document.getElementById('resultDisplay');
+      const switchBtn = document.getElementById('switchBtn');
+      const ingredientSelect = document.getElementById('ingredient');
+
+      const inputLabel = document.getElementById('inputLabel');
+      const outputLabel = document.getElementById('outputLabel');
+      const modeLabel = document.getElementById('modeLabel');
+
+      const ingredientRatios = [
+        { name: 'Whole Milk', ratio: 0.00412 },
+        { name: 'Skim Milk', ratio: 0.00413 },
+        { name: 'Condensed Milk', ratio: 0.00239 },
+        { name: 'Evaporated Milk', ratio: 0.00245 },
+      ];
+
+      let currentRatio = ingredientRatios[0].ratio;
+      let mode = 'gramsToCups';
+
+      const convert = () => {
+        const val = parseFloat(input.value);
+        if (isNaN(val)) {
+          output.value = '';
+          resultDisplay.textContent = '—';
+          return;
+        }
+
+        let result = mode === 'gramsToCups'
+          ? val * currentRatio
+          : val / currentRatio;
+
+        const fromUnit = mode === 'gramsToCups' ? 'g' : 'cups';
+        const toUnit = mode === 'gramsToCups' ? 'cups' : 'g';
+
+        output.value = result.toFixed(4);
+        resultDisplay.textContent = `${val} ${fromUnit} = ${result.toFixed(4)} ${toUnit}`;
+      };
+
+      input.addEventListener('input', convert);
+
+      switchBtn.addEventListener('click', () => {
+        mode = mode === 'gramsToCups' ? 'cupsToGrams' : 'gramsToCups';
+
+        if (mode === 'gramsToCups') {
+          inputLabel.textContent = 'Grams';
+          outputLabel.textContent = 'Cups';
+          modeLabel.textContent = 'Convert Grams to Cups';
+        } else {
+          inputLabel.textContent = 'Cups';
+          outputLabel.textContent = 'Grams';
+          modeLabel.textContent = 'Convert Cups to Grams';
+        }
+
+        input.value = '';
+        output.value = '';
+        resultDisplay.textContent = '—';
+      });
+
+      ingredientSelect.addEventListener('change', (e) => {
+        const idx = parseInt(e.target.value);
+        currentRatio = ingredientRatios[idx].ratio;
+        convert();
+      });
+    </script>
+  </body>
+</html>

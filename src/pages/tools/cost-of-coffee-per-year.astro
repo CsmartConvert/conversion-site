@@ -1,0 +1,78 @@
+---
+export const prerender = false;
+import Layout from '../../layouts/Layout.astro';
+
+let result = null;
+
+if (Astro.request.method === 'POST') {
+  const contentType = Astro.request.headers.get('content-type') || '';
+  if (
+    contentType.includes('application/x-www-form-urlencoded') ||
+    contentType.includes('multipart/form-data')
+  ) {
+    const data = await Astro.request.formData();
+    const costPerCup = parseFloat(data.get('costPerCup')) || 0;
+    const cupsPerDay = parseFloat(data.get('cupsPerDay')) || 0;
+    result = costPerCup * cupsPerDay * 365;
+  }
+}
+---
+
+<Layout>
+  <main class="max-w-4xl mx-auto px-4 py-10">
+    <!-- ☕ Header -->
+    <section class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6 rounded-t-lg shadow-md">
+      <h1 class="text-3xl font-bold">Cost of Coffee Per Year Calculator</h1>
+      <p class="text-sm mt-1">Find out how much you're really spending on coffee each year based on your daily habit.</p>
+    </section>
+
+    <!-- 💡 Tip -->
+    <div class="bg-purple-50 border-l-4 border-purple-400 p-4 mb-6">
+      <p class="text-purple-700">
+        <strong>💡 Tip:</strong> Use this tool to see how your daily coffee adds up—and where you might save.
+      </p>
+    </div>
+
+    <!-- 🧮 Calculator -->
+    <section class="bg-white border border-gray-200 p-6 rounded-b-lg shadow space-y-6">
+      <form method="POST" enctype="application/x-www-form-urlencoded" class="grid gap-6">
+        <div>
+          <label for="costPerCup" class="block font-semibold mb-1">Cost Per Cup ($):</label>
+          <input type="number" step="any" name="costPerCup" id="costPerCup" class="w-full p-2 border rounded" required />
+        </div>
+
+        <div>
+          <label for="cupsPerDay" class="block font-semibold mb-1">Cups Per Day:</label>
+          <input type="number" step="any" name="cupsPerDay" id="cupsPerDay" class="w-full p-2 border rounded" required />
+        </div>
+
+        <button type="submit" class="bg-purple-700 hover:bg-purple-800 text-white py-2 px-4 rounded font-semibold">
+          Calculate
+        </button>
+      </form>
+
+      {result !== null && (
+        <div class="mt-6 bg-green-50 border border-green-300 text-green-800 font-semibold p-4 rounded">
+          ☕ Estimated Annual Coffee Cost: ${result.toFixed(2)}
+        </div>
+      )}
+    </section>
+
+    <!-- 📘 Why This Matters + Pro Tips -->
+    <section class="mt-10 px-6">
+      <h2 class="text-xl font-semibold mb-4 text-gray-800">Why This Matters</h2>
+      <p class="text-gray-700 mb-4">
+        Small daily habits add up. This calculator helps you understand how your coffee routine affects your annual spending—especially if you're buying coffee out.
+      </p>
+
+      <h3 class="text-lg font-semibold mb-2 text-gray-800">Pro Tips</h3>
+      <ul class="list-disc list-inside text-gray-700 space-y-1">
+        <li>Try making coffee at home and compare savings using this tool.</li>
+        <li>Reduce your habit by one cup a day and track the annual difference.</li>
+        <li>Use the savings to fund other lifestyle or financial goals.</li>
+      </ul>
+    </section>
+  </main>
+</Layout>
+
+

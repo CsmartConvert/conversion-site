@@ -1,0 +1,118 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const title = "Mortgage Payment Calculator";
+
+let loanAmount = "";
+let interestRate = "";
+let loanTermYears = "";
+let monthlyPayment = null;
+
+// ✅ Proper SSR POST form handling
+if (
+  Astro.request?.method === 'POST' &&
+  Astro.request.headers.get('content-type')?.includes('application/x-www-form-urlencoded')
+) {
+  const form = await Astro.request.formData();
+
+  loanAmount = form.get('loanAmount') || "";
+  interestRate = form.get('interestRate') || "";
+  loanTermYears = form.get('loanTermYears') || "";
+
+  const principal = parseFloat(loanAmount);
+  const rate = parseFloat(interestRate) / 100 / 12; // monthly interest rate
+  const n = parseFloat(loanTermYears) * 12; // number of monthly payments
+
+  if (!isNaN(principal) && !isNaN(rate) && !isNaN(n) && rate > 0 && n > 0) {
+    const numerator = rate * Math.pow(1 + rate, n);
+    const denominator = Math.pow(1 + rate, n) - 1;
+    monthlyPayment = principal * (numerator / denominator);
+  }
+}
+---
+
+<Layout>
+  <!-- 🏠 Header -->
+  <section class="max-w-3xl mx-auto bg-gradient-to-r from-blue-600 to-blue-800 text-white py-6 px-4 md:py-8 mb-8 shadow text-center rounded-md">
+    <h1 class="text-3xl font-bold mb-2">🏠 {title}</h1>
+    <p class="text-base">Estimate your monthly mortgage payment based on loan details.</p>
+  </section>
+
+  <!-- 💡 Tip -->
+  <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 max-w-3xl mx-auto">
+    <p class="text-blue-700"><strong>💡 Tip:</strong> This calculator uses the standard amortization formula. Be sure to include property taxes and insurance separately.</p>
+  </div>
+
+  <!-- 🔢 Form -->
+  <section class="bg-white border border-gray-200 p-6 rounded-lg shadow max-w-2xl mx-auto mb-10">
+    <form method="POST" enctype="application/x-www-form-urlencoded" class="space-y-6">
+      <div>
+        <label for="loanAmount" class="block font-medium text-gray-800">Loan Amount ($):</label>
+        <input
+          type="number"
+          step="any"
+          name="loanAmount"
+          id="loanAmount"
+          class="w-full p-2 border rounded"
+          value={loanAmount}
+          required
+        />
+      </div>
+
+      <div>
+        <label for="interestRate" class="block font-medium text-gray-800">Annual Interest Rate (%):</label>
+        <input
+          type="number"
+          step="any"
+          name="interestRate"
+          id="interestRate"
+          class="w-full p-2 border rounded"
+          value={interestRate}
+          required
+        />
+      </div>
+
+      <div>
+        <label for="loanTermYears" class="block font-medium text-gray-800">Loan Term (Years):</label>
+        <input
+          type="number"
+          step="1"
+          name="loanTermYears"
+          id="loanTermYears"
+          class="w-full p-2 border rounded"
+          value={loanTermYears}
+          required
+        />
+      </div>
+
+      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded font-semibold w-full">
+        Calculate Payment
+      </button>
+    </form>
+
+    {monthlyPayment !== null && (
+      <div class="mt-6 bg-green-50 border border-green-300 text-green-800 font-semibold p-4 rounded text-center">
+        Estimated Monthly Payment: ${monthlyPayment.toFixed(2)}
+      </div>
+    )}
+  </section>
+
+  <!-- 📘 Why This Matters + Pro Tips -->
+  <section class="max-w-3xl mx-auto px-6 mt-6 mb-8">
+    <h2 class="text-xl font-semibold mb-4 text-gray-800">Why This Matters</h2>
+    <p class="text-gray-700 mb-4">
+      A mortgage is one of the largest long-term financial commitments you'll make. Knowing your monthly payment helps you stay within budget and plan for the long haul.
+    </p>
+
+    <h3 class="text-lg font-semibold mb-2 text-gray-800">Pro Tips</h3>
+    <ul class="list-disc list-inside text-gray-700 space-y-1">
+      <li>Include estimated taxes, insurance, and HOA fees to get a full payment picture.</li>
+      <li>Use a fixed rate for long-term predictability if available.</li>
+      <li>Compare different term lengths (15 vs 30 years) to see interest savings.</li>
+    </ul>
+  </section>
+</Layout>
+
+
+
+

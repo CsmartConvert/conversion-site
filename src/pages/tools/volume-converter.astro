@@ -1,0 +1,62 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout>
+  <section class="max-w-xl mx-auto mt-10 p-6 bg-white shadow rounded-lg">
+    <h1 class="text-2xl font-bold mb-4">Volume Converter</h1>
+    <p class="text-gray-600 mb-6">
+      Convert between liters and US gallons.
+    </p>
+
+    <form class="space-y-4">
+      <div>
+        <label class="block font-medium text-gray-700">Volume:</label>
+        <input id="volumeInput" type="number" step="0.01" class="w-full border rounded p-2" required />
+      </div>
+
+      <div>
+        <label class="block font-medium text-gray-700">Convert From:</label>
+        <select id="volumeScale" class="w-full border rounded p-2">
+          <option value="liters">Liters</option>
+          <option value="gallons">Gallons</option>
+        </select>
+      </div>
+
+      <button type="button" onclick="convertVolume()" class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">
+        Convert
+      </button>
+    </form>
+
+    <div id="volumeResult" class="mt-6 text-lg font-semibold text-purple-700 hidden"></div>
+  </section>
+
+  <script is:inline>
+    function convertVolume() {
+      const value = parseFloat(document.getElementById("volumeInput").value);
+      const scale = document.getElementById("volumeScale").value;
+      const resultDiv = document.getElementById("volumeResult");
+
+      if (isNaN(value)) {
+        resultDiv.innerText = "Please enter a valid number.";
+        resultDiv.classList.remove("hidden");
+        return;
+      }
+
+      let result = 0;
+      let label = "";
+
+      if (scale === "liters") {
+        result = value * 0.264172;
+        label = `${value} liters is ${result.toFixed(2)} gallons`;
+      } else {
+        result = value / 0.264172;
+        label = `${value} gallons is ${result.toFixed(2)} liters`;
+      }
+
+      resultDiv.innerText = label;
+      resultDiv.classList.remove("hidden");
+    }
+  </script>
+</Layout>
+

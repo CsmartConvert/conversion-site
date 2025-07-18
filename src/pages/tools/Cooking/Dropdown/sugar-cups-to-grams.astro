@@ -1,0 +1,182 @@
+---
+const pageTitle = 'Sugar Cups to Grams Converter';
+const pageDesc = 'Convert cups of sugar to grams by selecting your sugar type: white, brown, powdered, or raw.';
+const path = '/tools/cooking/dropdown/sugar-cups-to-grams';
+
+const ingredientOptions = [
+  { name: 'White Sugar', ratio: 200 },       // 1 cup = 200g
+  { name: 'Brown Sugar (packed)', ratio: 220 },
+  { name: 'Powdered Sugar', ratio: 120 },
+  { name: 'Raw Sugar', ratio: 190 },
+];
+
+let mode = 'cupsToGrams';
+---
+<html lang="en">
+  <head>
+    <title>{pageTitle} | Smart Converter</title>
+    <meta charset="UTF-8" />
+    <meta name="description" content={pageDesc} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100">
+    <main class="max-w-3xl mx-auto px-4 py-8 space-y-8">
+      <!-- Header -->
+      <header class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6 rounded-t-xl shadow">
+        <h1 class="text-3xl font-bold">Sugar ↔ Cups to Grams Converter</h1>
+        <p class="text-base mt-2">Convert sugar by type—white, brown, powdered, and more—for accurate kitchen conversions.</p>
+      </header>
+
+      <!-- Seasonal Tip -->
+      <div class="mt-6 mb-4 bg-purple-100 dark:bg-purple-800 text-purple-900 dark:text-purple-100 p-4 text-sm rounded text-center">
+        💡 <strong>Seasonal Tip:</strong> Holiday baking? This tool ensures your sugar measurements stay spot-on!
+      </div>
+
+      <!-- Converter -->
+      <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow p-6 space-y-4">
+        <div>
+          <label for="ingredient" class="block font-semibold mb-1">Sugar Type</label>
+          <select id="ingredient" class="w-full p-2 rounded border dark:bg-gray-900 dark:border-gray-600">
+            {ingredientOptions.map((item, i) => (
+              <option value={i}>{item.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <p id="modeLabel" class="text-lg font-medium">Convert Cups to Grams</p>
+          <button id="switchBtn" class="bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded text-sm">🔁 Switch</button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label id="inputLabel" for="inputValue" class="block mb-1 font-medium">Cups</label>
+            <input id="inputValue" type="number" step="any" class="w-full p-3 rounded border text-lg dark:bg-gray-900 dark:border-gray-700" />
+          </div>
+          <div>
+            <label id="outputLabel" for="outputValue" class="block mb-1 font-medium">Grams</label>
+            <input id="outputValue" type="text" disabled class="w-full p-3 rounded border bg-gray-100 text-gray-500 text-lg dark:bg-gray-800 dark:border-gray-700" />
+          </div>
+        </div>
+
+        <p id="resultDisplay" class="text-2xl font-bold text-purple-700 text-center mt-4">—</p>
+      </div>
+
+      <!-- Conversion Table -->
+      <section class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4">Quick Reference</h2>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+          <li>1 cup White Sugar ≈ 200g</li>
+          <li>1 cup Brown Sugar ≈ 220g</li>
+          <li>1 cup Powdered Sugar ≈ 120g</li>
+          <li>1 cup Raw Sugar ≈ 190g</li>
+        </ul>
+      </section>
+
+      <!-- Learn More -->
+      <section class="prose dark:prose-invert">
+        <h2>Why Sugar Type Affects Conversion</h2>
+        <p>Different types of sugar have different weights per cup due to moisture, density, and granule size. This tool helps prevent recipe mishaps by using type-specific ratios.</p>
+
+        <h2>Tips for Best Results</h2>
+        <ul>
+          <li>Spoon sugar into measuring cups—don’t scoop directly from the bag.</li>
+          <li>For packed brown sugar, press it down into the cup until level.</li>
+          <li>Use this tool when converting from volume-based recipes to weight-based for better accuracy.</li>
+        </ul>
+      </section>
+
+      <!-- FAQs -->
+      <section class="prose dark:prose-invert">
+        <h2>FAQs</h2>
+
+        <h3>Why is powdered sugar so much lighter?</h3>
+        <p>It contains more air and has a finer texture, which takes up more volume per gram.</p>
+
+        <h3>Can I use the same conversion for all sugars?</h3>
+        <p>No. Always choose the correct sugar type from the dropdown for accurate conversions.</p>
+
+        <h3>Is this based on US cup size?</h3>
+        <p>Yes, this converter uses the US cup (1 cup = ~236.6 mL).</p>
+      </section>
+
+      <!-- Structured Data -->
+      <script type="application/ld+json" is:inline>
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Sugar Cups to Grams Converter",
+          "description": "Convert cups of sugar to grams. Includes white, brown, powdered, and raw sugar options for precise baking.",
+          "url": "https://yourdomain.com/tools/cooking/dropdown/sugar-cups-to-grams"
+        }
+      </script>
+    </main>
+
+    <script is:inline>
+      const input = document.getElementById('inputValue');
+      const output = document.getElementById('outputValue');
+      const resultDisplay = document.getElementById('resultDisplay');
+      const switchBtn = document.getElementById('switchBtn');
+      const ingredientSelect = document.getElementById('ingredient');
+
+      const inputLabel = document.getElementById('inputLabel');
+      const outputLabel = document.getElementById('outputLabel');
+      const modeLabel = document.getElementById('modeLabel');
+
+      const ingredientRatios = [
+        { name: 'White Sugar', ratio: 200 },
+        { name: 'Brown Sugar (packed)', ratio: 220 },
+        { name: 'Powdered Sugar', ratio: 120 },
+        { name: 'Raw Sugar', ratio: 190 },
+      ];
+
+      let currentRatio = ingredientRatios[0].ratio;
+      let mode = 'cupsToGrams';
+
+      const convert = () => {
+        const val = parseFloat(input.value);
+        if (isNaN(val)) {
+          output.value = '';
+          resultDisplay.textContent = '—';
+          return;
+        }
+
+        let result = mode === 'cupsToGrams'
+          ? val * currentRatio
+          : val / currentRatio;
+
+        const fromUnit = mode === 'cupsToGrams' ? 'cups' : 'g';
+        const toUnit = mode === 'cupsToGrams' ? 'g' : 'cups';
+
+        output.value = result.toFixed(4);
+        resultDisplay.textContent = `${val} ${fromUnit} = ${result.toFixed(4)} ${toUnit}`;
+      };
+
+      input.addEventListener('input', convert);
+
+      switchBtn.addEventListener('click', () => {
+        mode = mode === 'cupsToGrams' ? 'gramsToCups' : 'cupsToGrams';
+
+        if (mode === 'cupsToGrams') {
+          inputLabel.textContent = 'Cups';
+          outputLabel.textContent = 'Grams';
+          modeLabel.textContent = 'Convert Cups to Grams';
+        } else {
+          inputLabel.textContent = 'Grams';
+          outputLabel.textContent = 'Cups';
+          modeLabel.textContent = 'Convert Grams to Cups';
+        }
+
+        input.value = '';
+        output.value = '';
+        resultDisplay.textContent = '—';
+      });
+
+      ingredientSelect.addEventListener('change', (e) => {
+        const idx = parseInt(e.target.value);
+        currentRatio = ingredientRatios[idx].ratio;
+        convert();
+      });
+    </script>
+  </body>
+</html>

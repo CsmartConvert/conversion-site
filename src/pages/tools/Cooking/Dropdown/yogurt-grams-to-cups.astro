@@ -1,0 +1,148 @@
+      <!-- Converter -->
+      <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow p-6 space-y-4">
+        <!-- Ingredient Dropdown -->
+        <div>
+          <label for="ingredient" class="block font-semibold mb-1">Ingredient Type</label>
+          <select id="ingredient" class="w-full p-2 rounded border dark:bg-gray-900 dark:border-gray-600">
+            {ingredientOptions.map((item, i) => (
+              <option value={i}>{item.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <!-- Switch & Mode -->
+        <div class="flex items-center justify-between">
+          <p id="modeLabel" class="text-lg font-medium">Convert Grams to Cups</p>
+          <button id="switchBtn" class="bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded text-sm">🔁 Switch</button>
+        </div>
+
+        <!-- Inputs -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label id="inputLabel" for="inputValue" class="block mb-1 font-medium">Grams</label>
+            <input id="inputValue" type="number" step="any" class="w-full p-3 rounded border text-lg dark:bg-gray-900 dark:border-gray-700" />
+          </div>
+          <div>
+            <label id="outputLabel" for="outputValue" class="block mb-1 font-medium">Cups</label>
+            <input id="outputValue" type="text" disabled class="w-full p-3 rounded border bg-gray-100 text-gray-500 text-lg dark:bg-gray-800 dark:border-gray-700" />
+          </div>
+        </div>
+
+        <p id="resultDisplay" class="text-2xl font-bold text-purple-700 text-center mt-4">—</p>
+      </div>
+
+      <!-- Conversion Table -->
+      <section class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4">Common Conversions</h2>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+          <li>100g Butter ≈ 0.44 cups</li>
+          <li>100g Sugar ≈ 0.5 cups</li>
+          <li>100g Flour ≈ 0.67 cups</li>
+          <li>100g Honey ≈ 0.42 cups</li>
+        </ul>
+      </section>
+
+      <!-- Learn More -->
+      <section class="prose dark:prose-invert">
+        <h2>Why Ingredient Type Matters</h2>
+        <p>Each ingredient has a unique density, so 100 grams of flour won't occupy the same volume as 100 grams of sugar. This tool takes ingredient density into account for accurate conversions.</p>
+
+        <h2>Tips for Accurate Measurement</h2>
+        <ul>
+          <li>Use a kitchen scale for best results.</li>
+          <li>Switch mode to convert cups back to grams.</li>
+          <li>Choose the correct ingredient from the dropdown menu.</li>
+        </ul>
+      </section>
+
+      <!-- FAQs -->
+      <section class="prose dark:prose-invert">
+        <h2>FAQs</h2>
+
+        <h3>What if my ingredient isn't listed?</h3>
+        <p>Use the closest match, or look up the specific density of your ingredient.</p>
+
+        <h3>How accurate are these conversions?</h3>
+        <p>They’re based on average ingredient densities and rounded to 4 decimal places for usability.</p>
+
+        <h3>What size is a “cup”?</h3>
+        <p>We use the US standard cup (1 cup = 236.59 mL).</p>
+      </section>
+
+      <!-- Structured Data -->
+      <script type="application/ld+json" is:inline>
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Grams to Cups Converter",
+          "description": "Convert grams to cups based on ingredient type like butter, sugar, flour, and more.",
+          "url": "https://yourdomain.com/tools/cooking/dropdown/template"
+        }
+      </script>
+    </main>
+
+    <script is:inline>
+      const input = document.getElementById('inputValue');
+      const output = document.getElementById('outputValue');
+      const resultDisplay = document.getElementById('resultDisplay');
+      const switchBtn = document.getElementById('switchBtn');
+      const ingredientSelect = document.getElementById('ingredient');
+
+      const inputLabel = document.getElementById('inputLabel');
+      const outputLabel = document.getElementById('outputLabel');
+      const modeLabel = document.getElementById('modeLabel');
+
+      const ingredientRatios = [
+        { name: 'Butter', ratio: 0.0044 },
+        { name: 'Sugar (granulated)', ratio: 0.005 },
+        { name: 'Flour (all-purpose)', ratio: 0.0067 },
+        { name: 'Honey', ratio: 0.0042 },
+      ];
+
+      let currentRatio = ingredientRatios[0].ratio;
+      let mode = 'gramsToCups';
+
+      const convert = () => {
+        const val = parseFloat(input.value);
+        if (isNaN(val)) {
+          output.value = '';
+          resultDisplay.textContent = '—';
+          return;
+        }
+
+        const result = mode === 'gramsToCups' ? val * currentRatio : val / currentRatio;
+        const fromUnit = mode === 'gramsToCups' ? 'g' : 'cups';
+        const toUnit = mode === 'gramsToCups' ? 'cups' : 'g';
+
+        output.value = result.toFixed(4);
+        resultDisplay.textContent = `${val} ${fromUnit} = ${result.toFixed(4)} ${toUnit}`;
+      };
+
+      input.addEventListener('input', convert);
+
+      switchBtn.addEventListener('click', () => {
+        mode = mode === 'gramsToCups' ? 'cupsToGrams' : 'gramsToCups';
+
+        if (mode === 'gramsToCups') {
+          inputLabel.textContent = 'Grams';
+          outputLabel.textContent = 'Cups';
+          modeLabel.textContent = 'Convert Grams to Cups';
+        } else {
+          inputLabel.textContent = 'Cups';
+          outputLabel.textContent = 'Grams';
+          modeLabel.textContent = 'Convert Cups to Grams';
+        }
+
+        input.value = '';
+        output.value = '';
+        resultDisplay.textContent = '—';
+      });
+
+      ingredientSelect.addEventListener('change', (e) => {
+        const idx = parseInt(e.target.value);
+        currentRatio = ingredientRatios[idx].ratio;
+        convert();
+      });
+    </script>
+  </body>
+</html>

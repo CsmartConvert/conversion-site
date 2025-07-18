@@ -1,0 +1,118 @@
+---
+export const prerender = false;
+import Layout from '../../layouts/Layout.astro';
+
+
+let result = null;
+let direction = 'from-to';
+let amount = 0;
+let fromCurrency = 'USD';
+let toCurrency = 'EUR';
+
+const exchangeRates = {
+  USD: { EUR: 0.85, GBP: 0.76, JPY: 110 },
+  EUR: { USD: 1.18, GBP: 0.89, JPY: 129 },
+  GBP: { USD: 1.32, EUR: 1.12, JPY: 145 },
+  JPY: { USD: 0.0091, EUR: 0.0078, GBP: 0.0069 }
+};
+
+if (Astro.request.method === 'POST') {
+  const data = await Astro.request.formData();
+  amount = parseFloat(data.get('amount')) || 0;
+  fromCurrency = data.get('fromCurrency') || 'USD';
+  toCurrency = data.get('toCurrency') || 'EUR';
+  direction = data.get('direction') || 'from-to';
+
+  if (direction === 'to-from') {
+    const temp = fromCurrency;
+    fromCurrency = toCurrency;
+    toCurrency = temp;
+  }
+
+  const rate = exchangeRates[fromCurrency]?.[toCurrency] || 1;
+  result = amount * rate;
+}
+---
+
+<Layout>
+  <!-- 🌐 Header -->
+  <section class="max-w-3xl mx-auto bg-gradient-to-r from-blue-600 to-blue-800 text-white py-6 px-4 md:py-8 mb-8 shadow text-center rounded-md">
+    <h1 class="text-3xl font-bold mb-2">💱 Currency Converter</h1>
+    <p class="text-base">Quickly convert between different currencies using estimated exchange rates.</p>
+  </section>
+
+  <!-- 💡 Seasonal Tip -->
+  <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 max-w-3xl mx-auto">
+    <p class="text-blue-700"><strong>💡 Tip:</strong> Exchange rates can vary — always check live rates before making large transactions!</p>
+  </div>
+
+  <!-- 🔢 Converter -->
+  <section class="bg-white border border-gray-200 p-6 rounded-lg shadow max-w-2xl mx-auto mb-10">
+    <form method="POST" class="space-y-6">
+      <div>
+        <label for="amount" class="block font-medium text-gray-800">Amount:</label>
+        <input type="number" step="any" name="amount" id="amount" class="w-full p-2 border rounded" value={amount} required />
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="fromCurrency" class="block font-medium text-gray-800">From:</label>
+          <select name="fromCurrency" id="fromCurrency" class="w-full p-2 border rounded">
+            <option value="USD" selected={fromCurrency === 'USD'}>USD</option>
+            <option value="EUR" selected={fromCurrency === 'EUR'}>EUR</option>
+            <option value="GBP" selected={fromCurrency === 'GBP'}>GBP</option>
+            <option value="JPY" selected={fromCurrency === 'JPY'}>JPY</option>
+          </select>
+        </div>
+        <div>
+          <label for="toCurrency" class="block font-medium text-gray-800">To:</label>
+          <select name="toCurrency" id="toCurrency" class="w-full p-2 border rounded">
+            <option value="USD" selected={toCurrency === 'USD'}>USD</option>
+            <option value="EUR" selected={toCurrency === 'EUR'}>EUR</option>
+            <option value="GBP" selected={toCurrency === 'GBP'}>GBP</option>
+            <option value="JPY" selected={toCurrency === 'JPY'}>JPY</option>
+          </select>
+        </div>
+      </div>
+
+      <input type="hidden" name="direction" value={direction} />
+
+      <div class="flex justify-between items-center mt-4">
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded font-semibold w-full">
+          Convert
+        </button>
+        <button
+          type="submit"
+          name="direction"
+          value={direction === 'from-to' ? 'to-from' : 'from-to'}
+          class="ml-4 text-sm text-blue-700 underline"
+        >
+          🔁 Switch
+        </button>
+      </div>
+    </form>
+
+    {result !== null && (
+      <div class="mt-6 bg-green-50 border border-green-300 text-green-800 font-semibold p-4 rounded text-center">
+        {amount} {fromCurrency} = {result.toFixed(2)} {toCurrency}
+      </div>
+    )}
+  </section>
+
+  <!-- 📘 Why This Matters + Pro Tips -->
+  <section class="max-w-3xl mx-auto px-6 mt-6 mb-8">
+    <h2 class="text-xl font-semibold mb-4 text-gray-800">Why This Matters</h2>
+    <p class="text-gray-700 mb-4">
+      Currency conversion is essential when budgeting for international travel, shopping globally, or analyzing expenses. A quick converter saves time and avoids math mistakes.
+    </p>
+
+    <h3 class="text-lg font-semibold mb-2 text-gray-800">Pro Tips</h3>
+    <ul class="list-disc list-inside text-gray-700 space-y-1">
+      <li>Double-check live rates when converting large amounts.</li>
+      <li>Consider transaction fees if using a bank or exchange service.</li>
+      <li>Save a favorite conversion pair for faster reuse!</li>
+    </ul>
+  </section>
+</Layout>
+
+
