@@ -1,3 +1,6 @@
+// Due to message size limitations, the full script will be split into parts.
+// This is Part 1 of 2
+
 import React, { useState, useEffect } from 'react';
 import Chart from 'chart.js/auto';
 
@@ -6,14 +9,17 @@ export default function LoanModule({ type }) {
   const [rate, setRate] = useState('');
   const [term, setTerm] = useState('');
   const [balloon, setBalloon] = useState('');
+  const [currencyCode, setCurrencyCode] = useState('USD');
   const [result, setResult] = useState(null);
   const [chartRef, setChartRef] = useState(null);
   const [amortizationData, setAmortizationData] = useState([]);
   const [showTable, setShowTable] = useState(false);
+  const [chartType, setChartType] = useState('line');
 
-  const currency = new Intl.NumberFormat('en-US', {
+  const currencyFormatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'USD',
+    currency: currencyCode,
+    maximumFractionDigits: 2,
   });
 
   const loanLabels = {
@@ -21,6 +27,16 @@ export default function LoanModule({ type }) {
     'interest-only': 'Interest-Only Loan',
     deferred: 'Deferred Payment Loan',
     balloon: 'Balloon Loan',
+  };
+
+  const availableCurrencies = ['USD', 'EUR', 'GBP', 'JPY', 'INR'];
+
+  const currencyColors = {
+    USD: { balance: '#3b82f6', principal: '#10b981', interest: '#f97316' },
+    EUR: { balance: '#6366f1', principal: '#34d399', interest: '#f59e0b' },
+    GBP: { balance: '#8b5cf6', principal: '#4ade80', interest: '#f87171' },
+    JPY: { balance: '#f43f5e', principal: '#facc15', interest: '#06b6d4' },
+    INR: { balance: '#0ea5e9', principal: '#84cc16', interest: '#eab308' },
   };
 
   function calculateLoan(e) {
@@ -107,6 +123,8 @@ export default function LoanModule({ type }) {
       interestData,
       principalData,
       labels,
+      principalTotal: P,
+      interestTotal: totalInterest,
     });
 
     setAmortizationData(amortization);
@@ -121,40 +139,69 @@ export default function LoanModule({ type }) {
     if (ctx && ctx instanceof HTMLCanvasElement) {
       if (chartRef) chartRef.destroy();
 
-      const newChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: result.labels,
-          datasets: [
-            {
-              label: 'Remaining Balance',
-              data: result.balanceData,
-              borderColor: '#3b82f6',
-              fill: false,
+      const colors = currencyColors[currencyCode] || currencyColors['USD'];
+
+      let newChart;
+      if (chartType === 'pie') {
+        newChart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: ['Principal', 'Interest'],
+            datasets: [
+              {
+                data: [result.principalTotal, result.interestTotal],
+                backgroundColor: [colors.principal, colors.interest],
+                borderColor: '#fff',
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: 'bottom' },
+              title: {
+                display: true,
+                text: 'Principal vs Interest Breakdown',
+              },
             },
-            {
-              label: 'Principal Paid',
-              data: result.principalData,
-              borderColor: '#10b981',
-              fill: false,
-            },
-            {
-              label: 'Interest Paid',
-              data: result.interestData,
-              borderColor: '#f97316',
-              fill: false,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          plugins: { legend: { position: 'top' } },
-        },
-      });
+          },
+        });
+      } else {
+        newChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: result.labels,
+            datasets: [
+              {
+                label: 'Remaining Balance',
+                data: result.balanceData,
+                borderColor: colors.balance,
+                fill: false,
+              },
+              {
+                label: 'Principal Paid',
+                data: result.principalData,
+                borderColor: colors.principal,
+                fill: false,
+              },
+              {
+                label: 'Interest Paid',
+                data: result.interestData,
+                borderColor: colors.interest,
+                fill: false,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: { legend: { position: 'top' } },
+          },
+        });
+      }
 
       setChartRef(newChart);
     }
-  }, [result]);
+  }, [result, chartType, currencyCode]);
 
   function downloadCSV() {
     const headers = 'Month,Interest,Principal,Payment,Remaining Balance\n';
@@ -174,8 +221,8 @@ export default function LoanModule({ type }) {
   }
 
   return (
-    <div className="bg-white shadow rounded-lg p-6 border border-gray-200 mb-12">
-      <h2 className="text-xl font-semibold mb-4 text-gray-800">{loanLabels[type]}</h2>
+    <div className="bg-white dark:bg-gray-900 shadow rounded-lg p-6 border border-gray-200 dark:border-gray-700 mb-12">
+      <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">{loanLabels[type]}</h2>
 
       <form
         onSubmit={calculateLoan}
@@ -183,33 +230,33 @@ export default function LoanModule({ type }) {
         aria-label={`${loanLabels[type]} Form`}
       >
         <div>
-          <label htmlFor={`${type}-amount`} className="block text-sm font-medium text-gray-700">
-            Loan Amount ($)
+          <label htmlFor={`${type}-amount`} className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Loan Amount
           </label>
           <input
             id={`${type}-amount`}
             type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2"
+            className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white p-2"
             required
           />
         </div>
         <div>
-          <label htmlFor={`${type}-rate`} className="block text-sm font-medium text-gray-700">
-            Annual Interest Rate (%)
+          <label htmlFor={`${type}-rate`} className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Interest Rate (%)
           </label>
           <input
             id={`${type}-rate`}
             type="number"
             value={rate}
             onChange={(e) => setRate(e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2"
+            className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white p-2"
             required
           />
         </div>
         <div>
-          <label htmlFor={`${type}-term`} className="block text-sm font-medium text-gray-700">
+          <label htmlFor={`${type}-term`} className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Term (Months)
           </label>
           <input
@@ -217,25 +264,39 @@ export default function LoanModule({ type }) {
             type="number"
             value={term}
             onChange={(e) => setTerm(e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2"
+            className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white p-2"
             required
           />
         </div>
         {type === 'balloon' && (
           <div>
-            <label htmlFor={`${type}-balloon`} className="block text-sm font-medium text-gray-700">
-              Balloon Payment ($)
+            <label htmlFor={`${type}-balloon`} className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Balloon Payment
             </label>
             <input
               id={`${type}-balloon`}
               type="number"
               value={balloon}
               onChange={(e) => setBalloon(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2"
-              required
+              className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white p-2"
             />
           </div>
         )}
+        <div>
+          <label htmlFor="currency" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Currency
+          </label>
+          <select
+            id="currency"
+            value={currencyCode}
+            onChange={(e) => setCurrencyCode(e.target.value)}
+            className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white p-2"
+          >
+            {availableCurrencies.map((cur) => (
+              <option key={cur} value={cur}>{cur}</option>
+            ))}
+          </select>
+        </div>
         <div className="md:col-span-2">
           <button
             type="submit"
@@ -248,34 +309,40 @@ export default function LoanModule({ type }) {
 
       {result && (
         <div aria-live="polite">
-          {/* Results Summary */}
-          <div className="bg-blue-50 border border-blue-200 text-blue-800 p-4 rounded mb-6 text-sm" role="region">
+          <div className="bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 text-blue-800 dark:text-blue-300 p-4 rounded mb-6 text-sm">
             <div className="flex justify-between mb-1">
               <span className="font-medium">📅 Monthly Payment</span>
-              <span className="font-bold">{currency.format(result.monthly)}</span>
+              <span className="font-bold">{currencyFormatter.format(result.monthly)}</span>
             </div>
             <div className="flex justify-between mb-1">
               <span className="font-medium">💵 Total Interest</span>
-              <span className="font-bold">{currency.format(result.totalInterest)}</span>
+              <span className="font-bold">{currencyFormatter.format(result.totalInterest)}</span>
             </div>
             <div className="flex justify-between">
               <span className="font-medium">💰 Total Cost</span>
-              <span className="font-bold">{currency.format(result.totalCost)}</span>
+              <span className="font-bold">{currencyFormatter.format(result.totalCost)}</span>
             </div>
           </div>
 
-          {/* Chart */}
+          <div className="flex justify-end mb-2">
+            <button
+              onClick={() => setChartType(chartType === 'line' ? 'pie' : 'line')}
+              className="text-sm text-blue-600 dark:text-blue-300 underline"
+            >
+              {chartType === 'line' ? 'Switch to Pie Chart' : 'Switch to Line Chart'}
+            </button>
+          </div>
+
           <div className="relative mb-6">
             <canvas
               id={`${type}-chart`}
-              className="w-full min-h-[220px] md:min-h-[300px] border border-gray-200 rounded"
+              className="w-full min-h-[220px] md:min-h-[300px] border border-gray-200 dark:border-gray-700 rounded"
             ></canvas>
           </div>
 
-          {/* Show/Hide Table */}
           <button
             onClick={() => setShowTable(!showTable)}
-            className="flex items-center gap-2 mb-4 text-blue-600 underline hover:text-blue-800 text-base"
+            className="flex items-center gap-2 mb-4 text-blue-600 dark:text-blue-300 underline hover:text-blue-800 dark:hover:text-blue-100 text-base"
             aria-expanded={showTable}
             aria-controls={`table-${type}`}
           >
@@ -287,18 +354,18 @@ export default function LoanModule({ type }) {
               <div className="text-right mb-3">
                 <button
                   onClick={downloadCSV}
-                  className="text-blue-600 underline text-sm hover:text-blue-800"
+                  className="text-blue-600 dark:text-blue-300 underline text-sm hover:text-blue-800 dark:hover:text-blue-100"
                 >
                   ⬇️ Download Amortization CSV
                 </button>
               </div>
 
-              <div className="overflow-x-auto rounded-lg border border-gray-200 max-w-full">
+              <div className="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-600 max-w-full">
                 <table
-                  className="min-w-full text-sm text-gray-800 border-collapse bg-white"
+                  className="min-w-full text-sm text-gray-800 dark:text-gray-200 border-collapse bg-white dark:bg-gray-900"
                   id={`table-${type}`}
                 >
-                  <thead className="bg-gray-100 text-gray-800 font-semibold">
+                  <thead className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-300 font-semibold">
                     <tr>
                       <th className="py-2 px-3 text-left border-b">Month</th>
                       <th className="py-2 px-3 text-left border-b">Interest</th>
@@ -309,12 +376,12 @@ export default function LoanModule({ type }) {
                   </thead>
                   <tbody>
                     {amortizationData.map((row) => (
-                      <tr key={row.month} className="border-b">
+                      <tr key={row.month} className="border-b dark:border-gray-700">
                         <td className="py-1.5 px-3 border-b">{row.month}</td>
-                        <td className="py-1.5 px-3 border-b">{currency.format(row.interest)}</td>
-                        <td className="py-1.5 px-3 border-b">{currency.format(row.principal)}</td>
-                        <td className="py-1.5 px-3 border-b">{currency.format(row.payment)}</td>
-                        <td className="py-1.5 px-3 border-b">{currency.format(row.balance)}</td>
+                        <td className="py-1.5 px-3 border-b">{currencyFormatter.format(row.interest)}</td>
+                        <td className="py-1.5 px-3 border-b">{currencyFormatter.format(row.principal)}</td>
+                        <td className="py-1.5 px-3 border-b">{currencyFormatter.format(row.payment)}</td>
+                        <td className="py-1.5 px-3 border-b">{currencyFormatter.format(row.balance)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -323,18 +390,17 @@ export default function LoanModule({ type }) {
             </>
           )}
 
-          {/* Why This Matters */}
-          <div className="mt-6 bg-gray-50 border-l-4 border-blue-400 p-4">
-            <h3 className="font-semibold text-blue-700 mb-2">Why This Matters</h3>
-            <p className="text-sm text-gray-700">
-              Understanding your loan breakdown helps avoid surprises and allows better financial planning. This calculator shows you not just your payment, but where the money goes.
+          <div className="mt-6 bg-gray-50 dark:bg-gray-800 border-l-4 border-blue-400 p-4">
+            <h3 className="font-semibold text-blue-700 dark:text-blue-300 mb-2">Why This Matters</h3>
+            <p className="text-sm text-gray-700 dark:text-gray-300">
+              Understanding your loan breakdown helps avoid surprises and allows better financial planning.
+              This calculator shows you not just your payment, but where the money goes.
             </p>
           </div>
 
-          {/* Pro Tips */}
-          <div className="mt-4 bg-blue-50 border-l-4 border-blue-300 p-4">
-            <h3 className="font-semibold text-blue-700 mb-2">Pro Tips</h3>
-            <ul className="list-disc pl-5 text-sm text-gray-700 space-y-1">
+          <div className="mt-4 bg-blue-50 dark:bg-gray-900 border-l-4 border-blue-300 p-4">
+            <h3 className="font-semibold text-blue-700 dark:text-blue-300 mb-2">Pro Tips</h3>
+            <ul className="list-disc pl-5 text-sm text-gray-700 dark:text-gray-300 space-y-1">
               <li>Try different loan types to see how interest accumulates.</li>
               <li>Paying just a bit extra monthly can significantly reduce total interest.</li>
               <li>Use the CSV to track or share your amortization schedule.</li>
@@ -345,6 +411,8 @@ export default function LoanModule({ type }) {
     </div>
   );
 }
+// → Part 2 (Remaining JSX output with chart toggle, currency dropdown, results, table, etc.) coming next
+
 
 
 
