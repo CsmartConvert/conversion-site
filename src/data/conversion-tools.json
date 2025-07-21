@@ -3,284 +3,178 @@
     "title": "Fuel Cost Calculator",
     "slug": "fuel-cost-calculator",
     "category": "💼 Budget & Work Calculators",
-    "featured": true
+    "featured": true,
+    "description": "Estimate how much you'll spend on gas for your trip."
   },
   {
     "title": "Hourly to Salary Converter",
     "slug": "hourly-to-salary",
     "category": "💼 Budget & Work Calculators",
-    "featured": false
+    "featured": false,
+    "description": "Convert your hourly wage into an annual salary estimate."
   },
   {
     "title": "Subscription Cost Per Year",
     "slug": "subscription-cost-per-year",
     "category": "💼 Budget & Work Calculators",
-    "featured": false
+    "featured": false,
+    "description": "Calculate your total yearly cost for monthly subscriptions."
   },
   {
     "title": "ROI on Gym Membership",
     "slug": "roi-on-gym-membership",
     "category": "💼 Budget & Work Calculators",
-    "featured": false
+    "featured": false,
+    "description": "Find out if your gym membership is really worth the cost."
   },
   {
     "title": "Cost of Coffee Per Year",
     "slug": "cost-of-coffee-per-year",
     "category": "💼 Budget & Work Calculators",
-    "featured": false
+    "featured": false,
+    "description": "See how much you're spending on coffee annually."
   },
   {
     "title": "Cost Per Unit Calculator",
     "slug": "cost-per-unit",
     "category": "🛒 Shopping & Grocery Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Compare products by price per unit to find the best deal."
   },
   {
     "title": "Cost Per Ounce Calculator",
     "slug": "cost-per-ounce",
     "category": "🛒 Shopping & Grocery Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Find out which item has the lowest cost per ounce."
   },
   {
     "title": "Price Per Diaper",
     "slug": "price-per-diaper",
     "category": "🛒 Shopping & Grocery Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Compare diaper pack prices based on cost per diaper."
   },
   {
     "title": "Price Per Roll",
     "slug": "price-per-roll",
     "category": "🛒 Shopping & Grocery Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Calculate price per toilet paper roll for best value."
   },
   {
     "title": "Price Per Sheet Toilet Paper",
     "slug": "price-per-sheet-toilet-paper",
     "category": "🛒 Shopping & Grocery Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Break down toilet paper cost to per-sheet pricing."
   },
   {
     "title": "Grocery Price Comparison",
     "slug": "grocery-price-comparison",
     "category": "🛒 Shopping & Grocery Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Compare total grocery costs across stores or items."
   },
   {
     "title": "Cheapest Per Ounce",
     "slug": "cheapest-per-ounce",
     "category": "🛒 Shopping & Grocery Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Find the cheapest item by ounce among multiple options."
   },
   {
     "title": "Cheapest Grocery Item",
     "slug": "cheapest-grocery-item",
     "category": "🛒 Shopping & Grocery Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Determine which grocery item offers the best value."
   },
   {
     "title": "Unit vs Bulk",
     "slug": "unit-vs-bulk",
     "category": "🛒 Shopping & Grocery Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Compare unit-priced vs. bulk-sized items to save money."
   },
   {
     "title": "Grocery Item Per Ounce",
     "slug": "grocery-item-per-ounce",
     "category": "🛒 Shopping & Grocery Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Calculate per-ounce cost of your grocery items."
   },
   {
     "title": "Tablespoons to Cups",
     "slug": "tablespoons-to-cups",
     "category": "🍽️ Cooking Measurement Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Easily convert tablespoons to cups for cooking."
   },
   {
     "title": "Teaspoons to Tablespoons",
     "slug": "teaspoons-to-tablespoons",
     "category": "🍽️ Cooking Measurement Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Convert teaspoons to tablespoons quickly."
   },
   {
     "title": "Cups to Milliliters",
     "slug": "cups-to-milliliters",
     "category": "🍽️ Cooking Measurement Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Convert US cups to milliliters accurately."
   },
   {
     "title": "Ounces to Cups",
     "slug": "ounces-to-cups",
     "category": "🍽️ Cooking Measurement Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Convert fluid ounces into cups easily."
   },
   {
     "title": "Milliliters to Ounces",
     "slug": "milliliters-to-ounces",
     "category": "🍽️ Cooking Measurement Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Switch between milliliters and ounces for any recipe."
   },
   {
     "title": "Liters to Cups",
     "slug": "liters-to-cups",
     "category": "🍽️ Cooking Measurement Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Convert liters to US or metric cups."
   },
   {
     "title": "Pounds to Cups",
     "slug": "pounds-to-cups",
     "category": "🍽️ Cooking Measurement Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Convert weight in pounds to volume in cups."
   },
   {
     "title": "Flour Grams to Cups",
     "slug": "Cooking/Dropdown/flour-grams-to-cups",
     "category": "🍽️ Cooking Measurement Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Convert grams of flour to cups with precision."
   },
   {
     "title": "Sugar Grams to Cups",
     "slug": "Cooking/Dropdown/sugar-grams-to-cups",
     "category": "🍽️ Cooking Measurement Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Get accurate conversions of sugar grams to cups."
   },
   {
     "title": "Grams to Tablespoons",
     "slug": "Cooking/Dropdown/grams-to-tablespoons",
     "category": "🍽️ Cooking Measurement Conversions",
-    "featured": false
+    "featured": false,
+    "description": "Convert ingredient weight (grams) to tablespoons."
   },
-  {
-    "title": "Currency Converter",
-    "slug": "currency-converter",
-    "category": "💰 Finance & Lifestyle Conversions",
-    "featured": false
-  },
-  {
-    "title": "Credit Card Interest Calculator",
-    "slug": "credit-card-interest-calculator",
-    "category": "💰 Finance & Lifestyle Conversions",
-    "featured": false
-  },
-  {
-    "title": "Sales Tax Calculator",
-    "slug": "sales-tax-calculator",
-    "category": "💰 Finance & Lifestyle Conversions",
-    "featured": false
-  },
-  {
-    "title": "Tip Calculator",
-    "slug": "tip-calculator",
-    "category": "💰 Finance & Lifestyle Conversions",
-    "featured": false
-  },
-  {
-    "title": "After Tax Income",
-    "slug": "after-tax-income",
-    "category": "💰 Finance & Lifestyle Conversions",
-    "featured": false
-  },
-  {
-    "title": "Mortgage Payment Calculator",
-    "slug": "mortgage-payment-calculator",
-    "category": "💰 Finance & Lifestyle Conversions",
-    "featured": false
-  },
-  {
-    "title": "Student Loan Payoff",
-    "slug": "student-loan-payoff",
-    "category": "💰 Finance & Lifestyle Conversions",
-    "featured": false
-  },
-  {
-    "title": "Mortgage Affordability",
-    "slug": "mortgage-affordability",
-    "category": "💰 Finance & Lifestyle Conversions",
-    "featured": false
-  },
-  {
-    "title": "Retirement Savings Goal",
-    "slug": "retirement-savings-goal",
-    "category": "💰 Finance & Lifestyle Conversions",
-    "featured": false
-  },
-  {
-    "title": "Rent vs Buy Calculator",
-    "slug": "rent-vs-buy-calculator",
-    "category": "💰 Finance & Lifestyle Conversions",
-    "featured": false
-  },
-  {
-    "title": "Property Tax Calculator",
-    "slug": "property-tax-calculator",
-    "category": "💰 Finance & Lifestyle Conversions",
-    "featured": false
-  },
-  {
-    "title": "Cost Per Text Message",
-    "slug": "cost-per-text-message",
-    "category": "✈️ Everyday Life & Travel Tools",
-    "featured": false
-  },
-  {
-    "title": "Cost Per Gigabyte",
-    "slug": "cost-per-gigabyte",
-    "category": "✈️ Everyday Life & Travel Tools",
-    "featured": false
-  },
-  {
-    "title": "Cost Per Serving",
-    "slug": "cost-per-serving",
-    "category": "✈️ Everyday Life & Travel Tools",
-    "featured": true
-  },
-  {
-    "title": "Unit Price Calculator",
-    "slug": "unit-price-calculator",
-    "category": "✈️ Everyday Life & Travel Tools",
-    "featured": false
-  },
-  {
-    "title": "Price Per 100g",
-    "slug": "price-per-100g",
-    "category": "✈️ Everyday Life & Travel Tools",
-    "featured": false
-  },
-  {
-    "title": "Price Per 100 Sheets",
-    "slug": "price-per-100-sheets",
-    "category": "✈️ Everyday Life & Travel Tools",
-    "featured": false
-  },
-  {
-    "title": "Cost Per 100ml",
-    "slug": "cost-per-100ml",
-    "category": "✈️ Everyday Life & Travel Tools",
-    "featured": true
-  },
-  {
-    "title": "Watt to Kilowatt Converter",
-    "slug": "watt-to-kilowatt",
-    "category": "🧺 Household & Utility Conversions",
-    "featured": false
-  },
-    {
-    "title": "Kilowatt to Watt Converter",
-    "slug": "kilowatt-to-watt",
-    "category": "🧺 Household & Utility Conversions",
-    "featured": false
-  },
- {
-  "title": "Amps to Watts Converter",
-  "slug": "amps-to-watts",
-  "category": "🧺 Household & Utility Conversions",
-  "featured": false
-},
-  {
-    "title": "Watts to Amps Converter",
-    "slug": "watts-to-amps",
-    "category": "🧺 Household & Utility Conversions",
-    "featured": false
-  }
+
 ]
 
 
