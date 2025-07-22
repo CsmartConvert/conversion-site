@@ -51,7 +51,7 @@
     "title": "Cost Per Ounce Calculator",
     "slug": "cost-per-ounce",
     "category": "🛒 Shopping & Grocery Conversions",
-    "featured": false,
+    "featured": true,
     "description": "Find out which item has the lowest cost per ounce.",
     "keywords": ["ounce", "cost", "shopping", "compare", "deal"]
   },
@@ -120,13 +120,13 @@
     "keywords": ["grocery", "ounce", "cost", "compare", "shopping"]
   },
   {
-    "title": "Tablespoons to Cups",
-    "slug": "tablespoons-to-cups",
-    "category": "🍽️ Cooking Measurement Conversions",
-    "featured": false,
-    "description": "Easily convert tablespoons to cups for cooking.",
-    "keywords": ["tablespoons", "cups", "cooking", "measurement", "kitchen"]
-  },
+  "title": "Tablespoons to Cups",
+  "slug": "tablespoons-to-cups",
+  "category": "🍽️ Cooking Measurement Conversions",
+  "featured": true,
+  "description": "Easily convert tablespoons to cups for cooking.",
+  "keywords": ["tablespoons", "cups", "cooking", "measurement", "kitchen"]
+ },
   {
     "title": "Teaspoons to Tablespoons",
     "slug": "teaspoons-to-tablespoons",
@@ -192,23 +192,31 @@
     "keywords": ["sugar", "grams", "cups", "sweet", "baking"]
   },
   {
-    "title": "Grams to Tablespoons",
-    "slug": "Cooking/Dropdown/grams-to-tablespoons",
-    "category": "🍽️ Cooking Measurement Conversions",
-    "featured": false,
-    "description": "Convert ingredient weight (grams) to tablespoons.",
-    "keywords": ["grams", "tablespoons", "cooking", "baking", "ingredients"]
-  },
-  {
-    "title": "Student Loan Payoff Calculator",
-    "slug": "student-loan-payoff",
-    "category": "💸 Finance & Lifestyle Conversions",
-    "featured": false,
-    "description": "Estimate how long it will take to pay off your student loan and how much interest you'll pay.",
-    "keywords": ["loan", "student", "repayment", "debt", "education"]
-  },
-  {
-    "title": "Mortgage Payment Calculator",
+  "title": "Grams to Tablespoons",
+  "slug": "Cooking/Dropdown/grams-to-tablespoons",
+  "category": "🍽️ Cooking Measurement Conversions",
+  "featured": false,
+  "description": "Convert ingredient weight (grams) to tablespoons.",
+  "keywords": ["grams", "tablespoons", "cooking", "baking", "ingredients"]
+},
+{
+  "title": "Currency Converter",
+  "slug": "currency-converter",
+  "category": "🌍 Everyday Life & Travel Tools",
+  "featured": true,
+  "description": "Convert between global currencies with live exchange rates.",
+  "keywords": ["currency", "money", "exchange", "conversion", "travel"]
+},
+{
+  "title": "Student Loan Payoff Calculator",
+  "slug": "student-loan-payoff",
+  "category": "💸 Finance & Lifestyle Conversions",
+  "featured": true,
+  "description": "Estimate how long it will take to pay off your student loan and how much interest you'll pay.",
+  "keywords": ["loan", "student", "repayment", "debt", "education"]
+},
+{
+  "title": "Mortgage Payment Calculator",
     "slug": "mortgage-payment-calculator",
     "category": "💸 Finance & Lifestyle Conversions",
     "featured": false,
