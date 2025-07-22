@@ -12,6 +12,7 @@ const categoryDescriptions = {
   "🔌 Household & Utility Conversions": "Convert electricity, water, and utility measurements to manage your home better."
 };
 ---
+
 <h1 class="text-3xl font-bold mb-6">All Conversion Tools</h1>
 
 <!-- 🔍 Search Input -->
@@ -20,7 +21,6 @@ const categoryDescriptions = {
     type="text"
     id="searchBox"
     placeholder="🔍 Search tools or categories..."
-    oninput="filterTools(this.value)"
     class="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
   />
 </div>
@@ -74,36 +74,36 @@ const categoryDescriptions = {
     const featuredSection = document.getElementById('featured-section');
     const categorySections = document.querySelectorAll('section:not(#featured-section)');
     
-    // Create a new section for search results
     const searchResultsSection = document.createElement('section');
     searchResultsSection.id = 'search-results';
     searchResultsSection.className = 'mb-10';
     searchResultsSection.innerHTML = `
       <h2 class="text-2xl font-semibold mb-2">🔎 Search Results</h2>
-      <div id="search-results-container" class="flex flex-wrap gap-2"></div>
+      <div id="search-results-container" class="flex flex-wrap gap-2 mb-4"></div>
+      <p id="no-results-message" class="text-gray-500 text-sm hidden">No tools found for your search.</p>
     `;
     featuredSection.insertAdjacentElement('afterend', searchResultsSection);
+    
     const resultsContainer = searchResultsSection.querySelector('#search-results-container');
+    const noResultsMessage = searchResultsSection.querySelector('#no-results-message');
     searchResultsSection.style.display = 'none';
 
     searchBox.addEventListener('input', () => {
-      const term = searchBox.value.toLowerCase();
+      const term = searchBox.value.toLowerCase().trim();
       const allTools = document.querySelectorAll('.tool');
       resultsContainer.innerHTML = '';
+      noResultsMessage.classList.add('hidden');
 
       if (term === '') {
-        // Restore original layout
         featuredSection.style.display = '';
         categorySections.forEach(sec => sec.style.display = '');
         searchResultsSection.style.display = 'none';
         return;
       }
 
-      // Hide featured + categories
       featuredSection.style.display = 'none';
       categorySections.forEach(sec => sec.style.display = 'none');
 
-      // Search matching tools
       let foundAny = false;
       allTools.forEach(tool => {
         const dataset = tool.dataset.title || '';
@@ -114,10 +114,12 @@ const categoryDescriptions = {
         }
       });
 
-      searchResultsSection.style.display = foundAny ? '' : 'none';
+      searchResultsSection.style.display = '';
+      noResultsMessage.classList.toggle('hidden', foundAny);
     });
   });
 </script>
+
 
 
 
