@@ -2,18 +2,63 @@
 import tools from '../data/conversion-tools.json';
 
 const categories = [...new Set(tools.map(tool => tool.category))];
----
 
+const categoryDescriptions = {
+  "💼 Budget & Work Calculators": "Manage your finances, estimate earnings, and plan smarter budgets.",
+  "🛒 Shopping & Grocery Conversions": "Compare prices, calculate cost per unit, and save money on everyday purchases.",
+  "🍽️ Cooking Measurement Conversions": "Easily convert between cups, grams, tablespoons, and more while cooking.",
+  "💸 Finance & Lifestyle Conversions": "Make informed decisions about loans, mortgages, and long-term expenses.",
+  "🌍 Everyday Life & Travel Tools": "Helpful tools for travelers, global shoppers, and everyday lifestyle planning.",
+  "🔌 Household & Utility Conversions": "Convert electricity, water, and utility measurements to manage your home better."
+};
+---
+<h1 class="text-3xl font-bold mb-6">All Conversion Tools</h1>
+
+<!-- 🔍 Search Input -->
+<div class="mb-6">
+  <input
+    type="text"
+    id="searchBox"
+    placeholder="🔍 Search tools or categories..."
+    oninput="filterTools(this.value)"
+    class="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+  />
+</div>
+
+<!-- 🌟 Featured Tools -->
+<section class="mb-12" id="featured-section">
+  <h2 class="text-2xl font-semibold mb-2">🌟 Featured Tools</h2>
+  <div class="flex flex-wrap gap-2">
+    {tools
+      .filter(tool => tool.featured)
+      .sort((a, b) => a.title.localeCompare(b.title))
+      .map(tool => (
+        <a 
+          href={`/tools/${tool.slug}`} 
+          class="tool featured inline-block bg-yellow-100 border border-yellow-300 px-4 py-2 rounded shadow hover:bg-yellow-200 text-yellow-900 text-sm font-medium"
+          data-title={`${tool.title.toLowerCase()} ${tool.category.toLowerCase()}`}
+        >
+          {tool.title}
+        </a>
+      ))}
+  </div>
+</section>
+
+<!-- 🧰 Tools by Category -->
 {categories.map(category => (
   <section class="mb-10">
-    <h2 class="text-2xl font-semibold mt-8 mb-2">{category}</h2>
+    <h2 class="text-2xl font-semibold mt-8 mb-1">{category}</h2>
+    <p class="text-gray-600 text-sm mb-3">{categoryDescriptions[category]}</p>
+
     <div class="flex flex-wrap gap-2">
       {tools
         .filter(tool => tool.category === category)
+        .sort((a, b) => a.title.localeCompare(b.title))
         .map(tool => (
           <a 
             href={`/tools/${tool.slug}`} 
-            class="inline-block bg-white border border-gray-300 px-4 py-2 rounded shadow hover:bg-blue-100 text-blue-700 text-sm font-medium"
+            class="tool inline-block bg-white border border-gray-300 px-4 py-2 rounded shadow hover:bg-blue-100 text-blue-700 text-sm font-medium"
+            data-title={`${tool.title.toLowerCase()} ${category.toLowerCase()}`}
           >
             {tool.title}
           </a>
@@ -21,4 +66,66 @@ const categories = [...new Set(tools.map(tool => tool.category))];
     </div>
   </section>
 ))}
+
+<!-- 🔍 Search Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchBox = document.getElementById('searchBox');
+    const featuredSection = document.getElementById('featured-section');
+    const categorySections = document.querySelectorAll('section:not(#featured-section)');
+    
+    // Create a new section for search results
+    const searchResultsSection = document.createElement('section');
+    searchResultsSection.id = 'search-results';
+    searchResultsSection.className = 'mb-10';
+    searchResultsSection.innerHTML = `
+      <h2 class="text-2xl font-semibold mb-2">🔎 Search Results</h2>
+      <div id="search-results-container" class="flex flex-wrap gap-2"></div>
+    `;
+    featuredSection.insertAdjacentElement('afterend', searchResultsSection);
+    const resultsContainer = searchResultsSection.querySelector('#search-results-container');
+    searchResultsSection.style.display = 'none';
+
+    searchBox.addEventListener('input', () => {
+      const term = searchBox.value.toLowerCase();
+      const allTools = document.querySelectorAll('.tool');
+      resultsContainer.innerHTML = '';
+
+      if (term === '') {
+        // Restore original layout
+        featuredSection.style.display = '';
+        categorySections.forEach(sec => sec.style.display = '');
+        searchResultsSection.style.display = 'none';
+        return;
+      }
+
+      // Hide featured + categories
+      featuredSection.style.display = 'none';
+      categorySections.forEach(sec => sec.style.display = 'none');
+
+      // Search matching tools
+      let foundAny = false;
+      allTools.forEach(tool => {
+        const dataset = tool.dataset.title || '';
+        if (dataset.includes(term)) {
+          foundAny = true;
+          const clone = tool.cloneNode(true);
+          resultsContainer.appendChild(clone);
+        }
+      });
+
+      searchResultsSection.style.display = foundAny ? '' : 'none';
+    });
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
 
