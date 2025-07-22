@@ -4,174 +4,231 @@
     "slug": "fuel-cost-calculator",
     "category": "💼 Budget & Work Calculators",
     "featured": true,
-    "description": "Estimate how much you'll spend on gas for your trip."
+    "description": "Estimate how much you'll spend on gas for your trip.",
+    "keywords": ["fuel", "gas", "trip", "cost", "mileage"]
   },
   {
     "title": "Hourly to Salary Converter",
     "slug": "hourly-to-salary",
     "category": "💼 Budget & Work Calculators",
     "featured": false,
-    "description": "Convert your hourly wage into an annual salary estimate."
+    "description": "Convert your hourly wage into an annual salary estimate.",
+    "keywords": ["hourly", "salary", "wage", "income", "pay"]
   },
   {
     "title": "Subscription Cost Per Year",
     "slug": "subscription-cost-per-year",
     "category": "💼 Budget & Work Calculators",
     "featured": false,
-    "description": "Calculate your total yearly cost for monthly subscriptions."
+    "description": "Calculate your total yearly cost for monthly subscriptions.",
+    "keywords": ["subscription", "yearly", "monthly", "cost", "budget"]
   },
   {
     "title": "ROI on Gym Membership",
     "slug": "roi-on-gym-membership",
     "category": "💼 Budget & Work Calculators",
     "featured": false,
-    "description": "Find out if your gym membership is really worth the cost."
+    "description": "Find out if your gym membership is really worth the cost.",
+    "keywords": ["gym", "roi", "membership", "fitness", "value"]
   },
   {
     "title": "Cost of Coffee Per Year",
     "slug": "cost-of-coffee-per-year",
     "category": "💼 Budget & Work Calculators",
     "featured": false,
-    "description": "See how much you're spending on coffee annually."
+    "description": "See how much you're spending on coffee annually.",
+    "keywords": ["coffee", "spending", "annual", "cost", "drinks"]
   },
   {
     "title": "Cost Per Unit Calculator",
     "slug": "cost-per-unit",
     "category": "🛒 Shopping & Grocery Conversions",
     "featured": false,
-    "description": "Compare products by price per unit to find the best deal."
+    "description": "Compare products by price per unit to find the best deal.",
+    "keywords": ["unit", "price", "shopping", "deal", "comparison"]
   },
   {
     "title": "Cost Per Ounce Calculator",
     "slug": "cost-per-ounce",
     "category": "🛒 Shopping & Grocery Conversions",
     "featured": false,
-    "description": "Find out which item has the lowest cost per ounce."
+    "description": "Find out which item has the lowest cost per ounce.",
+    "keywords": ["ounce", "cost", "shopping", "compare", "deal"]
   },
   {
     "title": "Price Per Diaper",
     "slug": "price-per-diaper",
     "category": "🛒 Shopping & Grocery Conversions",
     "featured": false,
-    "description": "Compare diaper pack prices based on cost per diaper."
+    "description": "Compare diaper pack prices based on cost per diaper.",
+    "keywords": ["diaper", "baby", "cost", "price", "compare"]
   },
   {
     "title": "Price Per Roll",
     "slug": "price-per-roll",
     "category": "🛒 Shopping & Grocery Conversions",
     "featured": false,
-    "description": "Calculate price per toilet paper roll for best value."
+    "description": "Calculate price per toilet paper roll for best value.",
+    "keywords": ["toilet paper", "roll", "price", "value", "bathroom"]
   },
   {
     "title": "Price Per Sheet Toilet Paper",
     "slug": "price-per-sheet-toilet-paper",
     "category": "🛒 Shopping & Grocery Conversions",
     "featured": false,
-    "description": "Break down toilet paper cost to per-sheet pricing."
+    "description": "Break down toilet paper cost to per-sheet pricing.",
+    "keywords": ["sheet", "toilet paper", "cost", "roll", "compare"]
   },
   {
     "title": "Grocery Price Comparison",
     "slug": "grocery-price-comparison",
     "category": "🛒 Shopping & Grocery Conversions",
     "featured": false,
-    "description": "Compare total grocery costs across stores or items."
+    "description": "Compare total grocery costs across stores or items.",
+    "keywords": ["grocery", "compare", "store", "shopping", "cost"]
   },
   {
     "title": "Cheapest Per Ounce",
     "slug": "cheapest-per-ounce",
     "category": "🛒 Shopping & Grocery Conversions",
     "featured": false,
-    "description": "Find the cheapest item by ounce among multiple options."
+    "description": "Find the cheapest item by ounce among multiple options.",
+    "keywords": ["cheapest", "ounce", "compare", "shopping", "deal"]
   },
   {
     "title": "Cheapest Grocery Item",
     "slug": "cheapest-grocery-item",
     "category": "🛒 Shopping & Grocery Conversions",
     "featured": false,
-    "description": "Determine which grocery item offers the best value."
+    "description": "Determine which grocery item offers the best value.",
+    "keywords": ["grocery", "cheapest", "value", "shopping", "compare"]
   },
   {
     "title": "Unit vs Bulk",
     "slug": "unit-vs-bulk",
     "category": "🛒 Shopping & Grocery Conversions",
     "featured": false,
-    "description": "Compare unit-priced vs. bulk-sized items to save money."
+    "description": "Compare unit-priced vs. bulk-sized items to save money.",
+    "keywords": ["unit", "bulk", "compare", "grocery", "price"]
   },
   {
     "title": "Grocery Item Per Ounce",
     "slug": "grocery-item-per-ounce",
     "category": "🛒 Shopping & Grocery Conversions",
     "featured": false,
-    "description": "Calculate per-ounce cost of your grocery items."
+    "description": "Calculate per-ounce cost of your grocery items.",
+    "keywords": ["grocery", "ounce", "cost", "compare", "shopping"]
   },
   {
     "title": "Tablespoons to Cups",
     "slug": "tablespoons-to-cups",
     "category": "🍽️ Cooking Measurement Conversions",
     "featured": false,
-    "description": "Easily convert tablespoons to cups for cooking."
+    "description": "Easily convert tablespoons to cups for cooking.",
+    "keywords": ["tablespoons", "cups", "cooking", "measurement", "kitchen"]
   },
   {
     "title": "Teaspoons to Tablespoons",
     "slug": "teaspoons-to-tablespoons",
     "category": "🍽️ Cooking Measurement Conversions",
     "featured": false,
-    "description": "Convert teaspoons to tablespoons quickly."
+    "description": "Convert teaspoons to tablespoons quickly.",
+    "keywords": ["teaspoons", "tablespoons", "convert", "cooking", "kitchen"]
   },
   {
     "title": "Cups to Milliliters",
     "slug": "cups-to-milliliters",
     "category": "🍽️ Cooking Measurement Conversions",
     "featured": false,
-    "description": "Convert US cups to milliliters accurately."
+    "description": "Convert US cups to milliliters accurately.",
+    "keywords": ["cups", "milliliters", "ml", "cooking", "convert"]
   },
   {
     "title": "Ounces to Cups",
     "slug": "ounces-to-cups",
     "category": "🍽️ Cooking Measurement Conversions",
     "featured": false,
-    "description": "Convert fluid ounces into cups easily."
+    "description": "Convert fluid ounces into cups easily.",
+    "keywords": ["ounces", "cups", "fluid", "cooking", "measurement"]
   },
   {
     "title": "Milliliters to Ounces",
     "slug": "milliliters-to-ounces",
     "category": "🍽️ Cooking Measurement Conversions",
     "featured": false,
-    "description": "Switch between milliliters and ounces for any recipe."
+    "description": "Switch between milliliters and ounces for any recipe.",
+    "keywords": ["milliliters", "ounces", "convert", "recipe", "cooking"]
   },
   {
     "title": "Liters to Cups",
     "slug": "liters-to-cups",
     "category": "🍽️ Cooking Measurement Conversions",
     "featured": false,
-    "description": "Convert liters to US or metric cups."
+    "description": "Convert liters to US or metric cups.",
+    "keywords": ["liters", "cups", "cooking", "convert", "metric"]
   },
   {
     "title": "Pounds to Cups",
     "slug": "pounds-to-cups",
     "category": "🍽️ Cooking Measurement Conversions",
     "featured": false,
-    "description": "Convert weight in pounds to volume in cups."
+    "description": "Convert weight in pounds to volume in cups.",
+    "keywords": ["pounds", "cups", "weight", "volume", "convert"]
   },
   {
     "title": "Flour Grams to Cups",
     "slug": "Cooking/Dropdown/flour-grams-to-cups",
     "category": "🍽️ Cooking Measurement Conversions",
     "featured": false,
-    "description": "Convert grams of flour to cups with precision."
+    "description": "Convert grams of flour to cups with precision.",
+    "keywords": ["flour", "grams", "cups", "baking", "cooking"]
   },
   {
     "title": "Sugar Grams to Cups",
     "slug": "Cooking/Dropdown/sugar-grams-to-cups",
     "category": "🍽️ Cooking Measurement Conversions",
     "featured": false,
-    "description": "Get accurate conversions of sugar grams to cups."
+    "description": "Get accurate conversions of sugar grams to cups.",
+    "keywords": ["sugar", "grams", "cups", "sweet", "baking"]
   },
   {
     "title": "Grams to Tablespoons",
     "slug": "Cooking/Dropdown/grams-to-tablespoons",
     "category": "🍽️ Cooking Measurement Conversions",
     "featured": false,
-    "description": "Convert ingredient weight (grams) to tablespoons."
+    "description": "Convert ingredient weight (grams) to tablespoons.",
+    "keywords": ["grams", "tablespoons", "cooking", "baking", "ingredients"]
+  },
+  {
+    "title": "Student Loan Payoff Calculator",
+    "slug": "student-loan-payoff",
+    "category": "💸 Finance & Lifestyle Conversions",
+    "featured": false,
+    "description": "Estimate how long it will take to pay off your student loan and how much interest you'll pay.",
+    "keywords": ["loan", "student", "repayment", "debt", "education"]
+  },
+  {
+    "title": "Mortgage Payment Calculator",
+    "slug": "mortgage-payment-calculator",
+    "category": "💸 Finance & Lifestyle Conversions",
+    "featured": false,
+    "description": "Calculate your monthly mortgage payment based on loan amount, interest rate, and term.",
+    "keywords": ["mortgage", "home", "loan", "payment", "real estate"]
+  },
+  {
+    "title": "Mortgage Affordability Calculator",
+    "slug": "mortgage-affordability",
+    "category": "💸 Finance & Lifestyle Conversions",
+    "featured": false,
+    "description": "Find out how much house you can afford based on your income and expenses.",
+    "keywords": ["mortgage", "affordability", "real estate", "budget", "home"]
+  },
+  {
+    "title": "Rent vs Buy Calculator",
+    "slug": "rent-vs-buy-calculator",
+    "category": "💸 Finance & Lifestyle Conversions",
+    "featured": false,
+    "description": "Compare the cost of renting vs. buying a home over time.",
+    "keywords": ["rent", "buy", "home", "real estate", "comparison"]
   }
 ]
