@@ -1,59 +1,94 @@
-{result && (
-  <div aria-live="polite">
-    {/* Result Summary */}
-    <div className="bg-blue-50 border border-blue-200 text-blue-800 p-4 rounded mb-6 text-sm">
-      <p>📅 Monthly Payment: <strong>{currency.format(result.monthly)}</strong></p>
-      <p>💵 Total Interest: <strong>{currency.format(result.totalInterest)}</strong></p>
-      <p>💰 Total Cost: <strong>{currency.format(result.totalCost)}</strong></p>
-    </div>
+import React from 'react';
 
-    {/* Chart */}
-    <canvas
-      id={`${type}-chart`}
-      className="w-full h-64 mb-6"
-      role="img"
-      aria-label="Loan payment trend line chart"
-    ></canvas>
+export default function AmortizationTable({ result, amortizationData, type, downloadCSV }) {
+  if (!result || amortizationData.length === 0) return null;
 
-    {/* CSV Download Button */}
-    <div className="text-right mb-3">
-      <button
-        onClick={downloadCSV}
-        className="text-blue-600 underline text-xs sm:text-sm hover:text-blue-800"
-      >
-        ⬇️ Download Amortization CSV
-      </button>
-    </div>
+  const [showTable, setShowTable] = React.useState(false);
 
-    {/* Amortization Table */}
-    <div className="overflow-x-auto rounded-lg shadow border border-gray-300 max-w-full sm:overflow-scroll">
-      <table className="min-w-full text-sm border-collapse bg-white" role="table">
-        <thead className="bg-gray-100 text-gray-800 font-semibold">
-          <tr role="row">
-            <th className="py-2 px-3 text-left border-b">Month</th>
-            <th className="py-2 px-3 text-left border-b">Interest</th>
-            <th className="py-2 px-3 text-left border-b">Principal</th>
-            <th className="py-2 px-3 text-left border-b">Payment</th>
-            <th className="py-2 px-3 text-left border-b">Remaining Balance</th>
-          </tr>
-        </thead>
-        <tbody>
-          {amortizationData.map((row, i) => (
-            <tr
-              key={row.month}
-              className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
-              role="row"
+  const currency = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 2,
+  });
+
+  return (
+    <div className="mt-6 bg-white border border-gray-300 rounded shadow-sm">
+      <div aria-live="polite" className="p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">💡 Result Summary</h2>
+        <div className="bg-blue-50 border border-blue-200 text-blue-800 p-4 rounded mb-6 text-sm">
+          <p>📅 Monthly Payment: <strong>{currency.format(result.monthly)}</strong></p>
+          <p>💵 Total Interest: <strong>{currency.format(result.totalInterest)}</strong></p>
+          <p>💰 Total Cost: <strong>{currency.format(result.totalCost)}</strong></p>
+        </div>
+
+        <div className="mb-6">
+          <canvas id={`loanChart-${type}`} className="w-full h-64 mb-6" role="img" aria-label="Loan payment trend line chart"></canvas>
+        </div>
+
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-md font-semibold text-gray-700">📊 Amortization Schedule</h3>
+          <div className="flex gap-2">
+            <button
+              className="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+              onClick={() => setShowTable(!showTable)}
             >
-              <td className="py-1.5 px-3 border-b">{row.month}</td>
-              <td className="py-1.5 px-3 border-b">{currency.format(row.interest)}</td>
-              <td className="py-1.5 px-3 border-b">{currency.format(row.principal)}</td>
-              <td className="py-1.5 px-3 border-b">{currency.format(row.payment)}</td>
-              <td className="py-1.5 px-3 border-b">{currency.format(row.balance)}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              {showTable ? 'Hide Table' : 'Show Table'}
+            </button>
+            <button
+              className="px-3 py-1 text-sm bg-green-600 text-white rounded hover:bg-green-700 transition"
+              onClick={downloadCSV}
+            >
+              Download CSV
+            </button>
+          </div>
+        </div>
+
+        {showTable && (
+          <div className="overflow-x-auto">
+            <table className="min-w-full border border-gray-300 text-sm text-left">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="px-3 py-2 border">Month</th>
+                  <th className="px-3 py-2 border">Payment</th>
+                  <th className="px-3 py-2 border">Principal</th>
+                  <th className="px-3 py-2 border">Interest</th>
+                  <th className="px-3 py-2 border">Balance</th>
+                </tr>
+              </thead>
+              <tbody>
+                {amortizationData.map((item, index) => (
+                  <tr
+                    key={index}
+                    className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
+                  >
+                    <td className="px-3 py-2 border">{item.month}</td>
+                    <td className="px-3 py-2 border">{currency.format(item.payment)}</td>
+                    <td className="px-3 py-2 border">{currency.format(item.principal)}</td>
+                    <td className="px-3 py-2 border">{currency.format(item.interest)}</td>
+                    <td className="px-3 py-2 border">{currency.format(item.balance)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        <div className="mt-8">
+          <h4 className="text-md font-semibold text-gray-800 mb-2">📌 Why This Matters</h4>
+          <p className="text-sm text-gray-700 mb-4">
+            Understanding your amortization schedule helps you track how much you're paying toward principal vs. interest over time. This insight empowers better loan decisions and can save thousands in interest.
+          </p>
+
+          <h4 className="text-md font-semibold text-gray-800 mb-2">✅ Pro Tips</h4>
+          <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
+            <li>Make extra payments toward principal early to reduce interest.</li>
+            <li>Refinance if your interest rate is significantly above market average.</li>
+            <li>Review the total cost — not just monthly payment — when comparing loans.</li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
-)}
+  );
+}
+
 
