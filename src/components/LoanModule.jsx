@@ -1,5 +1,5 @@
 // src/components/LoanModule.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
 export default function LoanModule({ type }) {
@@ -26,12 +26,42 @@ export default function LoanModule({ type }) {
     balloon: 'Balloon Loan',
   };
 
+  const formatWithCommas = (value) => {
+    const cleaned = value.replace(/,/g, '');
+    const num = parseFloat(cleaned);
+    return isNaN(num) ? '' : num.toLocaleString();
+  };
+
+  function handleAmountChange(e) {
+    const raw = e.target.value.replace(/,/g, '');
+    if (!isNaN(raw)) setAmount(formatWithCommas(raw));
+  }
+
+  function handleRateChange(e) {
+    const raw = e.target.value.replace(/,/g, '');
+    if (!isNaN(raw)) setRate(formatWithCommas(raw));
+  }
+
+  function handleTermChange(e) {
+    const raw = e.target.value.replace(/,/g, '');
+    if (!isNaN(raw)) setTerm(formatWithCommas(raw));
+  }
+
+  function handleBalloonChange(e) {
+    const raw = e.target.value.replace(/,/g, '');
+    if (!isNaN(raw)) setBalloon(formatWithCommas(raw));
+  }
+
+  function parseNumber(value) {
+    return parseFloat(value.toString().replace(/,/g, ''));
+  }
+
   function calculateLoan(e) {
     e.preventDefault();
-    const P = parseFloat(amount);
+    const P = parseNumber(amount);
     const r = parseFloat(rate) / 100 / 12;
-    const n = parseInt(term);
-    const B = parseFloat(balloon) || 0;
+    const n = parseInt(parseNumber(term));
+    const B = parseNumber(balloon) || 0;
 
     if (isNaN(P) || isNaN(r) || isNaN(n) || P <= 0 || r < 0 || n <= 0) return;
 
@@ -181,53 +211,82 @@ export default function LoanModule({ type }) {
   }
 
   return (
-    <div className="bg-white shadow rounded-lg p-6 border border-gray-200 mb-12" role="region" aria-labelledby={`${type}-heading`}>
-      <h2 id={`${type}-heading`} className="text-xl font-semibold mb-4 text-gray-800">{loanLabels[type]}</h2>
+    <div
+      className="bg-white shadow rounded-lg p-6 border border-gray-200 mb-12"
+      role="region"
+      aria-labelledby={`${type}-heading`}
+      tabIndex="0"
+    >
+      <h2 id={`${type}-heading`} className="text-xl font-semibold mb-4 text-gray-800 text-center">
+        {loanLabels[type]}
+      </h2>
 
-      <form onSubmit={calculateLoan} className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6" aria-label="Loan calculation form">
+      <form
+        onSubmit={calculateLoan}
+        className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6"
+        aria-label="Loan calculation form"
+      >
         <div>
           <label htmlFor="amount">Loan Amount ($)</label>
           <input
             id="amount"
-            type="number"
+            type="text"
+            inputMode="decimal"
+            autoComplete="off"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            className="mt-1 block w-full p-2 border rounded"
+            onChange={handleAmountChange}
+            className="mt-1 block w-full p-3 text-lg border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
             required
-            aria-required="true"
           />
         </div>
         <div>
           <label htmlFor="rate">Annual Interest Rate (%)</label>
           <input
             id="rate"
-            type="number"
+            type="text"
+            inputMode="decimal"
+            autoComplete="off"
             value={rate}
-            onChange={(e) => setRate(e.target.value)}
-            className="mt-1 block w-full p-2 border rounded"
+            onChange={handleRateChange}
+            className="mt-1 block w-full p-3 text-lg border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
             required
-            aria-required="true"
           />
         </div>
         <div>
-          <label htmlFor="term">Term (Months)</label>
+          <label htmlFor="term">Loan Term (Months)</label>
           <input
             id="term"
-            type="number"
+            type="text"
+            inputMode="numeric"
+            autoComplete="off"
             value={term}
-            onChange={(e) => setTerm(e.target.value)}
-            className="mt-1 block w-full p-2 border rounded"
+            onChange={handleTermChange}
+            className="mt-1 block w-full p-3 text-lg border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
             required
-            aria-required="true"
           />
         </div>
+        {type === 'balloon' && (
+          <div>
+            <label htmlFor="balloon">Balloon Payment ($)</label>
+            <input
+              id="balloon"
+              type="text"
+              inputMode="decimal"
+              autoComplete="off"
+              value={balloon}
+              onChange={handleBalloonChange}
+              className="mt-1 block w-full p-3 text-lg border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
+              required
+            />
+          </div>
+        )}
         <div>
           <label htmlFor="currency">Currency</label>
           <select
             id="currency"
             value={currencyCode}
             onChange={(e) => setCurrencyCode(e.target.value)}
-            className="mt-1 block w-full p-2 border rounded"
+            className="mt-1 block w-full p-3 text-lg border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
           >
             <option value="USD">USD</option>
             <option value="CAD">CAD</option>
@@ -237,27 +296,13 @@ export default function LoanModule({ type }) {
             <option value="JPY">JPY</option>
           </select>
         </div>
-        {type === 'balloon' && (
-          <div>
-            <label htmlFor="balloon">Balloon Payment ($)</label>
-            <input
-              id="balloon"
-              type="number"
-              value={balloon}
-              onChange={(e) => setBalloon(e.target.value)}
-              className="mt-1 block w-full p-2 border rounded"
-              required
-              aria-required="true"
-            />
-          </div>
-        )}
         <div>
           <label htmlFor="chart">Chart Type</label>
           <select
             id="chart"
             value={chartType}
             onChange={(e) => setChartType(e.target.value)}
-            className="mt-1 block w-full p-2 border rounded"
+            className="mt-1 block w-full p-3 text-lg border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
           >
             <option value="line">Line</option>
             <option value="bar">Bar</option>
@@ -267,7 +312,7 @@ export default function LoanModule({ type }) {
         <div className="sm:col-span-2">
           <button
             type="submit"
-            className="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+            className="mt-4 w-full bg-blue-600 text-white text-lg py-3 px-4 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
           >
             Calculate
           </button>
@@ -276,7 +321,7 @@ export default function LoanModule({ type }) {
 
       {result && (
         <div aria-live="polite">
-          <div className="bg-blue-50 border border-blue-200 text-blue-800 p-4 rounded mb-6 text-sm" role="status">
+          <div className="bg-blue-50 border border-blue-200 text-blue-800 p-4 rounded mb-6 text-base" role="status">
             <div className="flex justify-between mb-1">
               <span>📅 Monthly Payment</span>
               <span className="font-bold">{currency.format(result.monthly)}</span>
@@ -300,8 +345,9 @@ export default function LoanModule({ type }) {
 
           <button
             onClick={() => setShowTable(!showTable)}
-            className="mb-4 text-blue-600 underline hover:text-blue-800 text-base"
+            className="mb-4 text-blue-600 underline hover:text-blue-800 text-base focus:outline-none focus:ring-2 focus:ring-blue-400 min-h-[44px]"
             aria-expanded={showTable}
+            aria-controls={`${type}-table`}
           >
             {showTable ? 'Hide Amortization Schedule' : 'Show Amortization Schedule'}
           </button>
@@ -311,12 +357,17 @@ export default function LoanModule({ type }) {
               <div className="text-right mt-4 mb-2">
                 <button
                   onClick={downloadCSV}
-                  className="text-blue-600 underline text-sm hover:text-blue-800"
+                  className="text-blue-600 underline text-sm hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   ⬇️ Download Amortization CSV
                 </button>
               </div>
-              <div className="overflow-x-auto rounded-lg border border-gray-200 max-w-full" role="table" aria-label="Amortization Schedule Table">
+              <div
+                className="overflow-x-auto rounded-lg border border-gray-200 max-w-full"
+                role="table"
+                aria-label="Amortization Schedule Table"
+                id={`${type}-table`}
+              >
                 <table className="min-w-full text-sm text-gray-800 border-collapse bg-white">
                   <thead className="bg-gray-100 text-gray-800 font-semibold">
                     <tr>
@@ -328,8 +379,8 @@ export default function LoanModule({ type }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {amortizationData.map((row) => (
-                      <tr key={row.month}>
+                    {amortizationData.map((row, idx) => (
+                      <tr key={row.month} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                         <td className="py-1.5 px-3 border-b">{row.month}</td>
                         <td className="py-1.5 px-3 border-b">{currency.format(row.interest)}</td>
                         <td className="py-1.5 px-3 border-b">{currency.format(row.principal)}</td>
@@ -363,3 +414,4 @@ export default function LoanModule({ type }) {
     </div>
   );
 }
+
