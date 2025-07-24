@@ -1,86 +1,42 @@
 ---
-import Layout from '../../layouts/Layout.astro';
 import LoanModule from '../../components/LoanModule.jsx';
-const title = 'Loan Calculator Suite – Amortized, Interest-Only, Deferred, and Balloon Loans';
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = '💰 All-in-One Loan Calculator Suite';
+const pageDesc = 'Compare amortized, interest-only, deferred, and balloon loan repayment options with interactive charts and amortization schedules.';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>{title}</title>
-    <meta name="description" content="Comprehensive loan calculator suite with amortized, interest-only, deferred, and balloon repayment options. Calculate payments, interest, and download schedules." />
-  </head>
+<Layout title={pageTitle} description={pageDesc}>
+  <section class="max-w-4xl mx-auto px-4 py-10">
+    <h1 class="text-4xl font-bold mb-4 text-center">{pageTitle}</h1>
+    <p class="text-center mb-10 text-gray-700">
+      Compare loan repayment options for <strong>Amortized</strong>, <strong>Interest-Only</strong>, <strong>Deferred Payment</strong>, and <strong>Balloon Loans</strong>. Each module includes charts, tables, and downloadable amortization schedules.
+    </p>
 
-  <Layout title={title}>
-    <main class="max-w-5xl mx-auto px-4 py-10">
+    <!-- ✅ Render each loan type with hydration -->
+    <LoanModule type="amortized" client:load />
+    <LoanModule type="interest-only" client:load />
+    <LoanModule type="deferred" client:load />
+    <LoanModule type="balloon" client:load />
+  </section>
 
-      <!-- Introduction -->
-      <section class="mb-12">
-        <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-          Loan Calculator Suite
-        </h1>
-        <p class="text-gray-700 dark:text-gray-300 text-lg mb-4">
-          Use this all-in-one calculator suite to explore four major loan types: Amortized, Interest-Only, Deferred Payment, and Balloon Loans.
-          Instantly calculate monthly payments, view charts, and download amortization schedules.
-        </p>
-        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 text-sm text-yellow-800 dark:bg-yellow-900 dark:border-yellow-500 dark:text-yellow-200">
-          📌 <strong>Tip:</strong> Scroll down to compare different loan types side by side.
-        </div>
-      </section>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggles = document.querySelectorAll('[data-toggle]');
 
-      <!-- Loan Calculator Modules -->
-      <section id="amortized" class="mb-16">
-        <LoanModule type="amortized" client:load />
-      </section>
-
-      <section id="interest-only" class="mb-16">
-        <LoanModule type="interest-only" client:load />
-      </section>
-
-      <section id="deferred" class="mb-16">
-        <LoanModule type="deferred" client:load />
-      </section>
-
-      <section id="balloon" class="mb-16">
-        <LoanModule type="balloon" client:load />
-      </section>
-
-      <!-- Educational Content -->
-      <section class="mt-20">
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Understanding Loan Types</h2>
-        <p class="text-gray-700 dark:text-gray-300 mb-4">
-          Each loan type calculates interest and principal differently. Here’s a quick summary:
-        </p>
-
-        <ul class="list-disc list-inside text-gray-800 dark:text-gray-200 mb-6 space-y-2">
-          <li><strong>Amortized:</strong> Equal monthly payments with varying interest/principal portions.</li>
-          <li><strong>Interest-Only:</strong> Monthly payments cover only interest; principal due at the end.</li>
-          <li><strong>Deferred:</strong> No payments until maturity; lump sum due at the end.</li>
-          <li><strong>Balloon:</strong> Regular smaller payments plus a large final payment.</li>
-        </ul>
-
-        <p class="text-gray-600 dark:text-gray-400 text-sm">
-          Knowing your loan structure helps manage payments and compare borrowing options intelligently.
-        </p>
-      </section>
-
-    </main>
-
-    <!-- Optional Scroll Script -->
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const buttons = document.querySelectorAll('[data-scroll-target]');
-        buttons.forEach(btn => {
-          btn.addEventListener('click', () => {
-            const target = document.getElementById(btn.getAttribute('data-scroll-target'));
-            if (target) target.scrollIntoView({ behavior: 'smooth' });
-          });
+      toggles.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = document.getElementById(btn.dataset.toggle);
+          if (target) {
+            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', !expanded);
+            target.classList.toggle('hidden');
+          }
         });
       });
-    </script>
-  </Layout>
-</html>
-
+    });
+  </script>
+</Layout>
 
 
 
