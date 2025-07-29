@@ -1,42 +1,81 @@
 ---
-import LoanModule from '../../components/LoanModule.jsx';
 import Layout from '../../layouts/Layout.astro';
+import LoanModule from '../../components/LoanModule.jsx';
 
-const pageTitle = '💰 All-in-One Loan Calculator Suite';
-const pageDesc = 'Compare amortized, interest-only, deferred, and balloon loan repayment options with interactive charts and amortization schedules.';
+const title = 'Loan Calculator Suite – Amortized, Interest-Only, Deferred, and Balloon Loans';
 ---
 
-<Layout title={pageTitle} description={pageDesc}>
-  <section class="max-w-4xl mx-auto px-4 py-10">
-    <h1 class="text-4xl font-bold mb-4 text-center">{pageTitle}</h1>
-    <p class="text-center mb-10 text-gray-700">
-      Compare loan repayment options for <strong>Amortized</strong>, <strong>Interest-Only</strong>, <strong>Deferred Payment</strong>, and <strong>Balloon Loans</strong>. Each module includes charts, tables, and downloadable amortization schedules.
-    </p>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{title}</title>
+    <meta name="description" content="Comprehensive loan calculator suite with amortized, interest-only, deferred, and balloon repayment options. Calculate payments, interest, and download schedules." />
+  </head>
 
-    <!-- ✅ Render each loan type with hydration -->
-    <LoanModule type="amortized" client:load />
-    <LoanModule type="interest-only" client:load />
-    <LoanModule type="deferred" client:load />
-    <LoanModule type="balloon" client:load />
-  </section>
+  <Layout title={title}>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <!-- Title and Intro -->
+      <section class="mb-10">
+        <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          Loan Calculator Suite
+        </h1>
+        <p class="text-gray-700 dark:text-gray-300 text-base sm:text-lg mb-4">
+          Use this all-in-one calculator suite to explore four major loan types: 
+          <strong>Amortized</strong>, <strong>Interest-Only</strong>, 
+          <strong>Deferred Payment</strong>, and <strong>Balloon</strong> loans. 
+          Calculate monthly payments, interest costs, and view amortization schedules with interactive charts.
+        </p>
+        <div class="bg-blue-50 dark:bg-gray-800 text-blue-900 dark:text-white text-sm sm:text-base p-4 rounded-md">
+          💡 <strong>Tip:</strong> Scroll down to compare different loan types side-by-side and download your amortization schedules as CSV.
+        </div>
+      </section>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const toggles = document.querySelectorAll('[data-toggle]');
+      <!-- Main Grid Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Left Column: Tools -->
+        <div class="lg:col-span-2 space-y-10">
+          <LoanModule type="amortized" client:load />
+          <LoanModule type="interest-only" client:load />
+          <LoanModule type="deferred" client:load />
+          <LoanModule type="balloon" client:load />
+        </div>
 
-      toggles.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const target = document.getElementById(btn.dataset.toggle);
-          if (target) {
-            const expanded = btn.getAttribute('aria-expanded') === 'true';
-            btn.setAttribute('aria-expanded', !expanded);
-            target.classList.toggle('hidden');
-          }
+        <!-- Right Sidebar -->
+        <aside class="hidden lg:block">
+          <div class="sticky top-20 space-y-6">
+            <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow text-sm text-gray-800 dark:text-gray-200">
+              <h3 class="font-semibold mb-2 text-gray-900 dark:text-white">🛠️ Financial Tools</h3>
+              <ul class="space-y-1 list-disc list-inside">
+                <li><a href="/tools/finance/mortgage-payment-calculator" class="text-blue-600 dark:text-blue-400 underline">Mortgage Calculator</a></li>
+                <li><a href="/tools/finance/student-loan-payoff" class="text-blue-600 dark:text-blue-400 underline">Student Loan Payoff</a></li>
+                <li><a href="/tools/finance/rent-vs-buy-calculator" class="text-blue-600 dark:text-blue-400 underline">Rent vs. Buy</a></li>
+              </ul>
+            </div>
+
+            <div class="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg shadow p-4 text-sm text-gray-700 dark:text-gray-300">
+              <h3 class="font-semibold mb-2 text-gray-900 dark:text-white">📣 Advertisement</h3>
+              <p>Advertise your financial products here. Contact us for placement.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <!-- Script: Toggle Handler -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll('button').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            window.scrollBy({ top: 300, behavior: 'smooth' });
+          });
         });
       });
-    });
-  </script>
-</Layout>
+    </script>
+  </Layout>
+</html>
+
+
+
 
 
 

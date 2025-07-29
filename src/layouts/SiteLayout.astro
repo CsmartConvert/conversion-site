@@ -21,8 +21,19 @@ const { title } = Astro.props;
       <slot />
     </main>
 
-    <footer class="bg-gray-200 text-center text-sm py-4 mt-8">
-      &copy; {new Date().getFullYear()} Smart Converter. All rights reserved.
-    </footer>
-  </body>
-</html>
+ <!-- Footer -->
+<footer class="bg-gray-200 text-sm text-gray-700 border-t border-gray-300 mt-16">
+  <div class="max-w-7xl mx-auto px-4 py-6 text-center">
+    <a href="/about" class="hover:underline text-gray-700">about us</a> |
+    <a href="/terms-of-use" class="hover:underline text-gray-700">terms of use</a> |
+    <a href="/privacy-policy" class="hover:underline text-gray-700">privacy policy</a> |
+    <a href="/contact us" class="hover:underline text-gray-700">contact us</a> | 
+    <a href="/sitemap" class="hover:underline text-gray-700">sitemap</a>| 
+    <a href="/faq" class="hover:underline text-gray-700">faq</a>| 
+  
+    <span class="mx-2">© 2025 <a href="/" class="hover:underline text-gray-700">smartconverter.online</a></span>
+  </div>
+</footer>
+
+
+

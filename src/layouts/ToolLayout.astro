@@ -9,6 +9,7 @@ const { title = "Unit Converter" } = Astro.props;
     <meta name="description" content={`Use this simple tool to convert or calculate ${title.toLowerCase()}.`} />
   </head>
   <body class="bg-gray-50 text-gray-900 font-sans">
+    
     <main class="max-w-2xl mx-auto px-4 py-10 space-y-8">
       <header class="text-center">
         <h1 class="text-3xl font-bold">{title}</h1>
@@ -16,13 +17,30 @@ const { title = "Unit Converter" } = Astro.props;
       </header>
 
       <slot /> <!-- Content of the tool goes here -->
-
-      <footer class="text-sm text-center text-gray-400 mt-12">
-        &copy; {new Date().getFullYear()} Smart Converter
-      </footer>
     </main>
+
+    <footer class="bg-white border-t text-xs text-gray-600 py-6">
+      <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-start gap-6">
+        
+        <nav class="flex flex-col gap-1">
+          <a href="/about" class="hover:underline">About Us</a>
+          <a href="/terms-of-service" class="hover:underline">Terms of Use</a>
+          <a href="/privacy-policy" class="hover:underline">Privacy Policy</a>
+          <a href="/faq" class="hover:underline">FAQ</a>
+          <a href="/sitemap" class="hover:underline">Sitemap</a>
+        </nav>
+
+        <div class="text-gray-500 text-right md:text-left">
+          &copy; 2023–2025 Smart Converter Online. All rights reserved.
+        </div>
+      </div>
+    </footer>
+    
   </body>
 </html>
+
+
+
 
 
 

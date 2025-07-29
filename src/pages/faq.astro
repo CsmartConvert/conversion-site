@@ -1,0 +1,35 @@
+---
+// src/pages/faq.astro
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const title = "Frequently Asked Questions (FAQ)";
+---
+
+<SiteLayout title={title}>
+  <main class="max-w-4xl mx-auto px-4 py-10">
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Frequently Asked Questions</h1>
+
+    <div class="space-y-6 text-gray-700 dark:text-gray-300">
+      <div>
+        <h2 class="font-semibold text-xl">What is Smart Converter Online?</h2>
+        <p>It’s a free tool hub that helps you convert units, calculate prices, and simplify everyday math in cooking, finance, and utilities.</p>
+      </div>
+
+      <div>
+        <h2 class="font-semibold text-xl">Is this site free to use?</h2>
+        <p>Yes! All converters and calculators are completely free.</p>
+      </div>
+
+      <div>
+        <h2 class="font-semibold text-xl">Can I request a new converter?</h2>
+        <p>Absolutely. Visit our <a href="/contact" class="text-blue-600 underline hover:text-blue-800">Contact page</a> and let us know what you’d like added.</p>
+      </div>
+
+      <div>
+        <h2 class="font-semibold text-xl">Do you store any personal data?</h2>
+        <p>No — we don’t store personal info unless you voluntarily submit it via our contact form.</p>
+      </div>
+    </div>
+  </main>
+</SiteLayout>
+

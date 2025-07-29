@@ -25,11 +25,50 @@ import GlobalHeader from '../components/GlobalHeader.astro';
       <slot />
     </main>
 
-    <!-- Footer -->
-    <footer class="mt-12 bg-white border-t py-6 text-center text-sm text-gray-500">
-      &copy; {new Date().getFullYear()} Easy Converter. All rights reserved.
-    </footer>
-  </body>
-</html>
+   <!-- Enhanced Footer -->
+<footer class="bg-gray-50 border-t py-10 mt-12 text-sm text-gray-700">
+  <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+    <div>
+      <h2 class="font-semibold mb-2">About Smart Converter</h2>
+      <p class="text-sm text-gray-600">
+        Smart Converter Online helps simplify everyday cooking, financial, and household conversions with fast, accurate tools — built for real-life use in the kitchen, office, or on the go.
+      </p>
+    </div>
+    <div>
+      <h2 class="font-semibold mb-2">Cooking Converters</h2>
+      <ul class="space-y-1">
+        <li><a href="/tools/cooking/dropdown/grams-to-tablespoons" class="text-purple-600 hover:underline">Grams ⇌ Tablespoons</a></li>
+        <li><a href="/tools/cooking/dropdown/flour-grams-to-cups" class="text-purple-600 hover:underline">Flour ⇌ Cups</a></li>
+        <li><a href="/tools/cooking/dropdown/milk-grams-to-cups" class="text-purple-600 hover:underline">Milk ⇌ Grams</a></li>
+        <li><a href="/tools/cooking/dropdown/butter-grams-to-cups" class="text-purple-600 hover:underline">Butter ⇌ Grams</a></li>
+        <li><a href="/tools/cooking/dropdown/oats-grams-to-cups" class="text-purple-600 hover:underline">Oats ⇌ Cups</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="font-semibold mb-2">Finance & Utility</h2>
+      <ul class="space-y-1">
+        <li><a href="/tools/finance/hourly-to-salary" class="text-blue-600 hover:underline">Hourly ⇌ Salary</a></li>
+        <li><a href="/tools/finance/fuel-cost-calculator" class="text-blue-600 hover:underline">Fuel Cost Calculator</a></li>
+        <li><a href="/tools/finance/credit-card-interest" class="text-blue-600 hover:underline">Credit Card Interest</a></li>
+        <li><a href="/tools/finance/student-loan-payoff" class="text-blue-600 hover:underline">Student Loan Payoff</a></li>
+        <li><a href="/tools/utility/amps-to-watts" class="text-blue-600 hover:underline">Amps ⇌ Watts</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="font-semibold mb-2">Pages</h2>
+      <ul class="space-y-1">
+        <li><a href="/" class="hover:underline">Home</a></li>
+        <li><a href="/search" class="hover:underline">All Converters</a></li>
+        <li><a href="/about" class="hover:underline">About Us</a></li>
+        <li><a href="/contact" class="hover:underline">Contact</a></li>
+        <li><a href="/privacy-policy" class="hover:underline">Privacy Policy</a></li>
+        <li><a href="/terms-of-service" class="hover:underline">Terms of Use</a></li>
+        <li><a href="/faq" class="hover:underline">FAQ</a></li>
+        <li><a href="/sitemap" class="hover:underline">Sitemap</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
 
 

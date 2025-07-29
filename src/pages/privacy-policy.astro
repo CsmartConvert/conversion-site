@@ -1,0 +1,27 @@
+---
+// src/pages/privacy-policy.astro
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const title = "Privacy Policy";
+---
+
+<SiteLayout title={title}>
+  <main class="max-w-4xl mx-auto px-4 py-10">
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Privacy Policy</h1>
+
+    <p class="text-gray-700 dark:text-gray-300 mb-4">
+      Smart Converter Online values your privacy. We do not collect personal information unless you provide it voluntarily (e.g., via contact forms).
+    </p>
+
+    <p class="text-gray-700 dark:text-gray-300 mb-4">
+      We may use analytics tools to understand usage patterns, but no identifying information is stored, shared, or sold.
+    </p>
+
+    <p class="text-gray-700 dark:text-gray-300 mb-4">
+      For questions about our privacy practices, please <a href="/contact" class="text-blue-600 underline hover:text-blue-800">contact us directly</a>.
+    </p>
+  </main>
+</SiteLayout>
+
+
+

@@ -306,7 +306,7 @@ export default function LoanModule({ type }) {
           >
             <option value="line">Line</option>
             <option value="bar">Bar</option>
-            <option value="radar">Radar</option>
+            <option value="pie">Pie</option>
           </select>
         </div>
         <div className="sm:col-span-2">
@@ -414,4 +414,3 @@ export default function LoanModule({ type }) {
     </div>
   );
 }
-
